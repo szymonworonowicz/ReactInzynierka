@@ -18,7 +18,6 @@ export function useToast() {
         switch(type) {
             case 'success':
                 return toast.success(message,toastOptions);
-                break;
             case 'error':
                 return toast.error(message, toastOptions);
         };

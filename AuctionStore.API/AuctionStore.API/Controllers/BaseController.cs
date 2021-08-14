@@ -1,4 +1,5 @@
 ﻿using AuctionStore.Infrastructure.Dtos;
+using AuctionStore.Infrastructure.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -50,6 +51,19 @@ namespace AuctionStore.API.Controllers
         {
             return new JsonResult(new ApiResultGeneric<T>() { Data = data, Success = true });
         }
+
+        [NonAction]
+        protected JsonResult JsonError()
+        {
+            return new JsonResult(new ApiResultBase(false)) { StatusCode = 400 };
+        }
+
+        [NonAction]
+        protected JsonResult JsonError(ApiError error)
+        {
+            return new JsonResult(new ApiResultBase(error)) { StatusCode = 400 };
+        }
+
     }
 
 }

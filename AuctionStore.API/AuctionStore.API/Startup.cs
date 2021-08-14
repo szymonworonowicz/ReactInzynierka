@@ -1,4 +1,5 @@
 using AuctionStore.API.DIConfig;
+using AuctionStore.API.Middleware;
 using AuctionStore.Infrastructure.DataContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 
@@ -35,34 +37,52 @@ namespace AuctionStore.API
                 });
             });
 
-            services.AddControllers().AddNewtonsoftJson(opt =>
+            services.AddControllers(opt =>
+            {
+                opt.EnableEndpointRouting = false;
+                //opt.Filters.Add(typeof(ValidateModelStateattribute))
+            })
+                .AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 opt.UseCamelCasing(true);
             });
 
+            services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddResponseCaching();
+
+            services.ConfigureDI(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuctionStore.API v1"));
-            }
+            app.UseStaticFiles();
+            //app.ueWebApiCommon();
+            app.UseCors("CorsPolicy");
+            app.UseMiddleware<DomainExceptionMiddleware>();
+            app.UseMvc();
 
-            app.UseHttpsRedirection();
+            logger.LogInformation("App started")
 
-            app.UseRouting();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuctionStore.API v1"));
+            //}
 
-            app.UseAuthorization();
+            //app.UseHttpsRedirection();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseRouting();
+
+            //app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         }
     }
 }

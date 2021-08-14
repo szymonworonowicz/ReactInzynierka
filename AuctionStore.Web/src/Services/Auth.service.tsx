@@ -14,7 +14,7 @@ export interface IUserAuthData {
   id: string | null;
   userName: string | null;
   name: string | null;
-  roles: Array<string> | null;
+  role: string | null;
 }
 
 export const authService: IAuthService = {
@@ -66,7 +66,7 @@ export const getUserDataFromAccessToken = (): IUserAuthData | null => {
   if (accessToken) {
     const decodedToken = JWTDecode(accessToken) as any;
 
-    const roles = decodedToken["role"];
+    const role = decodedToken["role"];
 
     const userDataClaim =
       "http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata";
@@ -76,7 +76,7 @@ export const getUserDataFromAccessToken = (): IUserAuthData | null => {
       id: decodedToken.nameid,
       userName: decodedToken.unique_name,
       name: userData,
-      roles: Array.isArray(roles) ? roles : [roles],
+      role: role,
     };
 
     return authData;
