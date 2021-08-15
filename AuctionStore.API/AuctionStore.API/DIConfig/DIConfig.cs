@@ -17,10 +17,11 @@ namespace AuctionStore.API.DIConfig
         {
             var infrastructure = AppDomain.CurrentDomain.Load("AuctionStore.Infrastructure");
             var domain = AppDomain.CurrentDomain.Load("AuctionStore.Domain");
+            var api = AppDomain.CurrentDomain.Load("AuctionStore.API");
 
 
             services.AddMediatR(domain);
-            services.AddAutoMapper(infrastructure);
+            services.AddAutoMapper(infrastructure, api);
 
             services.RegisterAssemblyPublicNonGenericClasses(infrastructure)
                 .Where(x => x.Name.EndsWith("Service"))

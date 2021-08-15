@@ -11,6 +11,5 @@ namespace AuctionStore.Infrastructure.Dtos
         public int AccessTokenExpiresInMinutes { get; set; }
         public int? RefreshTokenExpiresInMinutes { get; set; }
         public string JwtTokenIssuer { get; set; }
-        public bool UseJwt { get; set; }
     }
 }

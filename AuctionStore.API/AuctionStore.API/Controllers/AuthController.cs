@@ -28,13 +28,22 @@ namespace AuctionStore.API.Controllers
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "login failed"));
         }
 
-        [HttpPost("login/refresh")]
+        //[HttpPost("login/refresh")]
 
-        public async Task<IActionResult> Login(UserRefreshTokenLoginCommand command)
+        //public async Task<IActionResult> Login(UserRefreshTokenLoginCommand command)
+        //{
+        //    var result = await CommandAsync(command);
+
+        //    return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "login failed"));
+        //}
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(CreateUserCommand command)
         {
             var result = await CommandAsync(command);
 
-            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "login failed"));
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
+
         }
     }
 }

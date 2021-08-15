@@ -23,14 +23,12 @@ namespace AuctionStore.API.DIConfig
             public JwtOptions Jwt { get; set; }
         }
         public static void ConfigApi(this IServiceCollection services, IConfiguration configuration,
-            Action<AspNetCoreOpenApiDocumentGeneratorSettings,
-                IServiceProvider> swaggerConfiguration = null,
             Action<JwtBearerOptions> jwtOptions = null)
         {
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             var commopOptions = new CommonOptions();
-            configuration.GetSection("ApiOption").Bind(commopOptions);
+            configuration.GetSection("ApiOptions").Bind(commopOptions);
 
             if (commopOptions.UseCors)
             {
@@ -42,7 +40,7 @@ namespace AuctionStore.API.DIConfig
                 });
             }
 
-            if(commopOptions.Jwt?.UseJwt ?? false)
+            if(commopOptions.UseJwt)
             {
                 services.AddAuthentication(
                     options =>
@@ -60,11 +58,8 @@ namespace AuctionStore.API.DIConfig
                     });
             }
 
-            if(commopOptions.UseSwagger)
-            {
-
-            }
-
+            services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
+            services.Configure<JwtOptions>(configuration.GetSection("ApiOptions:Jwt"));
         }
     }
 }

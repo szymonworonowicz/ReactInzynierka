@@ -11,19 +11,12 @@ namespace AuctionStore.Infrastructure.Services.Auth
 {
     public class JwtHandler
     {
-        public static JwtUserTokensDto GenerateUserTokens(string userId, string userLogin, List<string> userRoles, List<Claim> customClaims, JwtOptions options)
+        public static JwtUserTokensDto GenerateUserTokens(string userId, string userLogin, List<Claim> customClaims, JwtOptions options)
         {
             GenerateUserTokensValidateOptions(options);
 
             var claims = new List<Claim>();
 
-            if(userRoles != null)
-            {
-                foreach(var userRole in userRoles)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
-            }
 
             if(customClaims != null)
             {
@@ -45,7 +38,7 @@ namespace AuctionStore.Infrastructure.Services.Auth
             };
         }
 
-        private static void GenerateUserTokensValidateOptions(JwtOptions options)
+        public static void GenerateUserTokensValidateOptions(JwtOptions options)
         {
             if (string.IsNullOrEmpty(options.JwtTokenSecretKey) || options.JwtTokenSecretKey.Length < 16)
             {
@@ -76,9 +69,9 @@ namespace AuctionStore.Infrastructure.Services.Auth
             {
                 throw new ArgumentException($"Parameter {nameof(options.AccessTokenExpiresInMinutes)} must be higher than {nameof(options.RefreshTokenExpiresInMinutes)}");
             }
-        } 
+        }
 
-        private static SecurityToken DoGenerateToken(string JwtTokenIssuer, string secretKey, int expireInMinutes, string userId, string userLogin, List<Claim> customClaims)
+        public static SecurityToken DoGenerateToken(string JwtTokenIssuer, string secretKey, int expireInMinutes, string userId, string userLogin, List<Claim> customClaims)
         {
             var claims = new List<Claim>()
             {
@@ -109,7 +102,7 @@ namespace AuctionStore.Infrastructure.Services.Auth
             var tokenHandler = new JwtSecurityTokenHandler();
 
             return tokenHandler.CreateToken(tokenDescriptor);
-        } 
+        }
 
         public static bool ValidateToken(string token, string jwtTokenIssuer, string secretKey)
         {

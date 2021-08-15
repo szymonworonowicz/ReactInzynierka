@@ -1,12 +1,13 @@
-﻿using AuctionStore.Infrastructure.Dtos;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AuctionStore.Infrastructure.Dtos;
+using Microsoft.Extensions.Options;
 
 namespace AuctionStore.Infrastructure.Services.Auth
 {
@@ -27,7 +28,7 @@ namespace AuctionStore.Infrastructure.Services.Auth
             byte[] passwordSalt = Encoding.UTF8.GetBytes(authOptions.Password_Salt);
 
             using var hmac = new HMACSHA512(passwordSalt);
-            var computedHash = hmac.ComputeHash(passwordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
             return computedHash.SequenceEqual(passwordHashArray);
         }
@@ -41,26 +42,20 @@ namespace AuctionStore.Infrastructure.Services.Auth
             return Convert.ToBase64String(computedHash);
         }
 
-        public Task<JwtToken> GenerateUserToken(string userId, string userLogin, string userName,
-            List<string> userRoles, string userWorkplaceId, List<Claim> additionalClaims = null)
+        public JwtUserTokensDto GenerateUserToken(string userId, string userLogin, string userName,
+            List<string> userRoles, List<Claim> additionalClaims = null)
         {
             var customClaims = new List<Claim>();
 
             foreach (var userRole in userRoles) customClaims.Add(new Claim(ClaimTypes.Role, userRole));
 
             customClaims.Add(new Claim(ClaimTypes.UserData, userName));
-            if (userWorkplaceId != null) customClaims.Add(new Claim("userWorkplaceId", userWorkplaceId));
 
             if (additionalClaims != null) customClaims.AddRange(additionalClaims);
 
-            var accessToken = JwtHandler.GenerateUserTokens(userId, userLogin, customClaims, jwtOptions);
+            var tokenResponse = JwtHandler.GenerateUserTokens(userId, userLogin, customClaims, jwtOptions);
 
-            var tokenResponse = new JwtUserTokensDto
-            {
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
-                RefreshToken = CreateRefreshToken(userLogin)
-            };
-            return Task.FromResult(tokenResponse);
+            return tokenResponse;
         }
     }
 }

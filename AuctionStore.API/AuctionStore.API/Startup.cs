@@ -1,6 +1,6 @@
 using AuctionStore.API.DIConfig;
 using AuctionStore.API.Middleware;
-using AuctionStore.Infrastructure.DataContext;
+using AuctionStore.Infrastructure.DB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +64,7 @@ namespace AuctionStore.API
             app.UseMiddleware<DomainExceptionMiddleware>();
             app.UseMvc();
 
-            logger.LogInformation("App started")
+            logger.LogInformation("App started");
 
             //if (env.IsDevelopment())
             //{

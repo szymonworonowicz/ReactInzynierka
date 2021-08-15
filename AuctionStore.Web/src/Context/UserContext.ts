@@ -6,5 +6,5 @@ export const UserContext = createContext <IUserData>({
   userName: null,
   userRole: null,
   userLogin: null,
-  isLogged: false,
+  isLogged: true,
 });
