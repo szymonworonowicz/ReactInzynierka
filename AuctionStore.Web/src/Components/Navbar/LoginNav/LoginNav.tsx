@@ -6,6 +6,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Modal from "../../../shared/Modal/Modal";
 import LoginForm from "../../../Forms/LoginForm";
+import { authService } from "../../../Services/Auth.service";
+import { ILoginCredentials } from "../../../Interfaces/Api";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -49,8 +51,9 @@ const LoginNav: React.FC = () => {
           header={t("login")}
           isOpen={isLogin}
           handleClose={() => setIsLogin(false)}
-          handleSave={() => {
-            console.log("save");
+          handleSave={(data : ILoginCredentials ) => {
+            debugger;
+            authService.login(data as ILoginCredentials);
           }}
         >
           <LoginForm />

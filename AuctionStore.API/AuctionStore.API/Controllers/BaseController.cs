@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AuctionStore.API.Controllers
@@ -62,6 +63,16 @@ namespace AuctionStore.API.Controllers
         protected JsonResult JsonError(ApiError error)
         {
             return new JsonResult(new ApiResultBase(error)) { StatusCode = 400 };
+        }
+
+        [NonAction]
+        protected Guid GetUserId ()
+        {
+            var userId = HttpContext?.User.Claims
+                .FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)
+                .Value;
+
+            return userId != null ? Guid.Parse(userId) : Guid.Empty;
         }
 
     }

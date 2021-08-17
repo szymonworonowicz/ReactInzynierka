@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const LoginForm: React.FC = () => {
 
   const {getValues, setValue, register} = useFormContext();
-  const [login, setLogin] = useState<string | undefined>(getValues()["Login"]);
+  const [login, setLogin] = useState<string | undefined>(getValues()["Username"]);
   const [password, setPassword] = useState<string | undefined>(
     getValues()["Password"]
   );
@@ -20,8 +20,8 @@ const LoginForm: React.FC = () => {
   return (
     <>
       <form >
-        <input type="hidden" {... register('Login')} />
-        <input type="hidden" {... register('Password')}  />
+        <input type="hidden" {... register('username')} />
+        <input type="hidden" {... register('password')}  />
         <Input
           autoFocus
           margin="dense"
@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
           value={login}
           onChange={(e: any) => {
             setLogin(e?.target.value);
-            setValue("Login", e.target.value);
+            setValue("username", e.target.value);
           }}
         />
         <Input
@@ -42,7 +42,7 @@ const LoginForm: React.FC = () => {
           value={password}
           onChange={(e: any) => {
             setPassword(e?.target.value);
-            setValue("Password", e.target.value);
+            setValue("password", e.target.value);
           }}
         />
       </form>

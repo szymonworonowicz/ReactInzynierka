@@ -1,9 +1,11 @@
 ﻿using AuctionStore.Infrastructure.DB;
 using AuctionStore.Infrastructure.Dtos;
+using AuctionStore.Infrastructure.Models;
 using AuctionStore.Infrastructure.Services.Auth;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,13 +26,13 @@ namespace AuctionStore.Domain.Commands.Auth
         {
             private readonly DataContext context;
             private readonly IAuthService authService;
-            private readonly IMapper mapper;
+            private readonly AuthOptions authOptions;
 
-            public UserLoginCommandHandler(DataContext context, IAuthService authService, IMapper mapper)
+            public UserLoginCommandHandler(DataContext context, IAuthService authService,  IOptions<AuthOptions> authOptions)
             {
                 this.context = context;
                 this.authService = authService;
-                this.mapper = mapper;
+                this.authOptions = authOptions.Value;
             }
 
             public async Task<JwtUserTokensDto> Handle(UserLoginCommand request, CancellationToken cancellationToken)
@@ -48,10 +50,49 @@ namespace AuctionStore.Domain.Commands.Auth
 
                 var tokens = authService.GenerateUserToken(targetUser.Id.ToString(), targetUser.UserName, userName, userRoles);
 
+                var dbToken = await context.UserTokens.FirstOrDefaultAsync(x =>
+                    x.UserID == targetUser.Id && x.TokenProvider == authOptions.REFRESH_TOKEN_PROVIDER
+                    && x.Name == authOptions.REFRESH_TOKEN_KEY, cancellationToken);
+
+               tokens.RefreshToken = await CheckDbTokens(dbToken, targetUser.Id, tokens.RefreshToken, cancellationToken);
+                
+
                 targetUser.LastLoginDateUtc = DateTime.UtcNow;
                 await context.SaveChangesAsync(cancellationToken);
 
                 return tokens;
+            }
+
+            private async Task<string> CheckDbTokens(UserToken dbToken, Guid userId, string refreshToken, CancellationToken ct)
+            {
+                if (dbToken == null)
+                {
+                    dbToken = new UserToken
+                    {
+                        UserID = userId,
+                        TokenProvider = authOptions.REFRESH_TOKEN_PROVIDER,
+                        Name = authOptions.REFRESH_TOKEN_KEY,
+                        Value = refreshToken,
+                        ExpirationTimeUtc = DateTime.UtcNow.AddDays(authOptions.REFRESH_TOKEN_VALID_DAYS)
+                    };
+
+                    await context.UserTokens.AddAsync(dbToken, ct);
+                }
+                else
+                {
+                    if(dbToken.ExpirationTimeUtc <= DateTime.UtcNow)
+                    {
+                        dbToken.Value = refreshToken;
+                        dbToken.ExpirationTimeUtc = DateTime.UtcNow.AddDays(authOptions.REFRESH_TOKEN_VALID_DAYS);
+                    }
+
+                    else
+                    {
+                        return dbToken.Value;
+                    }
+                }
+
+                return refreshToken;
             }
         }
     }

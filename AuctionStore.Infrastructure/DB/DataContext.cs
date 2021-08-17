@@ -1,5 +1,6 @@
 ﻿using AuctionStore.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,13 +13,17 @@ namespace AuctionStore.Infrastructure.DB
         {
 
         }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
         }
+
         public DbSet<User> Users { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<UserToken> UserTokens { get; set; }
+        public DbSet<UserTemporaryPassword> UserTemporaryPasswords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -35,12 +35,15 @@ namespace AuctionStore.API.DIConfig
                 services.AddCors(options =>
                 {
                     options.AddPolicy("CorsPolicy",
-                        builder => builder.
-                        WithOrigins(commopOptions.CorsOrigin).AllowAnyHeader().AllowAnyMethod());
+                        builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader().AllowAnyMethod());
+                    //WithOrigins(commopOptions.CorsOrigin)
+
                 });
             }
 
-            if(commopOptions.UseJwt)
+            if (commopOptions.UseJwt)
             {
                 services.AddAuthentication(
                     options =>
@@ -60,6 +63,8 @@ namespace AuctionStore.API.DIConfig
 
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
             services.Configure<JwtOptions>(configuration.GetSection("ApiOptions:Jwt"));
+            services.Configure<WebUrlOptions>(configuration.GetSection("WebUrlOptions"));
+            services.Configure<SmtpOptions>(configuration.GetSection("SmtpOptions"));
         }
     }
 }

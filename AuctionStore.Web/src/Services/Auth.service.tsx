@@ -20,7 +20,7 @@ export interface IUserAuthData {
 export const authService: IAuthService = {
   login: async (credentials: ILoginCredentials): Promise<boolean> => {
     try {
-      const response = await apiClient.post("auth/login", {
+      const response = await apiClient.post("auths/login", {
         UserName: credentials.username,
         Password: credentials.password,
       });
@@ -40,9 +40,8 @@ export const authService: IAuthService = {
           authService.onLogin(userData);
         }
       }
-
       sessionStorage.setItem("refresh_token", response.data.data.refreshToken);
-      sessionStorage.setItem("userName", response.data.data.userName);
+      sessionStorage.setItem("userName", userData?.userName ?? '');
 
       return new Promise<boolean>((resolve) => resolve(true));
     } catch (error) {
