@@ -2,7 +2,6 @@
 using AuctionStore.Infrastructure.Dtos;
 using AuctionStore.Infrastructure.Models;
 using AuctionStore.Infrastructure.Services.Auth;
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

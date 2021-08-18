@@ -1,7 +1,5 @@
 ﻿using AuctionStore.Infrastructure.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AuctionStore.Infrastructure.Exceptions
 {

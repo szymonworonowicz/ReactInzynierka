@@ -1,7 +1,6 @@
 ﻿using AuctionStore.Infrastructure.Dtos;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace AuctionStore.Infrastructure.Services.Auth
 {

@@ -1,4 +1,4 @@
-import { ILoginCredentials } from "../Interfaces/Api";
+import { ILoginCredentials,IRegisterCredentials } from "../Interfaces/Api";
 import { apiClient } from "./APIClient/apiClient";
 import JWTDecode from "jwt-decode";
 import { history } from "../Helpers";
@@ -8,6 +8,7 @@ export interface IAuthService {
   logout: () => void;
   onLogin?: (userData: IUserAuthData) => void;
   onLogout?: () => void;
+  register : (credentials : IRegisterCredentials) => Promise<boolean>
 }
 
 export interface IUserAuthData {
@@ -57,6 +58,20 @@ export const authService: IAuthService = {
 
     history.push("/");
   },
+
+  register : async (credentials : IRegisterCredentials) : Promise<boolean> => {
+    const response = await apiClient.post('auths/register', credentials);
+
+    if(response.data.success === false) {
+      return new Promise<boolean>((_resolve, reject) => {
+        reject(response.data.errors[0].message)
+      })
+    }
+
+    return new Promise<boolean>((resolve) => {
+      resolve(true);
+    })
+  }
 };
 
 export const getUserDataFromAccessToken = (): IUserAuthData | null => {

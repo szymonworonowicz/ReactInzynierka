@@ -5,6 +5,11 @@ import { history } from "../Helpers";
 import NormalRoute from './Routes/NormalRoute'
 import DefaultLayout from '../Layouts/DefaultLayout';
 
+
+history.listen((_) => {
+  window.scrollTo(0,0);
+})
+
 const AppRouter: React.FC = () => {
   return (
     <Router history={history}>

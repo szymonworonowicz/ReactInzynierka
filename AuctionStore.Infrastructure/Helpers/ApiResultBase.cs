@@ -1,8 +1,6 @@
 ﻿using AuctionStore.Infrastructure.Helpers;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AuctionStore.Infrastructure.Dtos
 {

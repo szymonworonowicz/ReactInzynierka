@@ -3,9 +3,7 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AuctionStore.API.Scheduler
 {

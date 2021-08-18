@@ -2,13 +2,10 @@ using AuctionStore.API.DIConfig;
 using AuctionStore.API.Middleware;
 using AuctionStore.Infrastructure.DB;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 
 namespace AuctionStore.API

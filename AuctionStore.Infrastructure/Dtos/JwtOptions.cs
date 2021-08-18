@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AuctionStore.Infrastructure.Dtos
+﻿namespace AuctionStore.Infrastructure.Dtos
 {
     public class JwtOptions
     {

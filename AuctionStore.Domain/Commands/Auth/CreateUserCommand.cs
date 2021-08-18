@@ -1,5 +1,4 @@
 ﻿using AuctionStore.Infrastructure.DB;
-using AuctionStore.Infrastructure.Helpers;
 using AuctionStore.Infrastructure.Models;
 using AuctionStore.Infrastructure.Services.Auth;
 using AutoMapper;
@@ -7,9 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

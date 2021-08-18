@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AuctionStore.Infrastructure.Helpers
+﻿namespace AuctionStore.Infrastructure.Helpers
 {
     public class ApiError
     {

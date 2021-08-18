@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Spi;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,7 +13,7 @@ namespace AuctionStore.API.Scheduler
     {
         private readonly ISchedulerFactory schedulerFactory;
         private readonly IJobFactory jobFactory;
-        private IEnumerable<JobSchedule> jobSchedules;
+        private readonly IEnumerable<JobSchedule> jobSchedules;
         private readonly ILogger<QuartzHostedService> logger;
 
         public QuartzHostedService(ISchedulerFactory schedulerFactory,

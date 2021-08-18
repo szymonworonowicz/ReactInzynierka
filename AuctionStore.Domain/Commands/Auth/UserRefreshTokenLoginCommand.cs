@@ -1,15 +1,12 @@
 ﻿using AuctionStore.Infrastructure.DB;
 using AuctionStore.Infrastructure.Dtos;
 using AuctionStore.Infrastructure.Services.Auth;
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,13 +1,14 @@
 ﻿using AuctionStore.API.Scheduler;
+using AuctionStore.Domain.Repositories;
+using AuctionStore.Domain.Services;
+using AuctionStore.Infrastructure.Services.SignalR;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCore.AutoRegisterDi;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace AuctionStore.API.DIConfig
 {
@@ -27,9 +28,20 @@ namespace AuctionStore.API.DIConfig
                 .Where(x => x.Name.EndsWith("Service"))
                 .AsPublicImplementedInterfaces();
 
+            services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+
             var schedulerOption = new SchedulerOptions();
             config.GetSection("Scheduler").Bind(schedulerOption);
             services.RegisterJobs(schedulerOption);
+
+            services.RegisterSignalRComponents();
+        }
+
+        private static void RegisterSignalRComponents(this IServiceCollection services)
+        {
+            services.AddSingleton<IWebSocketClientService, WebSocketClientService>();
+            services.AddSingleton<ISignalRMessageRepository, SignalRMessageRepository>();
+            services.AddSingleton<ISignalRClientService, SignalRClientService>();
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace AuctionStore.Infrastructure.Enums
 {
@@ -18,5 +15,8 @@ namespace AuctionStore.Infrastructure.Enums
 
         [Description("SmtpAuthenticationError")]
         SmtpAuthenticationError = 1003,
+
+        [Description("Error creating JwtToken")]
+        ErrorWhileCreatingJWTToken = 1004
     }
 }

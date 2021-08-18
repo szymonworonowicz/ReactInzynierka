@@ -1,12 +1,9 @@
 ﻿using AuctionStore.Domain.Commands.Auth;
 using AuctionStore.Infrastructure.Helpers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AuctionStore.API.Controllers

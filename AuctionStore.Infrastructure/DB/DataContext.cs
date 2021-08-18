@@ -1,9 +1,5 @@
 ﻿using AuctionStore.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AuctionStore.Infrastructure.DB
 {
