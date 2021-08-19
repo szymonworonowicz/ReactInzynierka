@@ -1,52 +1,79 @@
 import React, { useState } from "react";
-import {  useFormContext } from "react-hook-form";
-import { Input } from "@material-ui/core";
+import { useFormContext } from "react-hook-form";
+import {
+  Grid,
+  FormControl,
+  Input,
+  InputLabel,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
+import PasswordField from "../Components/Shared/PasswordField/PasswordField";
+import { ILoginCredentials } from "../Interfaces/Api";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+}));
 
 const LoginForm: React.FC = () => {
+  const {register, setValue } = useFormContext();
+  const [credentials, setCredentials]  = useState<ILoginCredentials>({
+    password:'',
+    username:''
+  })
 
-  const {getValues, setValue, register} = useFormContext();
-  const [login, setLogin] = useState<string | undefined>(getValues()["Username"]);
-  const [password, setPassword] = useState<string | undefined>(
-    getValues()["Password"]
-  );
   const { t } = useTranslation();
+  const classes = useStyles();
 
-  // useEffect(() => {
-  //   register('Login');
-  //   register('Password')
-  // },[register])
+  const onCredentialsChange = (e : any) => {
+    const{value, id} = e.target;
+    setCredentials(prev => {
+      return {
+        ...prev,
+        [id] : value
+      }
+    })
+    setValue(`${id}`, value);
+  }
 
   return (
-    <>
-      <form >
-        <input type="hidden" {... register('username')} />
-        <input type="hidden" {... register('password')}  />
-        <Input
-          autoFocus
-          margin="dense"
-          placeholder={t("username")}
-          fullWidth
-          value={login}
-          onChange={(e: any) => {
-            setLogin(e?.target.value);
-            setValue("username", e.target.value);
-          }}
-        />
-        <Input
-          autoFocus
-          margin="dense"
-          placeholder={t("password")}
-          fullWidth
-        //   inputRef={register('Password')}
-          value={password}
-          onChange={(e: any) => {
-            setPassword(e?.target.value);
-            setValue("password", e.target.value);
-          }}
-        />
-      </form>
-    </>
+    <form>
+      <Grid container spacing={1} justify={"center"} alignContent={"center"}>
+        <input type="hidden" {...register("username", {required: true})} />
+        <input type="hidden" {...register("password", {required: true})} />
+        <Grid item xs={12}>
+          <FormControl className={clsx(classes.margin)} fullWidth>
+            <InputLabel htmlFor='username'>{t("username")}</InputLabel>
+            <Input 
+              id='username'
+              autoFocus
+              fullWidth
+              value={credentials.username}
+              onChange={onCredentialsChange}  
+            />
+
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <PasswordField
+            className = {classes.margin}
+            fieldName="password"
+            onChange = {onCredentialsChange}
+            value = {credentials.password}
+          />
+        </Grid>
+      </Grid>
+    </form>
   );
 };
 

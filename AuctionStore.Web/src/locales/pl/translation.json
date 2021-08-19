@@ -4,5 +4,7 @@
     "cancel" : "Anuluj",
     "save": "Zatwierdź",
     "username":"Login",
-    "password":"Hasło"
+    "password":"Hasło",
+    "firstName":"Imię",
+    "lastName":"Nazwisko"
 }

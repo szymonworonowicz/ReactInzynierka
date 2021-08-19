@@ -34,7 +34,7 @@ namespace AuctionStore.API.DIConfig
             config.GetSection("Scheduler").Bind(schedulerOption);
             services.RegisterJobs(schedulerOption);
 
-            services.RegisterSignalRComponents();
+            //services.RegisterSignalRComponents();
         }
 
         private static void RegisterSignalRComponents(this IServiceCollection services)

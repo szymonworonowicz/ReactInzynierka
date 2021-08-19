@@ -26,6 +26,7 @@ const Modal: React.FC<IModalProps> = ({
       open={isOpen}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
+      fullWidth
     >
       <DialogTitle id="form-dialog-title">{header} </DialogTitle>
       <DialogContent>

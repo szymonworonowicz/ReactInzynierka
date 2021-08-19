@@ -8,5 +8,28 @@ export const PhoneNumber = /(^\+\d{2})?(\+\d{11}$)|(^\d{9}$)/;
 export const Numbers = /^[0-9]*$/;
 export const ZipCode = /^([0-9]{2})-([0-9]{3})$/;
 export const Decimal = /^[\d]{0,6}[.,.]?[\d]{1,2}$/;
-export const Password = /^(?=.{6,50}$)(?:(?=.*\d)(?=.*[A-Z]).*)$/;
-export const MacAddress = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+export const Password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+export enum ValidatorType {
+    Email,
+    AlphaNumeric,
+    Alphabetic,
+    PhoneNumber,
+    Numbers,
+    ZipCode,
+    Decimal,
+    Password
+}
+export const getValidators = () => {
+    return new Map<ValidatorType, RegExp>([
+        [ValidatorType.Email, EmailRegex],
+        [ValidatorType.Alphabetic, Alphabetic],
+        [ValidatorType.AlphaNumeric, AlphaNumeric],
+        [ValidatorType.PhoneNumber, PhoneNumber],
+        [ValidatorType.Numbers, Numbers],
+        [ValidatorType.ZipCode, ZipCode],
+        [ValidatorType.Decimal, Decimal],
+        [ValidatorType.Password, Password],
+
+    ])
+}

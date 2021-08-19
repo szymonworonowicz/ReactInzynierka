@@ -26,7 +26,6 @@ const Navbar: React.FC = () => {
   const classes = useStyles();
   const context = useContext(UserContext);
   const { isLogged } = context;
-  debugger;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
