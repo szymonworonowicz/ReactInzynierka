@@ -3,9 +3,9 @@ import React from "react";
 const Home : React.FC = () => {
 
     return (
-        <>
-            <p> asdasd</p>
-        </>
+        <div>
+            
+        </div>
     )
 }
 

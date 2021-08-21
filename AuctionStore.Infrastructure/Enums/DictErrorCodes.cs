@@ -17,6 +17,9 @@ namespace AuctionStore.Infrastructure.Enums
         SmtpAuthenticationError = 1003,
 
         [Description("Error creating JwtToken")]
-        ErrorWhileCreatingJWTToken = 1004
+        ErrorWhileCreatingJWTToken = 1004,
+        
+        [Description("Error in send email")]
+        SendEmailError = 1005
     }
 }

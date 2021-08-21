@@ -3,8 +3,9 @@ import {Route} from 'react-router-dom'
 import {IRouteProps} from '../Interfaces/IRouteProps'
 
 
-const NormalRoute : React.FC<IRouteProps> = ({Component,Layout, Path, isExact = false}) => {
+const NormalRoute : React.FC<IRouteProps> = ({Component,Layout, Path, isExact = true}) => {
 
+    debugger;
     return  (
         <Route 
             exact = {isExact}

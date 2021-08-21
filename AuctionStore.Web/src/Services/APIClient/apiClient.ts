@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { history } from "../../Helpers";
-import { getUserDataFromAccessToken, authService } from "../Auth.service";
+import { getUserDataFromAccessToken, authService } from "../Auth/Auth.service";
 
 interface IApiClient extends AxiosInstance {
   logout(redirectToHomePage: boolean): void;

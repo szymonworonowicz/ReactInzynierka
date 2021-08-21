@@ -6,5 +6,8 @@
     "username":"Login",
     "password":"Hasło",
     "firstName":"Imię",
-    "lastName":"Nazwisko"
+    "lastName":"Nazwisko",
+    "account" : "Konto",
+    "messages" : "Wiadomosci",
+    "logout" : "Wyloguj się"
 }

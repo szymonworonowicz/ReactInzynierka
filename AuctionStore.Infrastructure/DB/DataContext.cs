@@ -20,6 +20,8 @@ namespace AuctionStore.Infrastructure.DB
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserToken> UserTokens { get; set; }
         public DbSet<UserTemporaryPassword> UserTemporaryPasswords { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> Subcategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

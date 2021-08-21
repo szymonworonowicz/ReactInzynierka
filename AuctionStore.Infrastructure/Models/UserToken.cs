@@ -15,7 +15,5 @@ namespace AuctionStore.Infrastructure.Models
         public string Value { get; set; }
 
         public DateTime ExpirationTimeUtc { get; set; }
-
-
     }
 }

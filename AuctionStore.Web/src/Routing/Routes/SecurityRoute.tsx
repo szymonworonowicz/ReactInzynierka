@@ -8,16 +8,22 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
   Component,
   Layout,
   Path,
-  isExact = false,
+  isExact = true,
   Role,
 }) => {
   const context = useContext(UserContext);
   const { isLogged, userRole } = context;
-
+  debugger;
   const isRouteAvailable = () => {
-    return isLogged && Role === userRole;
+    return isLogged && Role.some(x => x === userRole);
   };
 
+  if(!isLogged )
+  {
+    return (
+      <Redirect to={{pathname:Routes.home}} />
+    )
+  }
   return (
     <Route
       render={(props) =>
@@ -26,7 +32,7 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
             <Component {...props}></Component>
           </Layout>
         ) : (
-          <Redirect to={{pathname:Routes.login, state:{from: props.location}}} />
+          <Redirect to={{pathname:Routes.home}} />
         )
       }
     />

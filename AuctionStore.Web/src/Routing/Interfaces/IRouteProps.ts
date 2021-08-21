@@ -4,5 +4,5 @@ export interface IRouteProps  {
     Layout: ElementType,
     Component : ElementType,
     Path: string,
-    isExact: boolean
+    isExact?: boolean
 }

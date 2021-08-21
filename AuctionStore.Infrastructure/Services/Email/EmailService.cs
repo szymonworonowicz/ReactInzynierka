@@ -30,6 +30,20 @@ namespace AuctionStore.Infrastructure.Services.Email
             await SmtpConnectAsync(client, cancellationToken);
             await SmtpAuthenticateAsync(client, cancellationToken);
 
+            try
+            {
+                await client.SendAsync(mail, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                throw new DomainException((int)DictErrorCodes.SendEmailError, DictErrorCodes.SendEmailError.GetDescription());
+            }
+            finally
+            {
+                await client.DisconnectAsync(true, cancellationToken);
+            }
+
         }
 
         private async Task SmtpConnectAsync(SmtpClient client, CancellationToken ct)

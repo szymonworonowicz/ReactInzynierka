@@ -1,7 +1,7 @@
-import { ILoginCredentials,IRegisterCredentials } from "../Interfaces/Api";
-import { apiClient } from "./APIClient/apiClient";
+import { ILoginCredentials,IRegisterCredentials } from "../../Interfaces/Api";
+import { apiClient } from "../APIClient/apiClient";
 import JWTDecode from "jwt-decode";
-import { history } from "../Helpers";
+import { history } from "../../Helpers";
 
 export interface IAuthService {
   login: (credentials: ILoginCredentials) => Promise<boolean>;

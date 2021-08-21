@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {IUserData} from '../../Interfaces/user'
-import {authService} from '../../Services/Auth.service'
+import {authService} from '../../Services/Auth/Auth.service'
 
 export const useUserContext = () => {
 

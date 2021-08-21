@@ -1,75 +1,101 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import Modal from "../../../shared/Modal/Modal"; 
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import { Person, AccountCircle, PersonAdd } from "@material-ui/icons";
+import Modal from "../../../shared/Modal/Modal";
 import LoginForm from "../../../Forms/LoginForm";
-import RegisterForm from "../../../Forms/RegisterForm"
-import { authService } from "../../../Services/Auth.service";
-import { ILoginCredentials, IRegisterCredentials } from "../../../Interfaces/Api";
-import {User} from '../../../Helpers/constans'
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
+import RegisterForm from "../../../Forms/RegisterForm";
+import { authService } from "../../../Services/Auth/Auth.service";
+import {
+  ILoginCredentials,
+  IRegisterCredentials,
+} from "../../../Interfaces/Api";
+import { User } from "../../../Helpers/constans";
+import styles from "./LoginNav.module.css";
+import { useToast } from "../../../shared/hooks/useToast";
 
 const LoginNav: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const toast = useToast();
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const IsLoginOpen = () => {
     setIsLogin((prev) => !prev);
   };
 
-  const IsRegisterOpen =() => {
-    setIsRegister(prev => !prev);
-  }
+  const IsRegisterOpen = () => {
+    setIsRegister((prev) => !prev);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const Login = async (data: ILoginCredentials) => {
+    if (await authService.login(data as ILoginCredentials)) {
+      toast('zalogowano', 'success');
+    }
+    else {
+      toast("bląąd logowania", "error");
+    }
+  };
   return (
     <>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-        startIcon={<PersonIcon />}
-        onClick={IsLoginOpen}
+      <IconButton onClick={handleMenuClick} className={styles.nav}>
+        <AccountCircle />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
       >
-        {t("login")}
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-        startIcon={<PersonAddIcon />}
-        onClick={IsRegisterOpen}
-      >
-        {t("register")}
-      </Button>
+        <MenuItem onClick={IsLoginOpen}>
+          <ListItemIcon>
+            <Person />
+          </ListItemIcon>
+          <ListItemText primary={t("login")} />
+        </MenuItem>
+        <MenuItem onClick={IsRegisterOpen}>
+          <ListItemIcon>
+            <PersonAdd />
+          </ListItemIcon>
+          <ListItemText primary={t("register")} />
+        </MenuItem>
+      </Menu>
 
       {isLogin && (
         <Modal
           header={t("login")}
           isOpen={isLogin}
           handleClose={() => setIsLogin(false)}
-          handleSave={(data : ILoginCredentials ) => {
-            authService.login(data as ILoginCredentials);
-          }}
+          handleSave={Login}
         >
           <LoginForm />
         </Modal>
       )}
       {isRegister && (
         <Modal
-          header={t('register')}
-          isOpen = {isRegister}
+          header={t("register")}
+          isOpen={isRegister}
           handleClose={() => setIsRegister(false)}
-          handleSave ={(data : IRegisterCredentials) => {
-            data.userType = User
+          handleSave={(data: IRegisterCredentials) => {
+            data.userType = User;
             authService.register(data);
           }}
         >
