@@ -12,6 +12,7 @@ import NavbarMenu from './NavbarMenu/NavbarMenu'
 const Navbar: React.FC = () => {
   const classes = useStyles();
   const context = useContext(UserContext);
+  console.log(context)
   const { isLogged } = context;
 
 

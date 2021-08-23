@@ -1,4 +1,5 @@
 ﻿using AuctionStore.Domain.Queries.Categories;
+using AuctionStore.Infrastructure.Attributes;
 using AuctionStore.Infrastructure.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

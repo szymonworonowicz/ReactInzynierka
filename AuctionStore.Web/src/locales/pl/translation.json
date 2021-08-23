@@ -9,5 +9,9 @@
     "lastName":"Nazwisko",
     "account" : "Konto",
     "messages" : "Wiadomosci",
-    "logout" : "Wyloguj się"
+    "logout" : "Wyloguj się",
+    "changeData" : "Zmien dane",
+    "bannedWords" : "Słowa zakazane",
+    "bannedUsers" : "Zablokowani użytkownicy",
+    "addAdmin" : "Dodaj administratora"
 }

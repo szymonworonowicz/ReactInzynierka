@@ -5,7 +5,6 @@ namespace AuctionStore.Infrastructure.Exceptions
 {
     public class DomainException : Exception
     {
-        public ApiError Error { get; set; }
         public DomainException(long? ErrorCode, string message) : base(message)
         {
             this.ErrorCode = ErrorCode;

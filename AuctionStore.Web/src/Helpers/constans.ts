@@ -1,6 +1,3 @@
-export const Admin = "Admin";
-export const User = "User";
-
 export const EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const AlphaNumeric = /(?!\s*$)^[-0-9/A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ$&+,:;=?@#_|[\]'"<>.-^*()%!\s]*$/;
 export const Alphabetic = /(?!\s*$)^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s,.-]*$/;
@@ -32,4 +29,10 @@ export const getValidators = () => {
         [ValidatorType.Password, Password],
 
     ])
+}
+
+export const UserRoles = {
+    Admin : 'Admin',
+    User : "User",
+    Both: ["Admin","User"]
 }

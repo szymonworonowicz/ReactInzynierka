@@ -26,10 +26,10 @@ namespace AuctionStore.API.Middleware
             }
             catch (DomainException e)
             {
-                var response = new ApiResultBase(new ApiError(e.Error.Code, e.Error.Message));
+                var response = new ApiResultBase(new ApiError(e.ErrorCode, e.Message));
                 int statusCode = 400;
 
-                switch (e.Error.Code)
+                switch (e.ErrorCode)
                 {
                     case 404: statusCode = 404; break;
                     default: break;

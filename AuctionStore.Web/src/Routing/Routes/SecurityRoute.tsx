@@ -13,7 +13,7 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
 }) => {
   const context = useContext(UserContext);
   const { isLogged, userRole } = context;
-  debugger;
+
   const isRouteAvailable = () => {
     return isLogged && Role.some(x => x === userRole);
   };

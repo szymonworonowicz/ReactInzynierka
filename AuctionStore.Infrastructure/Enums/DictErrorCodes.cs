@@ -4,6 +4,9 @@ namespace AuctionStore.Infrastructure.Enums
 {
     public enum DictErrorCodes 
     {
+        [Description("No Error")]
+        NoneError = 0,
+
         [Description("Unauthorized")]
         UnAuthorize = 1000,
         

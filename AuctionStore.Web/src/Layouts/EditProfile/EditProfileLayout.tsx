@@ -6,6 +6,7 @@ const EditProfileLayout : React.FC =({children}) => {
     return (
         <>
             <Navbar/>
+            {children}
         </>
     )
 }

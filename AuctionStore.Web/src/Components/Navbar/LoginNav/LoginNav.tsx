@@ -16,7 +16,7 @@ import {
   ILoginCredentials,
   IRegisterCredentials,
 } from "../../../Interfaces/Api";
-import { User } from "../../../Helpers/constans";
+import { UserRoles } from "../../../Helpers/constans";
 import styles from "./LoginNav.module.css";
 import { useToast } from "../../../shared/hooks/useToast";
 
@@ -95,7 +95,7 @@ const LoginNav: React.FC = () => {
           isOpen={isRegister}
           handleClose={() => setIsRegister(false)}
           handleSave={(data: IRegisterCredentials) => {
-            data.userType = User;
+            data.userType = UserRoles.User;
             authService.register(data);
           }}
         >

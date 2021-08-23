@@ -88,7 +88,7 @@ apiClient.interceptors.response.use(
         const userName = sessionStorage.getItem("userName");
 
         if (refreshToken === null) {
-          history.push(`/login?returnUrl=${window.location.href}`);
+          // history.push(`/login?returnUrl=${window.location.href}`);
           reject(error);
         }
 

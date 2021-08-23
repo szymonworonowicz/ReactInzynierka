@@ -1,22 +1,43 @@
-import React from "react";
+import React,{useState} from "react";
 import { useIdleTimer } from "react-idle-timer";
 
 import { CssBaseline } from "@material-ui/core";
 
 import { apiClient } from "./Services/APIClient/apiClient";
-import { UserContext } from "./Context/UserContext";
+import { UserContext,InitialUserContext } from "./Context/UserContext";
 import AppRouter from './Routing/AppRouter';
-import {useUserContext} from './shared/hooks/useUserContext'
-
+import { IUserData } from "./Interfaces/user";
+import { authService } from "./Services/Auth/Auth.service";
 
 
 const App: React.FC = () => {
 
-  const userContextValue = useUserContext();
+  const [userContext,setUserContext] = useState<IUserData>(InitialUserContext);
+
+  authService.onLogin = (authdata) => {
+    setUserContext({
+      userId: authdata.id,
+      userName: authdata.name,
+      userRole: authdata.role,
+      userLogin: authdata.userName,
+      isLogged: true,
+    });
+  };
+ 
+  authService.onLogout = () => {
+    setUserContext({
+      userId: null,
+      userName: null,
+      userLogin: null,
+      userRole: null,
+      isLogged: false,
+    });
+  };
+
 
   const onUserIdle = (e: Event): void => {
     console.log("user is idle", e);
-    if (userContextValue.isLogged) {
+    if (userContext.isLogged) {
       var refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken === null) {
         console.log("no remember me, user logout", e);
@@ -34,7 +55,7 @@ const App: React.FC = () => {
   return (
     <>
       <CssBaseline />
-      <UserContext.Provider value={userContextValue}>
+      <UserContext.Provider value={userContext}>
         <AppRouter/>
       </UserContext.Provider>
     </>
