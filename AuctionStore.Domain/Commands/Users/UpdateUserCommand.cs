@@ -11,17 +11,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AuctionStore.Domain.Commands.Auth
+namespace AuctionStore.Domain.Commands.Users
 {
     public class UpdateUserCommand : IRequest<bool>
     {
-        public UpdateUserCommand WithUserId(Guid id)
-        {
-            this.Id = id;
-            return this;
-        }
 
-        protected Guid Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MinLength(2)]
@@ -44,7 +39,6 @@ namespace AuctionStore.Domain.Commands.Auth
         //[RegularExpression(Constants.EmailRegex)]
         public string Email { get; set; }
 
-        public Guid GetUserID => Id;
 
         public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
         {

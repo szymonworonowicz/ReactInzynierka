@@ -5,11 +5,9 @@ import UserProfile from '../Components/UserProfile/UserProfile'
 import AdminProfile from '../Components/AdminProfile/AdminProfile'
 
 const Profile : React.FC = () => {
-    debugger;
-    console.log('profile')
     const context = useContext(UserContext);
     const {userRole} = context;
-    console.log(userRole)
+    
     const getProfile = () : JSX.Element => {
         if(userRole === UserRoles.Admin) {
             return <AdminProfile/>;

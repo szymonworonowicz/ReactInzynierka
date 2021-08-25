@@ -64,15 +64,15 @@ namespace AuctionStore.API.Controllers
             return new JsonResult(new ApiResultBase(error)) { StatusCode = 400 };
         }
 
-        [NonAction]
-        protected Guid GetUserId ()
-        {
-            var userId = HttpContext?.User.Claims
-                .FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)
-                .Value;
+        //[NonAction]
+        //protected Guid GetUserId ()
+        //{
+        //    var userId = HttpContext?.User.Claims
+        //        .FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)
+        //        .Value;
 
-            return userId != null ? Guid.Parse(userId) : Guid.Empty;
-        }
+        //    return userId != null ? Guid.Parse(userId) : Guid.Empty;
+        //}
 
     }
 

@@ -4,18 +4,17 @@ using AuctionStore.Infrastructure.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AuctionStore.Domain.Commands.Auth
+namespace AuctionStore.Domain.Commands.Users
 {
     public class DeleteUserCommand : IRequest<bool>
     {
-        protected Guid UserId { get; set; }
-        public DeleteUserCommand(Guid userId)
-        {
-            this.UserId = userId;
-        }
+        [Required]
+        public Guid UserId { get; set; }
+
 
         public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
         {

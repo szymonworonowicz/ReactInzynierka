@@ -18,6 +18,9 @@ namespace AuctionStore.Infrastructure.Models
 
         public bool IsDisabled { get; set; }
 
+        public bool IsBanned { get; set; }
+        public DateTime? EndOffBan { get; set; }
+
         public bool IsDeleted { get; set; }
         public DateTime LastLoginDateUtc { get; set; }
 

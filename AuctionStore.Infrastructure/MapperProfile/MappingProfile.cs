@@ -1,4 +1,5 @@
-﻿using AuctionStore.Infrastructure.ModelDtos;
+﻿using AuctionStore.Infrastructure.Dtos;
+using AuctionStore.Infrastructure.ModelDtos;
 using AuctionStore.Infrastructure.Models;
 using AutoMapper;
 
@@ -10,6 +11,7 @@ namespace AuctionStore.Infrastructure.MapperProfile
         {
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
+            CreateMap<User, BannedUserDto>().ReverseMap();
         }
     }
 }

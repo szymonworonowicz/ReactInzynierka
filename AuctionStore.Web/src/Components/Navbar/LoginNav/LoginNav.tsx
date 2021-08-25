@@ -44,7 +44,7 @@ const LoginNav: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const Login = async (data: ILoginCredentials) => {
+  const Login = async (data: ILoginCredentials) : Promise<void> => {
     if (await authService.login(data as ILoginCredentials)) {
       toast('zalogowano', 'success');
     }

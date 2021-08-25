@@ -8,11 +8,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AuctionStore.Domain.Commands.Auth
+namespace AuctionStore.Domain.Commands.Users
 {
     public class ChangePasswordCommand : IRequest<bool>
     {
-        protected Guid UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [Required]
         public string OldPassword { get; set; }
@@ -20,14 +20,8 @@ namespace AuctionStore.Domain.Commands.Auth
         [Required]
         [MinLength(6)]
         [MaxLength(50)]
-        [RegularExpression(Constants.Password)]
+        //[RegularExpression(Constants.Password)]
         public string NewPassword { get; set; }
-
-        public ChangePasswordCommand WithUserId (Guid userId)
-        {
-            this.UserId = userId;
-            return this;
-        }
 
         public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, bool>
         {

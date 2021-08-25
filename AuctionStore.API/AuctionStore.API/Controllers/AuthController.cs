@@ -1,4 +1,6 @@
 ﻿using AuctionStore.Domain.Commands.Auth;
+using AuctionStore.Infrastructure.Attributes;
+using AuctionStore.Infrastructure.Enums;
 using AuctionStore.Infrastructure.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -41,24 +43,6 @@ namespace AuctionStore.API.Controllers
 
         }
 
-        [HttpPost("{userId}/update")]
-        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateUserCommand command)
-        {
-            var result = await CommandAsync(command.WithUserId(userId));
-
-            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
-        }
-
-        [HttpPost("changePassword")]
-
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
-        {
-            var result = await CommandAsync(command.WithUserId(GetUserId()));
-
-            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
-
-        }
-
         [HttpPost("resetPasswordRequest")]
         public async Task<IActionResult> ResetPasswordRequest([FromBody] ResetPasswordRequestCommand command)
         {
@@ -71,14 +55,6 @@ namespace AuctionStore.API.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {
             var result = await CommandAsync(command);
-
-            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
-        }
-
-        [HttpPost("deleteUser")]
-        public async Task <IActionResult> DeleteUser()
-        {
-            var result = await CommandAsync(new DeleteUserCommand(GetUserId()));
 
             return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }

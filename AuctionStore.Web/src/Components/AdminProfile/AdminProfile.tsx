@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Paper, Tabs, Tab } from "@material-ui/core";
 import TabPanel from "../Shared/Tabs/TabPanel";
 import AdminInfo from './AdminInfo/AdminInfo'
+import BannedUsers from './BannedUsers/BannedUsers';
 
 const useStyles = makeStyles({
   root: {
@@ -72,7 +73,7 @@ const AdminProfile: React.FC = () => {
           <p>komponent 2</p>
         </TabPanel>
         <TabPanel value={selectedTab} index={2}>
-          <p>komponent 3</p>
+          <BannedUsers/>
         </TabPanel>
         <TabPanel value={selectedTab} index={3}>
           <p>komponent 4</p>

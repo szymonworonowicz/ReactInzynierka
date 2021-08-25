@@ -50,12 +50,13 @@ namespace AuctionStore.API.DIConfig
                     })
                     .AddJwtBearer(options =>
                     {
-                        options.SaveToken = true;
+                        //options.SaveToken = true;
                         options.TokenValidationParameters = JwtHandler.GetTokenValidationParameters(commopOptions.Jwt.JwtTokenIssuer, commopOptions.Jwt.JwtTokenSecretKey);
 
-                        jwtOptions?.Invoke(options);
+                        /*kwtOptions?.Invoke(options);*/
                     });
             }
+            services.AddMvc();
 
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
             services.Configure<JwtOptions>(configuration.GetSection("ApiOptions:Jwt"));

@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
 
 namespace AuctionStore.API
 {
@@ -42,6 +44,7 @@ namespace AuctionStore.API
                 .AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                //opt.SerializerSettings.Converters.Add(new GuidConverter());
                 opt.UseCamelCasing(true);
             });
 
@@ -60,6 +63,10 @@ namespace AuctionStore.API
             app.UseCors("CorsPolicy");
             app.UseMiddleware<DomainExceptionMiddleware>();
             app.UseMvc();
+            app.UseRouting();
+
+            app.UseAuthorization();
+            app.UseAuthentication();
 
             logger.LogInformation("App started");
 
@@ -72,14 +79,33 @@ namespace AuctionStore.API
 
             //app.UseHttpsRedirection();
 
-            //app.UseRouting();
 
-            //app.UseAuthorization();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+        public sealed class GuidConverter : JsonConverter<Guid>
+        {
+
+            public GuidConverter() { }
+
+            public GuidConverter(string format) { _format = format; }
+
+            private readonly string _format = "N";
+
+            public override void WriteJson(JsonWriter writer, Guid value, JsonSerializer serializer)
+            {
+                writer.WriteValue(value.ToString(_format));
+            }
+
+            public override Guid ReadJson(JsonReader reader, Type objectType, Guid existingValue, bool hasExistingValue, JsonSerializer serializer)
+            {
+                string s = (string)reader.Value;
+                return new Guid(s);
+            }
+
         }
     }
 }

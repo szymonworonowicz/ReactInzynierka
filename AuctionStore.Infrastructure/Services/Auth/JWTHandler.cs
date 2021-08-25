@@ -143,7 +143,6 @@ namespace AuctionStore.Infrastructure.Services.Auth
         {
             return new TokenValidationParameters
             {
-                NameClaimType = ClaimTypes.NameIdentifier,
                 ValidateIssuerSigningKey = true,
                 ValidateLifetime = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
