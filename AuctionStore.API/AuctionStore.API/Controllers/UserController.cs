@@ -1,5 +1,4 @@
 ﻿using AuctionStore.Domain.Commands.Users;
-using AuctionStore.Domain.Queries.User;
 using AuctionStore.Infrastructure.Attributes;
 using AuctionStore.Infrastructure.Enums;
 using AuctionStore.Infrastructure.Helpers;
@@ -46,13 +45,6 @@ namespace AuctionStore.API.Controllers
             var result = await CommandAsync(command);
 
             return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
-        }
-
-        [HttpPost("bannedUser")]
-        public async Task<IActionResult> GetBannedUser([FromBody] PagedBannedUserQuery query)
-        {
-            var result = await QueryAsync(query);
-            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
     }
 }

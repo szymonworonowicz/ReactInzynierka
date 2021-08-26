@@ -81,6 +81,7 @@ namespace AuctionStore.Domain.Commands.Auth
 
                 mapper.Map(request, target);
 
+                target.CreatedDateUtc = DateTime.UtcNow;
                 target.PasswordHash = authService.CreatePasswordHash(request.Password);
                 await AssignRole(request, target, ct);
 

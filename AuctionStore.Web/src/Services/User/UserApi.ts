@@ -1,7 +1,6 @@
 import {apiClient} from '../APIClient/apiClient'
 import { IBaseResponse } from '../../Interfaces/Api'
-import {IUserInfo, IChangePassword,IBannedUser } from '../../Interfaces/user';
-import {IPageRequest, IPageResponse} from '../../Interfaces/Paged';
+import {IUserInfo, IChangePassword } from '../../Interfaces/user';
 
 export const UserApi = {
     getUser: async(userId : string | null): Promise<IUserInfo> => {
@@ -30,15 +29,5 @@ export const UserApi = {
         }
         
         return new Promise<boolean>((_resolve, reject) => reject(null));
-    },
-    getBannedUsers : async(data : IPageRequest) : Promise<IPageResponse<IBannedUser>> => {
-        const response = await apiClient.post<IBaseResponse<IPageResponse<IBannedUser>>>('users/bannedUser', data);
-
-        if(response.data.success) {
-            return new Promise<IPageResponse<IBannedUser>>((resolve) => resolve(response.data.data));
-        }
-
-        return new Promise<IPageResponse<IBannedUser>>((_resolve, reject) => reject(null));
     }
-
 }

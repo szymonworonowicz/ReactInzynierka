@@ -1,30 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace AuctionStore.Infrastructure.Models
+namespace AuctionStore.Infrastructure.Dtos
 {
-    public class User
+    public class AdminUserDto
     {
         public Guid Id { get; set; }
-
         public string UserName { get; set; }
 
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
-
-        public string PasswordHash { get; set; }
-
         public string Email { get; set; }
-
         public bool IsDisabled { get; set; }
-
-        public bool IsBanned { get; set; }
-        public DateTime? EndOffBan { get; set; }
-
         public bool IsDeleted { get; set; }
-        public DateTime LastLoginDateUtc { get; set; }
         public DateTime CreatedDateUtc { get; set; }
-
-        public virtual UserRoles UserRoles {get;set;}
+        public DateTime LastLoginDateUtc { get; set; }
     }
 }

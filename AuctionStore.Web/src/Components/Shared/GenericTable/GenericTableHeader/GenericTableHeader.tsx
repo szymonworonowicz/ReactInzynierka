@@ -10,7 +10,7 @@ const  GenericTableHeader = <T, K extends keyof T>({columns} : IGenericTableHead
                 {
                     columns.map((elem, index) => {
                         return (
-                            <TableCell align={index === 0 ?'left' : 'right'} key={`headerRow-${index}`}> 
+                            <TableCell align='left' key={`headerRow-${index}`}> 
                                 {elem.header}
                             </TableCell>
                         )

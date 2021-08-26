@@ -5,6 +5,7 @@ import { Paper, Tabs, Tab } from "@material-ui/core";
 import TabPanel from "../Shared/Tabs/TabPanel";
 import AdminInfo from './AdminInfo/AdminInfo'
 import BannedUsers from './BannedUsers/BannedUsers';
+import AdminPanel from './AdminPanel/AdminPanel'
 
 const useStyles = makeStyles({
   root: {
@@ -76,7 +77,7 @@ const AdminProfile: React.FC = () => {
           <BannedUsers/>
         </TabPanel>
         <TabPanel value={selectedTab} index={3}>
-          <p>komponent 4</p>
+          <AdminPanel/>
         </TabPanel>
       </div>
     </div>

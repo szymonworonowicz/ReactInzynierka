@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AuctionStore.Domain.Queries.User
+namespace AuctionStore.Domain.Queries.Admin
 {
     public class PagedBannedUserQuery : BasePagedQuery, IRequest<BasePagedQueryResponse<BannedUserDto>>
     {
@@ -35,7 +35,7 @@ namespace AuctionStore.Domain.Queries.User
                     .Where(x => x.IsBanned && x.EndOffBan > DateTime.Now)
                     .ProjectTo<BannedUserDto>(mapper.ConfigurationProvider);
 
-                var skiped = await bannedUsers.Skip(request.Page * request.ElemPerPage).Take(request.ElemPerPage).ToListAsync(cancellationToken);
+                var skiped = await bannedUsers.Skip(    request.Page * request.ElemPerPage).Take(request.ElemPerPage).ToListAsync(cancellationToken);
 
                 return new BasePagedQueryResponse<BannedUserDto>
                 {

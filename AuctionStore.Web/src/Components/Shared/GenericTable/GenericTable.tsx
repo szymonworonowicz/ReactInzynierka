@@ -34,7 +34,7 @@ const GenericTable = <T, K extends keyof T>({
   const handleChangeRowsPerPage = (e : any) => {
     setQuery({
       elemPerPage: parseInt(e.target.value),
-      page : 1
+      page : 0
     })
   }
 

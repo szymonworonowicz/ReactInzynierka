@@ -13,8 +13,27 @@ const GenericTableBody = <T, K extends keyof T>({
           <TableRow key={`tableRow-${index}`}>
             {columns.map((column, index2) => {
               return (
-                <TableCell key={`tableCell-${index}-${index2}`}>
-                  {row[column.key]}
+                <TableCell key={`tableCell-${index}-${index2}`}  align='left'>
+                  {
+                    typeof column.generate === 'undefined' 
+                    ?
+                    (
+                      typeof column.formatValue === 'undefined'
+                      ?
+                      (
+                        row[column.key]
+                      )
+                      :
+                      (
+                        column.formatValue(row)
+                      )
+                    )
+                    :
+                    (
+                      column.generate(row)
+                    )
+                  }
+
                 </TableCell>
               );
             })}
