@@ -2,6 +2,7 @@
 using AuctionStore.Infrastructure.Enums;
 using AuctionStore.Infrastructure.Exceptions;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -50,10 +51,11 @@ namespace AuctionStore.Infrastructure.Services.Email
         {
             try
             {
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 await client.ConnectAsync(
                     smtpOptions.SmtpClient,
                     smtpOptions.Port,
-                    smtpOptions.UseSsl,
+                    SecureSocketOptions.Auto,
                     ct);
             }
             catch (Exception e)

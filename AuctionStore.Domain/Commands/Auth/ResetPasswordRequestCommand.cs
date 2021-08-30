@@ -50,7 +50,7 @@ namespace AuctionStore.Domain.Commands.Auth
 
                 var tmpPassword = GeneratePassword(12);
                 var token = GenerateToken();
-                var resetUrl = $"{urlOptions.Value.BaseUrl}/users/reset-password?token={token}";
+                var resetUrl = $"{urlOptions.Value.BaseUrl}resetpassword/{token}";
 
                 var userTmpPwd = new UserTemporaryPassword
                 {

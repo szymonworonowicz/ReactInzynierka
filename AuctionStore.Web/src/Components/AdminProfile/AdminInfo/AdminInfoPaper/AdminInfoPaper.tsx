@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IAdminInfoPaper } from "./IAdminInfoPaper";
 import { useTranslation } from "react-i18next";
 import { Grid, Typography } from "@material-ui/core";

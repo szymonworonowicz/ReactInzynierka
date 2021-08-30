@@ -23,6 +23,9 @@ namespace AuctionStore.Infrastructure.Enums
         ErrorWhileCreatingJWTToken = 1004,
         
         [Description("Error in send email")]
-        SendEmailError = 1005
+        SendEmailError = 1005,
+
+        [Description("BannedWord not exist")]
+        BannedWordDontExist = 1006
     }
 }

@@ -3,10 +3,10 @@ import { useFormContext } from "react-hook-form";
 import { Grid, FormControl, Input, InputLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import { IRegisterCredentials } from "../Interfaces/Api";
+import { IRegisterCredentials } from "../../Interfaces/Api";
 import { useTranslation } from "react-i18next";
-import PasswordField from "../Components/Shared/PasswordField/PasswordField";
-import { ValidatorType, getValidators } from "../Helpers/constans";
+import PasswordField from "../../Components/Shared/PasswordField/PasswordField";
+import { ValidatorType, getValidators } from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +52,6 @@ const RegisterForm: React.FC = () => {
       return { ...prev, [id]: value };
     });
     setValue(`${id}`, value);
-    console.log(credentials)
   };
 
   return (

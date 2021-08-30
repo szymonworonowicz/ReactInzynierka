@@ -9,7 +9,7 @@ import AdminInfoPaper from "./AdminInfoPaper/AdminInfoPaper";
 import { Lock } from "@material-ui/icons";
 import Modal from "../../../shared/Modal/Modal";
 import Popper from "../../../shared/Popper/Popper";
-import ChangePasswordForm from "../../../Forms/ChangePasswordForm";
+import ChangePasswordForm from "../../../Forms/Auth/ChangePasswordForm";
 import { useToast } from "../../../shared/hooks/useToast";
 
 const AdminInfo: React.FC = () => {

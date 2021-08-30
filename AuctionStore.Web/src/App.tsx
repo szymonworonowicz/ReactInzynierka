@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { useIdleTimer } from "react-idle-timer";
-
+import {ToastContainer} from 'react-toastify'
 import { CssBaseline } from "@material-ui/core";
 
 import { apiClient } from "./Services/APIClient/apiClient";
@@ -55,6 +55,7 @@ const App: React.FC = () => {
   return (
     <>
       <CssBaseline />
+      <ToastContainer/>
       <UserContext.Provider value={userContext}>
         <AppRouter/>
       </UserContext.Provider>

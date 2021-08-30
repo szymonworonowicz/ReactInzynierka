@@ -22,6 +22,7 @@ namespace AuctionStore.Infrastructure.DB
         public DbSet<UserTemporaryPassword> UserTemporaryPasswords { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> Subcategories { get; set; }
+        public DbSet<BannedWord> BannedWords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

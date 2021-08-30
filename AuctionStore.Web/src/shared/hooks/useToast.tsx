@@ -1,41 +1,25 @@
-import React, { useState } from "react";
-import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import {toast, ToastOptions} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-export type ToastType = "success" | "error";
-
-const snackBarOptions: SnackbarOrigin = {
-  horizontal: "center",
-  vertical: "top",
-};
-
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+export type ToastType = 'success' | 'error';
 
 export function useToast() {
-  const [open, setOpen] = useState<boolean>(false);
-  const handleClose = (_event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+    const toastOptions: ToastOptions = {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+    };
 
-  return (message: string, type: ToastType) => {
-    debugger;
-    setOpen(true);
-    return (
-      <Snackbar
-        anchorOrigin={snackBarOptions}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={4000}
-      >
-        <Alert onClose={handleClose} severity={type}>
-          {message}
-        </Alert>
-      </Snackbar>
-    );
-  };
-}
+    return (message:string, type : ToastType) => {
+        switch(type) {
+            case 'success':
+                return toast.success(message,toastOptions);
+            case 'error':
+                return toast.error(message, toastOptions);
+        };
+    };
+};

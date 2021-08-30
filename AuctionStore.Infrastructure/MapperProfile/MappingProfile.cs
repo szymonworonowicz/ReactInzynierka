@@ -13,6 +13,7 @@ namespace AuctionStore.Infrastructure.MapperProfile
             CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
             CreateMap<User, BannedUserDto>().ReverseMap();
             CreateMap<User, AdminUserDto>().ReverseMap();
+            CreateMap<BannedWord, BannedWordDto>().ReverseMap();
         }
     }
 }

@@ -1,13 +1,12 @@
 import React, { useState , useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { Grid, FormControl, Input, InputLabel } from "@material-ui/core";
+import { Grid} from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
-import clsx from "clsx";
-import PasswordField from "../Components/Shared/PasswordField/PasswordField";
-import { IChangePassword } from "../Interfaces/user/IChangePassword";
-import { UserContext } from "../Context/UserContext";
+import PasswordField from "../../Components/Shared/PasswordField/PasswordField";
+import { IChangePassword } from "../../Interfaces/user/IChangePassword";
+import { UserContext } from "../../Context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {

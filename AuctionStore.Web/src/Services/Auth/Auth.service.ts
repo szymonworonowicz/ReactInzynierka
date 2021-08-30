@@ -2,13 +2,16 @@ import { ILoginCredentials,IRegisterCredentials } from "../../Interfaces/Api";
 import { apiClient } from "../APIClient/apiClient";
 import JWTDecode from "jwt-decode";
 import { history } from "../../Helpers";
+import { IResetPasswordRequired ,IResetPassword} from "../../Interfaces/user";
 
 export interface IAuthService {
   login: (credentials: ILoginCredentials) => Promise<boolean>;
   logout: () => void;
   onLogin?: (userData: IUserAuthData) => void;
   onLogout?: () => void;
-  register : (credentials : IRegisterCredentials) => Promise<boolean>
+  register : (credentials : IRegisterCredentials) => Promise<boolean>;
+  resetPasswordRequired : (data : IResetPasswordRequired) => Promise<boolean>;
+  resetPassword : (data : IResetPassword) => Promise<boolean>;
 }
 
 export interface IUserAuthData {
@@ -61,6 +64,35 @@ export const authService: IAuthService = {
 
   register : async (credentials : IRegisterCredentials) : Promise<boolean> => {
     const response = await apiClient.post('auths/register', credentials);
+
+    if(response.data.success === false) {
+      return new Promise<boolean>((_resolve, reject) => {
+        reject(response.data.errors[0].message)
+      })
+    }
+
+    return new Promise<boolean>((resolve) => {
+      resolve(true);
+    })
+  },
+
+  resetPasswordRequired : async(data: IResetPasswordRequired) : Promise<boolean> => {
+    const response = await apiClient.post('auths/resetPasswordRequest', data);
+    
+    if(response.data.success === false) {
+      return new Promise<boolean>((_resolve, reject) => {
+        reject(response.data.errors[0].message)
+      })
+    }
+
+    return new Promise<boolean>((resolve) => {
+      resolve(true);
+    })
+    
+  },
+
+  resetPassword : async(data : IResetPassword) : Promise<boolean> => {
+    const response = await apiClient.post('auths/resetPassword', data);
 
     if(response.data.success === false) {
       return new Promise<boolean>((_resolve, reject) => {

@@ -9,8 +9,9 @@ import {
 } from "@material-ui/core";
 import { Person, AccountCircle, PersonAdd } from "@material-ui/icons";
 import Modal from "../../../shared/Modal/Modal";
-import LoginForm from "../../../Forms/LoginForm";
-import RegisterForm from "../../../Forms/RegisterForm";
+import LoginForm from "../../../Forms/Auth/LoginForm";
+import RegisterForm from "../../../Forms/Auth/RegisterForm";
+import ResetPasswordRequiredForm from '../../../Forms/Auth/ResetPasswordRequiredForm'
 import { authService } from "../../../Services/Auth/Auth.service";
 import {
   ILoginCredentials,
@@ -19,10 +20,12 @@ import {
 import { UserRoles } from "../../../Helpers/constans";
 import styles from "./LoginNav.module.css";
 import { useToast } from "../../../shared/hooks/useToast";
+import { IResetPasswordRequired } from "../../../Interfaces/user";
 
 const LoginNav: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isRegister, setIsRegister] = useState<boolean>(false);
+  const [isResetPassword, setIsResetPassword] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const toast = useToast();
@@ -86,7 +89,11 @@ const LoginNav: React.FC = () => {
           handleClose={() => setIsLogin(false)}
           handleSave={Login}
         >
-          <LoginForm />
+          <LoginForm  
+            setLogin={setIsLogin} 
+            setResetPassword = {setIsResetPassword} 
+            setRegister = {setIsRegister}
+            />
         </Modal>
       )}
       {isRegister && (
@@ -100,6 +107,18 @@ const LoginNav: React.FC = () => {
           }}
         >
           <RegisterForm />
+        </Modal>
+      )}
+      {isResetPassword && (
+        <Modal
+          header={t('resetPassword')}
+          isOpen={isResetPassword}
+          handleClose={() => setIsResetPassword(false)}
+          handleSave={(data : IResetPasswordRequired) => {
+            authService.resetPasswordRequired(data);
+          }}
+        >
+          <ResetPasswordRequiredForm/>
         </Modal>
       )}
     </>

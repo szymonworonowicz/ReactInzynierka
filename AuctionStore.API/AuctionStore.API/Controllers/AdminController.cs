@@ -41,7 +41,7 @@ namespace AuctionStore.API.Controllers
         }
 
         [HttpPost("holiday")]
-        public async Task<IActionResult> GetAdmins([FromBody] AdminHolidayCommand command)
+        public async Task<IActionResult> SetAdminHoliday([FromBody] AdminHolidayCommand command)
         {
             var result = await CommandAsync(command);
 
@@ -49,11 +49,34 @@ namespace AuctionStore.API.Controllers
         }
 
         [HttpPost("delete")]
-        public async Task<IActionResult> GetAdmins([FromBody] DeleteAdminCommand command)
+        public async Task<IActionResult> SetAdminDeleted([FromBody] DeleteAdminCommand command)
         {
             var result = await CommandAsync(command);
 
             return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
+        [HttpPost("bannedWords")]
+        public async Task<IActionResult> GetPagedBannedWords([FromBody] PagedBannedWordsQuery query)
+        {
+            var result = await QueryAsync(query);
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
+
+        [HttpPost("deleteBannedWord")]
+        public async Task<IActionResult> DeleteBannedWord([FromBody] DeleteBannedWordCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
+        [HttpPost("addBannedWord")]
+        public async Task<IActionResult> AddBannedWord([FromBody] AddBannedWordCommand command)
+        {
+            var result = await CommandAsync(command);
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
     }
 }
