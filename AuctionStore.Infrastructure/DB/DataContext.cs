@@ -32,6 +32,8 @@ namespace AuctionStore.Infrastructure.DB
             {
                 entity.HasKey(x => new { x.RoleId, x.UserId });
             });
+
+            modelBuilder.Entity<Category>().HasMany(x => x.SubCategories).WithOne(x => x.Category).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

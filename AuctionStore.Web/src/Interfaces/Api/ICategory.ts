@@ -1,6 +1,6 @@
 import {ISubCategory} from './ISubCategory'
 
-export  interface ICategory {
+export  interface ICategoryList {
     id:string,
     name:string,
     subCategories: Array<ISubCategory>

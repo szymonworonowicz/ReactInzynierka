@@ -1,6 +1,7 @@
-import { ICategory } from "../../../../Interfaces/Api";
+import { ICategoryList } from "../../../../Interfaces/Api";
 
 export interface ICategoryPanelElementProps {
-    data : ICategory,
-    deleteCategory : (id : string)  => Promise<void>
+    data : ICategoryList;
+    deleteCategory : (id : string)  => Promise<void>;
+    deleteSubCategory : (id: string) => Promise<void>;
 }

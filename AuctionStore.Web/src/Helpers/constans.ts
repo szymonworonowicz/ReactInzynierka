@@ -36,3 +36,5 @@ export const UserRoles = {
     User : "User",
     Both: ["Admin","User"]
 }
+
+export const GuidEmpty = '00000000-0000-0000-0000-000000000000';
