@@ -2,8 +2,10 @@ import React from "react";
 import {Route} from 'react-router-dom'
 
 //@ts-ignore
-const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
+const AppRoute = ({ component: Component, layout: Layout, path = '', exact =true , ...rest}) => (
 	<Route
+		path={path}
+		exact={exact}
 		render={(props) => (
 			<Layout {...props}>
 				<Component {...rest} />

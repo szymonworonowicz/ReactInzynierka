@@ -32,7 +32,7 @@ const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
           ) : (
             <StyledTreeItem
               key={elem.id}
-              nodeId={`${index + 1}`}
+              nodeId={elem.id}
               labelText={elem.name}
               labelIcon={Home}
             >
@@ -40,7 +40,7 @@ const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
                 return (
                   <StyledTreeItem
                     key={subcategory.id}
-                    nodeId={`${elemNr ++}`}
+                    nodeId={elem.id}
                     labelText={subcategory.name}
                     labelIcon={Home}
                   />

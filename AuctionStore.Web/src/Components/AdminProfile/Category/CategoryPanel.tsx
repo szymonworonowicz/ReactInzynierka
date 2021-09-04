@@ -71,13 +71,32 @@ const CategoryPanel: React.FC = () => {
   }
 
   const addCategory = async (data :IAddCategory) : Promise<void> => {
-    debugger;
+    let value = {}
     if(data.id === undefined || data.id === '') {
-      data.id = GuidEmpty;
+      value = {
+        ...data,
+        id:GuidEmpty
+      }
     }
     //@TODO ADD Category/Subcategory into table
-    const response = await CategoriesApi.AddCategory(data);
-    return new Promise((resolve) => resolve());
+    const response = await CategoriesApi.AddCategory(value);
+    debugger;
+    if(data.id === undefined) {
+      setCategories(prev => {
+        return [...prev, response];
+      })
+    }
+    else {
+      let index = categories.findIndex(x => x.id === data.id);
+      setCategories(prev => {
+        let category = prev[index];
+        category.subCategories = [...category.subCategories, ...response.subCategories];
+        let local = prev;
+        local.splice(index,1,category);
+        return [...local];
+      })
+    }
+    setAddModal(false);
   }
 
   const generateColumns = (): IGenericTableColumnDefinitionType<
