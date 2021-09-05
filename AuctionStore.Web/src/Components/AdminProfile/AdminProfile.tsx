@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { Paper, Tabs, Tab } from "@material-ui/core";
 import TabPanel from "../Shared/Tabs/TabPanel";
-import AdminInfo from './AdminInfo/AdminInfo'
+import UserInfo from '../Shared/UserInfo/UserInfo'
 import BannedUsers from './BannedUsers/BannedUsers';
 import AdminPanel from './AdminPanel/AdminPanel';
 import BannedWords from './BannedWords/BannedWords';
@@ -75,7 +75,7 @@ const AdminProfile: React.FC = () => {
 
       <div className={classes.content}>
         <TabPanel value={selectedTab} index={0}>
-          <AdminInfo/>
+          <UserInfo/>
         </TabPanel>
         <TabPanel value={selectedTab} index={1}>
           <BannedWords/>

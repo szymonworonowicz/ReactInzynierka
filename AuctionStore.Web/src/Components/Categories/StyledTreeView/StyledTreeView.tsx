@@ -40,7 +40,7 @@ const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
                 return (
                   <StyledTreeItem
                     key={subcategory.id}
-                    nodeId={elem.id}
+                    nodeId={subcategory.id}
                     labelText={subcategory.name}
                     labelIcon={Home}
                   />

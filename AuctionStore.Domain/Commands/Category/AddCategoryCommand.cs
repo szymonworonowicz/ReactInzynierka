@@ -66,8 +66,10 @@ namespace AuctionStore.Domain.Commands.Category
                     await context.Subcategories.AddAsync(target, cancellationToken);
                     await context.SaveChangesAsync(cancellationToken);
 
-                    result.SubCategories = new List<SubCategoryDto>();
-                    result.SubCategories.Add(mapper.Map<SubCategoryDto>(target));
+                    result.SubCategories = new List<SubCategoryDto>
+                    {
+                        mapper.Map<SubCategoryDto>(target)
+                    };
                 }
 
                 return result;

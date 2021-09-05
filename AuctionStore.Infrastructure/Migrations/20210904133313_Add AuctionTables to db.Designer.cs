@@ -4,48 +4,22 @@ using AuctionStore.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuctionStore.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210904133313_Add AuctionTables to db")]
+    partial class AddAuctionTablestodb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AuctionStore.Infrastructure.Models.Address", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HouseNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Addresses");
-                });
 
             modelBuilder.Entity("AuctionStore.Infrastructure.Models.Auction", b =>
                 {
@@ -58,9 +32,6 @@ namespace AuctionStore.Infrastructure.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("SubCategoryId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long?>("TimeStampDuration")
                         .HasColumnType("bigint");
@@ -78,8 +49,6 @@ namespace AuctionStore.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SubCategoryId");
 
                     b.ToTable("Auctions");
                 });
@@ -316,24 +285,6 @@ namespace AuctionStore.Infrastructure.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("AuctionStore.Infrastructure.Models.Address", b =>
-                {
-                    b.HasOne("AuctionStore.Infrastructure.Models.User", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("AuctionStore.Infrastructure.Models.Auction", b =>
-                {
-                    b.HasOne("AuctionStore.Infrastructure.Models.SubCategory", "SubCategory")
-                        .WithMany()
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubCategory");
-                });
-
             modelBuilder.Entity("AuctionStore.Infrastructure.Models.AuctionFile", b =>
                 {
                     b.HasOne("AuctionStore.Infrastructure.Models.Auction", null)
@@ -389,8 +340,6 @@ namespace AuctionStore.Infrastructure.Migrations
 
             modelBuilder.Entity("AuctionStore.Infrastructure.Models.User", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

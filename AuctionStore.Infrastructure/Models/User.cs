@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AuctionStore.Infrastructure.Models
 {
@@ -26,5 +27,6 @@ namespace AuctionStore.Infrastructure.Models
         public DateTime CreatedDateUtc { get; set; }
 
         public virtual UserRoles UserRoles {get;set;}
+        public virtual IEnumerable<Address> Addresses { get; set; }
     }
 }

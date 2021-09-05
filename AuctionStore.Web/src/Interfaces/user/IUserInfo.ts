@@ -1,7 +1,7 @@
-export interface IUserInfo {
-    UserName : string,
-    FirstName : string,
-    LastName : string,
-    Email : string,
-    LastLoginDateUtc : string
+export interface IUserDto {
+    userName : string,
+    firstName : string,
+    lastName : string,
+    email : string,
+    lastLoginDateUtc : string
 }

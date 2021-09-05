@@ -15,6 +15,11 @@ namespace AuctionStore.Infrastructure.MapperProfile
             CreateMap<User, AdminUserDto>().ReverseMap();
             CreateMap<BannedWord, BannedWordDto>().ReverseMap();
             CreateMap<Category, EmptyCategory>().ReverseMap();
+            CreateMap<Auction, AuctionDto>().ReverseMap();
+            CreateMap<AuctionOffer, AuctionOfferDto>().ReverseMap();
+            CreateMap<AuctionFile, AuctionFileDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<Address, AddressDto>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AuctionStore.Domain.Commands.Users;
+using AuctionStore.Domain.Queries.User;
 using AuctionStore.Infrastructure.Attributes;
 using AuctionStore.Infrastructure.Enums;
 using AuctionStore.Infrastructure.Helpers;
@@ -45,6 +46,31 @@ namespace AuctionStore.API.Controllers
             var result = await CommandAsync(command);
 
             return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetUser([FromBody] GetUserByIdQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
+        }
+
+        [HttpPost("getAddress")]
+        public async Task<IActionResult> GetAddress([FromBody] GetAddressesQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
+        }
+        
+        [HttpPost("deleteAddress")]
+        public async Task<IActionResult> DeleteAddress([FromBody] DeleteAddressCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
         }
     }
 }

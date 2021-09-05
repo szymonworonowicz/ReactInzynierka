@@ -23,6 +23,10 @@ namespace AuctionStore.Infrastructure.DB
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> Subcategories { get; set; }
         public DbSet<BannedWord> BannedWords { get; set; }
+        public DbSet<Auction> Auctions { get; set; }
+        public DbSet<AuctionFile> AuctionFiles { get; set; }
+        public DbSet<AuctionOffer> AuctionOffer { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -36,7 +36,7 @@ namespace AuctionStore.API.Controllers
         }
 
         [HttpPost("deleteSubCategory")]
-        public async Task<IActionResult> deleteSubCategory([FromBody] DeleteSubCategoryCommand command)
+        public async Task<IActionResult> DeleteSubCategory([FromBody] DeleteSubCategoryCommand command)
         {
             var result = await CommandAsync(command);
 

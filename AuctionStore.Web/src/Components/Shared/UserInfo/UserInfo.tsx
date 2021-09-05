@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { IUserInfo, IChangePassword } from "../../../Interfaces/user";
+import { IUserDto, IChangePassword } from "../../../Interfaces/user";
 import { UserApi } from "../../../Services/User/UserApi";
 import { UserContext } from "../../../Context/UserContext";
 import { CircularProgress, Paper } from "@material-ui/core";
-import PaperNav from "../../Shared/PaperNav/PaperNav";
-import AdminInfoPaper from "./AdminInfoPaper/AdminInfoPaper";
+import PaperNav from "../PaperNav/PaperNav";
+import UserInfoPaper from "./UserInfoPaper/UserInfoPaper";
 import { Lock } from "@material-ui/icons";
 import Modal from "../../../shared/Modal/Modal";
 import Popper from "../../../shared/Popper/Popper";
 import ChangePasswordForm from "../../../Forms/Auth/ChangePasswordForm";
 import { useToast } from "../../../shared/hooks/useToast";
 
-const AdminInfo: React.FC = () => {
+const UserInfo: React.FC = () => {
   const context = useContext(UserContext);
-  const [userData, setUserData] = useState<IUserInfo | null>(null);
+  const [userData, setUserData] = useState<IUserDto | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
@@ -28,7 +28,6 @@ const AdminInfo: React.FC = () => {
     (async () => {
       try {
         const data = await UserApi.getUser(context.userId);
-
         setUserData(data);
         setIsLoaded(true);
       } catch {
@@ -43,7 +42,7 @@ const AdminInfo: React.FC = () => {
   };
 
   const onEdit = () => {
-    
+    //@TODO UserEdit
   };
 
   const handleChangePassword = () => {
@@ -89,7 +88,9 @@ const AdminInfo: React.FC = () => {
         ExternalIcon={Lock}
         externalIconAction={handleChangePassword}
       />
-      <Paper square>{<AdminInfoPaper data={userData} />}</Paper>
+      <Paper square>
+        <UserInfoPaper data={userData} />
+      </Paper>
 
       <Modal
         header={t("change_password")}
@@ -111,4 +112,4 @@ const AdminInfo: React.FC = () => {
   );
 };
 
-export default AdminInfo;
+export default UserInfo;

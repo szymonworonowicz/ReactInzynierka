@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
       <AppBar position="static">
         <Toolbar>
           <div>
-            <img src="./logo.png" alt="logo" onClick={handleHome} />
+            <img src="./logo.png" alt="logo" onClick={handleHome} height='50px' width='50px'/>
           </div>
           {isLogged ? <NavbarMenu /> : <LoginNav />}
         </Toolbar>
