@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
   data,
   onDeleteAddress,
+  onEditAddress
 }) => {
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -83,6 +84,7 @@ const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
             <UserAddressContainerPapper
               address={selectedAddress}
               onDeleteAddress={onDeleteAddress}
+              onEditAddress = {onEditAddress}
             />
           </Paper>
         )}

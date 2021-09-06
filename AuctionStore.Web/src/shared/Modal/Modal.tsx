@@ -15,9 +15,12 @@ const Modal: React.FC<IModalProps> = ({
   isOpen = false,
   handleClose = () => {},
   handleSave = () => {},
+  initValue ={},
   children,
 }) => {
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: initValue
+  });
   const { handleSubmit } = methods;
 
   const { t } = useTranslation();

@@ -12,6 +12,6 @@ namespace AuctionStore.Infrastructure.Models
         public string Street { get; set; }
         public string HouseNo { get; set; }
         public string PostCode { get; set; }
-
+        public bool IsDeleted { get; set; }
     }
 }

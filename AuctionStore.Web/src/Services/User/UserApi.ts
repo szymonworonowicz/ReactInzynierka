@@ -47,5 +47,14 @@ export const UserApi = {
         }
         
         return new Promise<boolean>((_resolve, reject) => reject(null));
+    },
+    UpsertAddress : async(address: IAddress, userId : string | null): Promise<IAddress> => {
+        const response = await apiClient.post<IBaseResponse<IAddress>>('users/upsertAddress', {...address, userId});
+
+        if(response.data.success) {
+            return new Promise<IAddress>((resolve) => resolve(response.data.data));
+        }
+        
+        return new Promise<IAddress>((_resolve, reject) => reject(null));
     }
 }

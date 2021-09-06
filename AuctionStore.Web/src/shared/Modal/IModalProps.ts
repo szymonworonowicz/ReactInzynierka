@@ -3,4 +3,5 @@ export interface IModalProps {
   header: string;
   handleClose?: () => void;
   handleSave?: (data? :any) => void;
+  initValue? :any;
 }

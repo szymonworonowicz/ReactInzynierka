@@ -70,6 +70,14 @@ namespace AuctionStore.API.Controllers
             var result = await CommandAsync(command);
 
             return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
+        [HttpPost("upsertAddress")]
+        public async Task<IActionResult> UpsertAddress([FromBody] UpsertAddressCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
 
         }
     }

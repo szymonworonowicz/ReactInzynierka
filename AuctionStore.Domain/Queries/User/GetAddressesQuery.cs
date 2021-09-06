@@ -32,6 +32,7 @@ namespace AuctionStore.Domain.Queries.User
             {
                 var addresses = await context.Addresses
                     .Where(x => x.UserId == request.UserId)
+                    .Where(x => !x.IsDeleted)
                     .ProjectTo<AddressDto>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 

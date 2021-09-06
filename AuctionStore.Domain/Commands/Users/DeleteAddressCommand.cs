@@ -30,7 +30,7 @@ namespace AuctionStore.Domain.Commands.Users
                     return false;
                 }
 
-                context.Addresses.Remove(target);
+                target.IsDeleted = true;
                 await context.SaveChangesAsync(cancellationToken);
 
                 return true;
