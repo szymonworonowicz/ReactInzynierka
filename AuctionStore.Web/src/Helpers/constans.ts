@@ -37,4 +37,47 @@ export const UserRoles = {
     Both: ["Admin","User"]
 }
 
+
 export const GuidEmpty = '00000000-0000-0000-0000-000000000000';
+
+export function convertBytesToMbsOrKbs(filesize: number) {
+	var size = '';
+ 
+	if (filesize >= 1000000) {
+		size = filesize / 1000000 + ' MBs';
+	} else if (filesize >= 1000) {
+		size = filesize / 1000 + ' KBs';
+	} else {
+		size = filesize + ' Bs';
+	}
+ 
+	return size;
+}
+
+// export const getValidator = (translation: any, max: number | null, pattern: { value: RegExp; message: string } | null, required: boolean = false, minLength: number = 2) => {
+// 	const registerObject: ValidationOptions = {};
+ 
+// 	if (max)
+// 		registerObject.maxLength = {
+// 			value: max,
+// 			message: translation('common.validations.maxLength', { length: max }),
+// 		};
+ 
+// 	if (required) {
+// 		if (max) {
+// 			registerObject.minLength = {
+// 				value: minLength,
+// 				message: translation('common.validations.minLength', {
+// 					length: minLength,
+// 				}),
+// 			};
+// 		}
+// 		registerObject.required = {
+// 			value: true,
+// 			message: translation('common.validations.required'),
+// 		};
+// 	}
+ 
+// 	if (pattern) registerObject.pattern = pattern;
+// 	return registerObject;
+// };

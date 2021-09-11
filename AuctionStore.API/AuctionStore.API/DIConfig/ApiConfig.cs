@@ -62,6 +62,7 @@ namespace AuctionStore.API.DIConfig
             services.Configure<JwtOptions>(configuration.GetSection("ApiOptions:Jwt"));
             services.Configure<WebUrlOptions>(configuration.GetSection("WebUrlOptions"));
             services.Configure<SmtpOptions>(configuration.GetSection("SmtpOptions"));
+            services.Configure<ImageOptions>(configuration.GetSection("ImageOptions"));
         }
     }
 }

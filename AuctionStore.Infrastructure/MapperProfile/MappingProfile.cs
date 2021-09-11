@@ -20,6 +20,7 @@ namespace AuctionStore.Infrastructure.MapperProfile
             CreateMap<AuctionFile, AuctionFileDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<StoreConfig, StoreConfigDto>().ReverseMap();
         }
     }
 }

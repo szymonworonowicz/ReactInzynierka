@@ -2,5 +2,6 @@ export const Routes = {
   home: "/",
   resetPassword:'/resetPassword/:token',
   profile:'/profile',
-  category : '/category'
+  category : '/category',
+  addAuction : '/add_auction'
 };

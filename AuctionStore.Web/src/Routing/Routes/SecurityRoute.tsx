@@ -17,7 +17,6 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
   const isRouteAvailable = () => {
     return isLogged && Role.some(x => x === userRole);
   };
-
   if(!isLogged )
   {
     return (
@@ -26,6 +25,8 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
   }
   return (
     <Route
+      exact ={isExact}
+      path={Path}
       render={(props) =>
         isRouteAvailable() ? (
           <Layout>

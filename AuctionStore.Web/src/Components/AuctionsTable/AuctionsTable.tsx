@@ -5,7 +5,7 @@ import {IPageRequest} from '../../Interfaces/Paged';
 import GenericTable from "../Shared/GenericTable/GenericTable";
 import { IGenericTableProps,IGenericTableColumnDefinitionType} from "../Shared/GenericTable/index";
 import {IAuction} from '../../Interfaces/Auctions';
-import {AuctionApi} from '../../Services/Auction/AuctionApi';
+import {AuctionApi} from '../../Services/Auction/Auction.service';
 import {ICategoriesTableProps} from './IAuctionsTableProps';
 import AuctionListElement from './AuctionList/AuctionListElement';
 

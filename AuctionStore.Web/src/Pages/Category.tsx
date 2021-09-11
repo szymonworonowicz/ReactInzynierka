@@ -1,5 +1,5 @@
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import AuctionsTable from '../Components/AuctionsTable/AuctionsTable'
 
 type LocationState = {
@@ -13,4 +13,4 @@ const Category:React.FC<RouteComponentProps<{},{},LocationState>> = ({location})
     )
 }
 
-export default Category
+export default withRouter(Category);

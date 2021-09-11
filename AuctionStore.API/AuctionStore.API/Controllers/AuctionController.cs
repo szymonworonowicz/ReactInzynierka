@@ -23,5 +23,13 @@ namespace AuctionStore.API.Controllers
             var result = await QueryAsync(query);
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
+
+        [HttpGet("auctionInfo")]
+        public async Task<IActionResult> GetAuctionInfo()
+        {
+            var result = await QueryAsync(new GetAuctionInfoQuery());
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
     }
 }

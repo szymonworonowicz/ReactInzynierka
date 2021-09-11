@@ -27,6 +27,7 @@ namespace AuctionStore.Infrastructure.DB
         public DbSet<AuctionFile> AuctionFiles { get; set; }
         public DbSet<AuctionOffer> AuctionOffer { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<StoreConfig> StoreConfig { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

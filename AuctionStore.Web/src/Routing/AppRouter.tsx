@@ -1,9 +1,10 @@
 import React from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route, BrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home";
 import Profile from "../Pages/Profile";
 import ResetPassword from '../Pages/ResetPassword';
 import Category from '../Pages/Category';
+import AddAuction from '../Pages/AddAuction';
 import { history } from "../Helpers";
 import { UserRoles } from "../Helpers/constans";
 import { Routes } from "./routes";
@@ -21,17 +22,22 @@ const AppRouter: React.FC = () => {
   return (
     <Router history={history}>
       <>
-        <Switch>
+        <BrowserRouter>
           
           <Route exact path={Routes.home} render={() => <DefaultLayout><Home/></DefaultLayout>}/>
           <Route path ={Routes.resetPassword} render={() =><EmptyLayout><ResetPassword/></EmptyLayout> } />
           <AppRoute 
-            exact
             path={Routes.category}
             component={Category}
             layout={DefaultLayout}
           />
 
+          <SecurityRoute
+            Path={Routes.addAuction}
+            Layout ={EditProfileLayout}
+            Component={AddAuction}
+            Role = {[UserRoles.User]}
+          />
           <SecurityRoute
             Path={Routes.profile}
             Layout ={EditProfileLayout}
@@ -40,7 +46,7 @@ const AppRouter: React.FC = () => {
           />
           
           
-        </Switch>
+        </BrowserRouter>
       </>
     </Router>
   );

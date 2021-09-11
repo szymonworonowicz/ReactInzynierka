@@ -78,5 +78,23 @@ namespace AuctionStore.API.Controllers
             var result = await CommandAsync(command);
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
+
+        [HttpGet("auctionInfo")]
+        public async Task<IActionResult> GetAuctionInfo()
+        {
+            var result = await QueryAsync(new GetStoreConfigQuery());
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
+
+        [HttpPost("auctionInfo")]
+        public async Task<IActionResult> GetAuctionInfo([FromBody] UpsertStoreConfigCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
     }
+
 }

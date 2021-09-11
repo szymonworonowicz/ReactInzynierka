@@ -2,6 +2,7 @@ import { apiClient } from "../APIClient/apiClient";
 import { IBaseResponse } from "../../Interfaces/Api";
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 import { IAdmin, IBannedUser, IBannedWord } from "../../Interfaces/Admin";
+import { IAuction, IAuctionInfo } from "../../Interfaces/Auctions";
 
 export const AdminApi = {
   getBannedUsers: async (
@@ -109,5 +110,25 @@ export const AdminApi = {
     }
 
     return new Promise<IBannedWord>((_resolve, reject) => reject(null));
+  },
+
+  GetAuctionInfo : async () : Promise<IAuctionInfo> => {
+    const response = await apiClient.get<IBaseResponse<IAuctionInfo>>('admins/auctionInfo');
+
+    if(response.data.success) {
+      return new Promise<IAuctionInfo>((resolve) => resolve(response.data.data));
+    }
+
+    return new Promise<IAuctionInfo>((_resolve, reject) => reject(null));
+  },
+  
+  UpsertAuctionInfo : async(data : IAuctionInfo) : Promise<IAuctionInfo> => {
+    const response = await apiClient.post<IBaseResponse<IAuctionInfo>>('admins/auctionInfo',data);
+
+    if(response.data.success) {
+      return new Promise<IAuctionInfo>((resolve) => resolve(response.data.data));
+    }
+
+    return new Promise<IAuctionInfo>((_resolve, reject) => reject(null));
   }
 };

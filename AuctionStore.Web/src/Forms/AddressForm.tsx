@@ -43,7 +43,7 @@ const AddressForm: React.FC = () => {
 
   return (
     <form>
-      <Grid container spacing={1} justify={"center"} alignContent={"center"}>
+      <Grid container spacing={1} justify="center" alignContent="center">
         <input type="hidden" {...register("city", { required: true })} />
         <input type="hidden" {...register("houseNo", { required: true })} />
         <input type="hidden" {...register("id", { required: false })}/>

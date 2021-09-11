@@ -8,6 +8,7 @@ import BannedUsers from './BannedUsers/BannedUsers';
 import AdminPanel from './AdminPanel/AdminPanel';
 import BannedWords from './BannedWords/BannedWords';
 import CategoryPanel from './Category/CategoryPanel';
+import StoreConfig from './StoreConfig/StoreConfig';
 
 const useStyles = makeStyles({
   root: {
@@ -69,6 +70,11 @@ const AdminProfile: React.FC = () => {
               id={`nav-tab-${4}`}
               aria-controls={`nav-tabpanel-${4}`}
             />
+            <Tab
+              label={t("strore_config")}
+              id={`nav-tab-${5}`}
+              aria-controls={`nav-tabpanel-${5}`}
+            />
           </Tabs>
         </Paper>
       </div>
@@ -88,6 +94,9 @@ const AdminProfile: React.FC = () => {
         </TabPanel>
         <TabPanel value={selectedTab} index={4}>
           <CategoryPanel/>
+        </TabPanel>
+        <TabPanel value={selectedTab} index={5}>
+          <StoreConfig/>
         </TabPanel>
       </div>
     </div>

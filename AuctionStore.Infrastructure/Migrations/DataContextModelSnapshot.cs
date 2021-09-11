@@ -188,6 +188,23 @@ namespace AuctionStore.Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("AuctionStore.Infrastructure.Models.StoreConfig", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("MaxPhotoSize")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("MaxPhotos")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StoreConfig");
+                });
+
             modelBuilder.Entity("AuctionStore.Infrastructure.Models.SubCategory", b =>
                 {
                     b.Property<Guid>("Id")
