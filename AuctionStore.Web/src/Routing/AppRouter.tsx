@@ -5,6 +5,7 @@ import Profile from "../Pages/Profile";
 import ResetPassword from '../Pages/ResetPassword';
 import Category from '../Pages/Category';
 import AddAuction from '../Pages/AddAuction';
+import Messages from '../Pages/Messages' 
 import { history } from "../Helpers";
 import { UserRoles } from "../Helpers/constans";
 import { Routes } from "./routes";
@@ -44,7 +45,12 @@ const AppRouter: React.FC = () => {
             Component={Profile}
             Role = {UserRoles.Both}
           />
-          
+          <SecurityRoute 
+            Path={Routes.messages}
+            Layout={DefaultLayout}
+            Component={Messages}
+            Role={UserRoles.Both}
+          />
           
         </BrowserRouter>
       </>

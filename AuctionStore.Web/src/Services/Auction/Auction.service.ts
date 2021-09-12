@@ -34,7 +34,7 @@ export const AuctionApi = {
     },
 
     addAuction : async(data : IAddAuction) : Promise<boolean> => {
-      const response =  await apiClient.post<IBaseResponse<any>>('/auctions/addAuction');
+      const response =  await apiClient.post<IBaseResponse<any>>('/auctions/addAuction', data);
 
       if (response.data.success) {
         return new Promise<boolean>((resolve) =>

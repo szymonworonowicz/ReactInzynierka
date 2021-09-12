@@ -4,4 +4,7 @@ export interface IAddAuction  {
     price: number;
     isTimeAuction: boolean;
     description: string;
+    timeStampStart?:number;
+    timeStampEnd? : number;
+    timeStampDuration?: number;
   };

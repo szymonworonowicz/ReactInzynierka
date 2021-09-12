@@ -7,7 +7,7 @@ const GenericTableFooter : React.FC<IGenericTableFooterProps>  = ({dataCount,row
     return (
         <TableFooter>
             <TableRow>
-                <TablePagination
+                {/* <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     colSpan={3}
                     count={dataCount}
@@ -19,7 +19,7 @@ const GenericTableFooter : React.FC<IGenericTableFooterProps>  = ({dataCount,row
                       }}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
+                /> */}
             </TableRow>
         </TableFooter>
     )

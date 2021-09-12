@@ -3,5 +3,6 @@ export const Routes = {
   resetPassword:'/resetPassword/:token',
   profile:'/profile',
   category : '/category',
-  addAuction : '/add_auction'
+  addAuction : '/add_auction',
+  messages: '/messages'
 };

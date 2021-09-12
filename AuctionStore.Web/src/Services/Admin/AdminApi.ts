@@ -2,7 +2,7 @@ import { apiClient } from "../APIClient/apiClient";
 import { IBaseResponse } from "../../Interfaces/Api";
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 import { IAdmin, IBannedUser, IBannedWord } from "../../Interfaces/Admin";
-import { IAuction, IAuctionInfo } from "../../Interfaces/Auctions";
+import { IAuctionInfo } from "../../Interfaces/Auctions";
 
 export const AdminApi = {
   getBannedUsers: async (
