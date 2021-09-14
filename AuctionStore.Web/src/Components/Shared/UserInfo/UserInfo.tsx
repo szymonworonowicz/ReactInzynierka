@@ -37,11 +37,11 @@ const UserInfo: React.FC = () => {
     })();
   }, [context.userId]);
 
-  const onDelete = () => {
+  const handleDelete = () => {
     setIsDeleteUser(true);
   };
 
-  const onEdit = () => {
+  const handleEdit = () => {
     //@TODO UserEdit
   };
 
@@ -60,11 +60,11 @@ const UserInfo: React.FC = () => {
     }
   };
 
-  const onCancelDeleteUser = () => {
+  const handleCancelDeleteUser = () => {
     setIsDeleteUser(false);
   };
 
-  const onAgreeDeleteUser = async (): Promise<void> => {
+  const handleAgreeDeleteUser = async (): Promise<void> => {
     debugger;
     if (await UserApi.DeleteUser(context.userId)) {
       toast("zalogowano", "success");
@@ -83,8 +83,8 @@ const UserInfo: React.FC = () => {
         header={t("userData")}
         hasEdit={true}
         hasDelete={true}
-        onDelete={onDelete}
-        onEdit={onEdit}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
         ExternalIcon={Lock}
         externalIconAction={handleChangePassword}
       />
@@ -105,8 +105,8 @@ const UserInfo: React.FC = () => {
         body={t("deleteUserConfirm")}
         title={t("deleteUser")}
         open={isDeleteUser}
-        onCancel={onCancelDeleteUser}
-        onAgree={onAgreeDeleteUser}
+        onCancel={handleCancelDeleteUser}
+        onAgree={handleAgreeDeleteUser}
       />
     </>
   );

@@ -45,7 +45,7 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
   const { register, setValue, handleSubmit } = useForm();
   const toast = useToast();
 
-  const onDataChange = (e: any) => {
+  const handleDataChange = (e: any) => {
     const { value, id } = e.target;
     setResetPasswordData((prev) => {
       return {
@@ -86,7 +86,7 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
               autoFocus
               fullWidth
               value={resetPasswordData.password}
-              onChange={onDataChange}
+              onChange={handleDataChange}
             />
           </FormControl>
         </Grid>
@@ -98,7 +98,7 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
               autoFocus
               fullWidth
               value={resetPasswordData.newPassword}
-              onChange={onDataChange}
+              onChange={handleDataChange}
             />
           </FormControl>
         </Grid>

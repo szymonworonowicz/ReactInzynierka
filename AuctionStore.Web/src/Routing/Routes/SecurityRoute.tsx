@@ -20,7 +20,7 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
   if(!isLogged )
   {
     return (
-      <Redirect to={{pathname:Routes.home}} />
+      <Redirect to={{pathname:Routes.errorPage}} />
     )
   }
   return (
@@ -33,7 +33,7 @@ const SecurityRoute: React.FC<ISecureRouteProps> = ({
             <Component {...props}></Component>
           </Layout>
         ) : (
-          <Redirect to={{pathname:Routes.home}} />
+          <Redirect to={{pathname:Routes.errorPage}} />
         )
       }
     />

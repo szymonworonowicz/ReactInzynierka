@@ -15,5 +15,6 @@
     "bannedUsers" : "Zablokowani użytkownicy",
     "addAdmin" : "Dodaj administratora",
     "deleteUser" : "Usun uzytkownika",
-    "deleteUserConfirm" : "Czy jesteś pewny że chcesz usunąć konto?"
+    "deleteUserConfirm" : "Czy jesteś pewny że chcesz usunąć konto?",
+    "error_screen_message" : "Ta strona nie istnieje lub nie masz do niej dostępu"
 }

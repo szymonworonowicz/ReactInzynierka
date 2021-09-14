@@ -46,7 +46,7 @@ const RegisterForm: React.FC = () => {
     userType: "User",
   });
 
-  const onCredentialChange = (e: any) => {
+  const handleCredentialChange = (e: any) => {
     const { value, id } = e.target;
     setCredentials((prev) => {
       return { ...prev, [id]: value };
@@ -97,7 +97,7 @@ const RegisterForm: React.FC = () => {
               autoFocus
               fullWidth
               value={credentials.userName}
-              onChange={onCredentialChange}
+              onChange={handleCredentialChange}
             />
           </FormControl>
         </Grid>
@@ -108,7 +108,7 @@ const RegisterForm: React.FC = () => {
               id="firstName"
               fullWidth
               value={credentials.firstName}
-              onChange={onCredentialChange}
+              onChange={handleCredentialChange}
             />
           </FormControl>
         </Grid>
@@ -119,7 +119,7 @@ const RegisterForm: React.FC = () => {
               id="lastName"
               fullWidth
               value={credentials.lastName}
-              onChange={onCredentialChange}
+              onChange={handleCredentialChange}
             />
           </FormControl>
         </Grid>
@@ -127,7 +127,7 @@ const RegisterForm: React.FC = () => {
           <PasswordField
             fieldName="password"
             value={credentials.password}
-            onChange={onCredentialChange}
+            onChange={handleCredentialChange}
             className={classes.margin}
           />
         </Grid>
@@ -135,7 +135,7 @@ const RegisterForm: React.FC = () => {
           <PasswordField
             fieldName="confirmPassword"
             value={credentials.confirmPassword}
-            onChange={onCredentialChange}
+            onChange={handleCredentialChange}
             className={classes.margin}
           />
         </Grid>
@@ -146,7 +146,7 @@ const RegisterForm: React.FC = () => {
                 id="email"
                 fullWidth
                 value={credentials.email}
-                onChange={onCredentialChange}
+                onChange={handleCredentialChange}
                 />
             </FormControl>
         </Grid>

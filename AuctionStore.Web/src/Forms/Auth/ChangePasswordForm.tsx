@@ -34,7 +34,7 @@ const ChangePasswordForm: React.FC = () => {
     }
   );
 
-  const onCredentialsChange = (e: any) => {
+  const handleCredentialsChange = (e: any) => {
     const { value, id } = e.target;
     setChangePasswordData((prev) => {
       return {
@@ -54,7 +54,7 @@ const ChangePasswordForm: React.FC = () => {
           <PasswordField
             className={classes.margin}
             fieldName="oldPassword"
-            onChange={onCredentialsChange}
+            onChange={handleCredentialsChange}
             value={changePasswordData.oldPassword}
           />
         </Grid>
@@ -62,7 +62,7 @@ const ChangePasswordForm: React.FC = () => {
           <PasswordField
             className={classes.margin}
             fieldName="newPassword"
-            onChange={onCredentialsChange}
+            onChange={handleCredentialsChange}
             value={changePasswordData.newPassword}
           />
         </Grid>

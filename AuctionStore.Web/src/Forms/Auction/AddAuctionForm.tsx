@@ -63,6 +63,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
 
 
   const handleSave = async (data: IAddAuction) => {
+    debugger;
     for (let file of files) {
       if (file.fileId) {
         data.photos = [...data.photos, file.fileId];
@@ -78,6 +79,9 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
       <input type="hidden" {...register("price", { required: true })} />
       <input type="hidden" {...register("isTimeAuction", { required: false })} />
       <input type="hidden" {...register("description", { required: true })} />
+      <input type="hidden" {...register("timeStampStart", { required: true })} />
+      <input type="hidden" {...register("timeStampEnd", { required: false })} />
+      <input type="hidden" {...register("timeStampDuration", { required: false })} />
       <Grid container spacing={1} justify="center" alignContent="center">
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>

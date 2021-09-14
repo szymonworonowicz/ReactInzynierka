@@ -1,13 +1,44 @@
 import React, { useState } from "react";
-import { Paper, Tab, Tabs } from "@material-ui/core";
+import {
+  Paper,
+  Tab,
+  Tabs,
+  InputAdornment,
+  IconButton,
+} from "@material-ui/core";
+import { AccessTime } from "@material-ui/icons";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IAuctionTimePickerProps } from "./IAuctionTimePickerProps";
-import  moment from "moment";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import moment from "moment";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDateTimePicker,
+  TimePicker,
+} from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import MomentUtils from "@date-io/moment";
-import "moment/locale/pl"
+import { makeStyles } from "@material-ui/core/styles";
+import "moment/locale/pl";
+
+const useStyles = makeStyles({
+  pickersContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "20px",
+    margin: "0 20px",
+  },
+  picker: {
+    width: "45%",
+  },
+});
+
+type FormTime = {
+  startTime : MaterialUiPickersDate;
+  endTime :MaterialUiPickersDate;
+  duration :MaterialUiPickersDate;
+} 
 
 const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
   auction,
@@ -17,7 +48,13 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const { setValue } = useFormContext();
   const { t } = useTranslation();
-  const [startTime, setStartTime] = useState<Date | undefined>(new Date());
+  const [times, setTimes] = useState<FormTime>({
+    duration : null,
+    endTime : null,
+    startTime: null
+  })
+
+  const classes = useStyles();
 
   const handleChangeAuctionType = (
     _e: React.ChangeEvent<{}>,
@@ -25,6 +62,16 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
   ) => {
     setSelectedTab(newValue);
     setValue("isTimeAuction", newValue === 0);
+    setValue('timeStampDuration','');
+    setValue('timeStampEnd','');
+    setValue('timeStampStart','');
+
+    setTimes({
+      duration : null,
+      endTime : null,
+      startTime: null
+    })
+    
     setAuction((prev) => {
       return {
         ...prev,
@@ -33,10 +80,38 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
     });
   };
 
-  const handleStartDateChange = (date : MaterialUiPickersDate) => {
-    debugger;
-    setStartTime(date?.toDate());
-  }
+  const handleStartDateChange = (date: MaterialUiPickersDate) => {
+    setTimes(prev => {
+      return {
+        ...prev,
+        startTime : date
+      }
+    });
+    setValue("timeStampStart", date?.unix());
+  };
+
+  const handleEndDateChange = (date: MaterialUiPickersDate) => {
+    setTimes(prev => {
+      return {
+        ...prev,
+        endTime : date
+      }
+    });
+    setValue("timeStampEnd", date?.unix());
+  };
+
+  const handleDuration = (date: MaterialUiPickersDate) => {
+    setTimes(prev => {
+      return {
+        ...prev,
+        duration : date
+      }
+    });
+    setValue("timeStampDuration", date?.unix());
+  };
+  const getSecondLabel = (): string => {
+    return selectedTab === 0 ? t("endtime") : t("duration");
+  };
 
   return (
     <>
@@ -60,21 +135,67 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
           />
         </Tabs>
 
-        <div>
+        <div className={classes.pickersContainer}>
           <MuiPickersUtilsProvider
-            libInstance={moment}
             utils={MomentUtils}
-            // locale={"pl"}
+            libInstance={moment}
+            locale={"pl"}
           >
-            <DateTimePicker 
-              // autoOk
-              // showTodayButton
-              // disablePast
-              value={startTime}
-              format="dd/MM/yyyy"
+            <KeyboardDateTimePicker
+              autoOk={true}
+              minDate={moment()}
+              format="DD/MM/yyyy HH:MM"
+              disablePast
+              value={times.startTime}
+              label={t("start_time")}
+              okLabel={t("confirm")}
+              cancelLabel={t("cancel")}
               onChange={handleStartDateChange}
+              className={classes.picker}
             />
+          </MuiPickersUtilsProvider>
 
+          <MuiPickersUtilsProvider
+            utils={MomentUtils}
+            libInstance={moment}
+            locale={"pl"}
+          >
+            {selectedTab === 0 ? (
+              <KeyboardDateTimePicker
+                autoOk={true}
+                minDate={moment()}
+                format="DD/MM/yyyy HH:MM"
+                disablePast
+                value={times.endTime}
+                label={getSecondLabel()}
+                okLabel={t("confirm")}
+                cancelLabel={t("cancel")}
+                onChange={handleEndDateChange}
+                className={classes.picker}
+              />
+            ) : (
+              <TimePicker
+                autoOk={true}
+                format="mm:ss"
+                value={times.duration}
+                ampm={false}
+                views={["minutes", "seconds"]}
+                label={getSecondLabel()}
+                okLabel={t("confirm")}
+                cancelLabel={t("cancel")}
+                onChange={handleDuration}
+                className={classes.picker}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton>
+                        <AccessTime />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
           </MuiPickersUtilsProvider>
         </div>
       </Paper>

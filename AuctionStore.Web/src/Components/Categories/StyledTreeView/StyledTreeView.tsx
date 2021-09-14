@@ -16,12 +16,11 @@ const useStyles = makeStyles({
 const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
   const classes = useStyles();
 
-  let elemNr = data.length +1;
 
   const generateTreeView = (): ReactNode => {
     return data.map((elem, index) => {
       return (
-        <>
+        <div key={index}>
           {elem.subCategories.length === 0 ? (
             <StyledTreeItem
               key={elem.id}
@@ -48,7 +47,7 @@ const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
               })}
             </StyledTreeItem>
           )}
-        </>
+        </div>
       );
     });
   };

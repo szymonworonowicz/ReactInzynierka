@@ -1,3 +1,5 @@
+import { DictThemeTypes } from "../Enums";
+
 export const EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const AlphaNumeric = /(?!\s*$)^[-0-9/A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ$&+,:;=?@#_|[\]'"<>.-^*()%!\s]*$/;
 export const Alphabetic = /(?!\s*$)^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s,.-]*$/;
@@ -52,6 +54,20 @@ export function convertBytesToMbsOrKbs(filesize: number) {
 	}
  
 	return size;
+}
+
+const theme = new Map<string, DictThemeTypes> ([
+    ["Black", DictThemeTypes.Black],
+    ["White", DictThemeTypes.White],
+    ["Contrast", DictThemeTypes.Contrast],
+])
+
+export const getTheme = (themeName : string) : DictThemeTypes =>{
+    return  theme.get(themeName) ?? DictThemeTypes.White;
+}
+
+export function getEnumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
+    return Object.keys(obj).filter(k => Number.isNaN(+k)) as K[];
 }
 
 // export const getValidator = (translation: any, max: number | null, pattern: { value: RegExp; message: string } | null, required: boolean = false, minLength: number = 2) => {

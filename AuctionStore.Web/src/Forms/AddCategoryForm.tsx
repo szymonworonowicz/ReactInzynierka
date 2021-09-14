@@ -67,7 +67,7 @@ const AddCategoryForm: React.FC = () => {
     }
   }, [open]);
 
-  const onSubcategoryChange = (e: any) => {
+  const handleSubcategoryChange = (e: any) => {
     const { value } = e.target;
     setSelectedValue((prev) => {
       return {
@@ -177,7 +177,7 @@ const AddCategoryForm: React.FC = () => {
               autoFocus
               fullWidth
               value={selectedValue?.subCategoryName ?? ""}
-              onChange={onSubcategoryChange}
+              onChange={handleSubcategoryChange}
             />
           </FormControl>
         </Grid>

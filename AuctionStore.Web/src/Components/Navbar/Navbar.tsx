@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { useStyles } from "./Navbar.styles";
 import { AppBar, Toolbar } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import ThemeSelect from './ThemeSelect/ThemeSelect'
+import LanguageSelect from './LanguageSelect/LanguageSelect'
 
 import { UserContext } from "../../Context/UserContext";
 import LoginNav from "./LoginNav/LoginNav";
@@ -21,10 +23,20 @@ const Navbar: React.FC = () => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <div>
-            <img src="./logo.png" alt="logo" onClick={handleHome} height='50px' width='50px'/>
+          <div className={classes.container}>
+            <img
+              src="./logo.png"
+              alt="logo"
+              onClick={handleHome}
+              height="50px"
+              width="50px"
+            />
+              <div className={classes.menus}>
+                <ThemeSelect/>
+                <LanguageSelect/>
+                {isLogged ? <NavbarMenu /> : <LoginNav />}
+              </div>
           </div>
-          {isLogged ? <NavbarMenu /> : <LoginNav />}
         </Toolbar>
       </AppBar>
     </div>

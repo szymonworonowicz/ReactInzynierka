@@ -1,8 +1,6 @@
 .children {
-    position: absolute;
-    width: 80%;
-    height: 100vh;
-    left: 20%;
-    top: 10%;
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
 }

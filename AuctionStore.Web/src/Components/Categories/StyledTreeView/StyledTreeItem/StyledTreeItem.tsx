@@ -70,7 +70,7 @@ const StyledTreeItem: React.FC<IStyledTreeItem> = ({
   const LabelIcon = labelIcon;
   const history = useHistory();
 
-  const onClick = () => {
+  const handleClick = () => {
     if(children == null) {
       history.push({
         pathname : '/category',
@@ -104,7 +104,7 @@ const StyledTreeItem: React.FC<IStyledTreeItem> = ({
         group: classes.group,
         label: classes.label,
       }}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </TreeItem>

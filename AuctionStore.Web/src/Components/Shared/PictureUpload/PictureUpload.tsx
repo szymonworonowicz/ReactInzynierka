@@ -58,7 +58,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
   const classes = useStyles();
   const toast = useToast();
 
-  const onChange = async (files: FileObject[]) => {
+  const handleChange = async (files: FileObject[]) => {
     try {
       if (files.length) {
         let loadedFiles: Array<IFileEntityId> = [];
@@ -122,7 +122,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
           dropzoneClass={classes.root}
           dropzoneText={t("uploadImages")}
           // onChange={onChange}
-          onAdd={onChange}
+          onAdd={handleChange}
           onDelete={handleDeletePhoto}
           filesLimit={storeFileConfig.maxPhotos}
           acceptedFiles={['image/*']}

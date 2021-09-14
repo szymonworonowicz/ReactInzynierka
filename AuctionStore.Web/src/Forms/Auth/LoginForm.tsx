@@ -40,7 +40,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const onCredentialsChange = (e: any) => {
+  const handleCredentialsChange = (e: any) => {
     const { value, id } = e.target;
     setCredentials((prev) => {
       return {
@@ -74,7 +74,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({
               autoFocus
               fullWidth
               value={credentials.username}
-              onChange={onCredentialsChange}
+              onChange={handleCredentialsChange}
             />
           </FormControl>
         </Grid>
@@ -82,7 +82,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({
           <PasswordField
             className={classes.margin}
             fieldName="password"
-            onChange={onCredentialsChange}
+            onChange={handleCredentialsChange}
             value={credentials.password}
           />
         </Grid>

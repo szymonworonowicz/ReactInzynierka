@@ -27,19 +27,19 @@ const NavbarMenu: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const onLogoutClick = (): void => {
+  const handleLogoutClick = (): void => {
     authService.logout();
   };
 
-  const onMessagesClick = (): void => {
+  const handleMessagesClick = (): void => {
     history.push("/messages");
   };
 
-  const onProfileClick = (): void => {
+  const handleProfileClick = (): void => {
     history.push("/profile");
   };
 
-  const onAddAuctionClick = (): void => {
+  const handleAddAuctionClick = (): void => {
     history.push("/add_auction");
   };
 
@@ -48,7 +48,7 @@ const NavbarMenu: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
       <IconButton onClick={handleMenuClick} className={styles.nav}>
         <AccountCircle />
       </IconButton>
@@ -60,34 +60,34 @@ const NavbarMenu: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={onProfileClick}>
+        <MenuItem onClick={handleProfileClick}>
           <ListItemIcon>
             <AccountCircle />
           </ListItemIcon>
           <ListItemText primary={t("account")} />
         </MenuItem>
         {isInRoleUser() && (
-          <MenuItem onClick={onAddAuctionClick}>
+          <MenuItem onClick={handleAddAuctionClick}>
             <ListItemIcon>
               <GavelRounded />
             </ListItemIcon>
             <ListItemText primary={t("add_auction")} />
           </MenuItem>
         )}
-        <MenuItem onClick={onMessagesClick}>
+        <MenuItem onClick={handleMessagesClick}>
           <ListItemIcon>
             <Mail />
           </ListItemIcon>
           <ListItemText primary={t("messages")} />
         </MenuItem>
-        <MenuItem onClick={onLogoutClick}>
+        <MenuItem onClick={handleLogoutClick}>
           <ListItemIcon>
             <ExitToApp />
           </ListItemIcon>
           <ListItemText primary={t("logout")} />
         </MenuItem>
       </Menu>
-    </>
+    </div>
   );
 };
 

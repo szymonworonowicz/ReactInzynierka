@@ -25,7 +25,7 @@ const AddWord: React.FC = () => {
   const classes = useStyles();
 
 
-  const OnNewWordChange = (e : any) => {
+  const handleNewWordChange = (e : any) => {
     const {value} = e.target;
 
     setNewWord(value);
@@ -43,7 +43,7 @@ const AddWord: React.FC = () => {
               autoFocus
               fullWidth
               value={newWord}
-              onChange={OnNewWordChange}
+              onChange={handleNewWordChange}
             />
           </FormControl>
         </Grid>

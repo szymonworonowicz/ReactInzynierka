@@ -1,11 +1,13 @@
 import React from "react";
-import { Router, Switch, Route, BrowserRouter } from "react-router-dom";
+import { Router, Route, BrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home";
+import ErrorPage from '../Pages/ErrorPage'
 import Profile from "../Pages/Profile";
 import ResetPassword from '../Pages/ResetPassword';
 import Category from '../Pages/Category';
 import AddAuction from '../Pages/AddAuction';
 import Messages from '../Pages/Messages' 
+import AuctionConfirmation from '../Pages/AuctionConfirmation';
 import { history } from "../Helpers";
 import { UserRoles } from "../Helpers/constans";
 import { Routes } from "./routes";
@@ -27,6 +29,7 @@ const AppRouter: React.FC = () => {
           
           <Route exact path={Routes.home} render={() => <DefaultLayout><Home/></DefaultLayout>}/>
           <Route path ={Routes.resetPassword} render={() =><EmptyLayout><ResetPassword/></EmptyLayout> } />
+          <Route path ={Routes.errorPage} render={() => <EmptyLayout><ErrorPage/></EmptyLayout>}/>
           <AppRoute 
             path={Routes.category}
             component={Category}
@@ -50,6 +53,13 @@ const AppRouter: React.FC = () => {
             Layout={DefaultLayout}
             Component={Messages}
             Role={UserRoles.Both}
+          />
+
+          <SecurityRoute 
+            Path={Routes.confirmAuction}
+            Layout={EditProfileLayout}
+            Component={AuctionConfirmation}
+            Role={[UserRoles.User]}
           />
           
         </BrowserRouter>

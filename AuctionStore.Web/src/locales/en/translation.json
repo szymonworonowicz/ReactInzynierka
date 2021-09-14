@@ -1,3 +1,14 @@
 {
-    "hello":"hello"
+    "login" : "Login",
+    "register" : "Register",
+    "cancel" : "Cancel",
+    "save": "Confirm",
+    "username":"Login",
+    "password":"Password",
+    "firstName":"Name",
+    "lastName":"Surname",
+    "account" : "Account",
+    "messages" : "Messages",
+    "logout" : "Logout",
+    "changeData" : "Change data"
 }

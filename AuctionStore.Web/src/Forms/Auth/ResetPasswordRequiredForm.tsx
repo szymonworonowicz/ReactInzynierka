@@ -28,7 +28,7 @@ const ResetPasswordRequiredForm : React.FC = () => {
         email:''
     });
 
-    const onCredentialChange = (e: any) => {
+    const handleCredentialChange = (e: any) => {
         const { value, id } = e.target;
         setCredentials((prev) => {
           return { ...prev, [id]: value };
@@ -48,7 +48,7 @@ const ResetPasswordRequiredForm : React.FC = () => {
                     autoFocus
                     fullWidth
                     value={credentials.email}
-                    onChange={onCredentialChange}
+                    onChange={handleCredentialChange}
                     />
                 </FormControl>
                 </Grid>
