@@ -1,46 +1,85 @@
 import React from "react";
-import {IImageElementProps} from './IImageElementProps';
+import { IImageElementProps } from "./IImageElementProps";
 import { makeStyles } from "@material-ui/styles";
 import { IconButton } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { Delete, Check, Clear } from "@material-ui/icons";
 
 const useStyles = makeStyles(() => ({
-    main: {
-        position:'relative'
+  main: {
+    position: "relative",
+  },
+  pictureThumbnail: {
+    display: "inline-grid",
+    maxWidth: "150px",
+    maxHeight: "90px",
+    justifyContent: "center",
+    alignContent: "center",
+    padding: "10px",
+  },
+  icons: {
+    display: "flex",
+    position: "absolute",
+    top: "2%",
+    right: "10%",
+    width: "20px",
+    height: "auto",
+    "& .MuiIconButton-root": {
+      padding: "0px",
     },
-    icon : {
-        position:'absolute',
-        top:'2%',
-        right:'5%',
-        width:'20px',
-        height:'auto',
-    },
-    pictureThumbnail: {
-        display: "inline-grid",
-        maxWidth: "150px",
-        maxHeight: "90px",
-        justifyContent: "center",
-        alignContent: "center",
-    
-        padding: "10px",
-      },
+  },
 }));
 
-const ImageElement : React.FC<IImageElementProps> = ({fileId, onDelete,fileUrl}) => {
+const ImageElement: React.FC<IImageElementProps> = ({
+  file,
+  onDelete,
+  onDeleteMainPhoto,
+  onSetMainPhoto,
+  selectedPhoto,
+}) => {
+  const classes = useStyles();
 
-    const classes = useStyles();
+  const handleOnDelete = (e : React.MouseEvent) => {
+    onDelete(file);
+    e.stopPropagation()
+  };
+  const handleSetMainPhoto = (e : React.MouseEvent) : void => {
+    onSetMainPhoto(file);
+    e.stopPropagation()
+  };
 
-    const handleOnDelete = () => {
-        onDelete(fileId);
-    }
-    return (
-        <div className={classes.main}>
-            <img src={fileUrl} alt="" className={classes.pictureThumbnail}/>
-            <IconButton className={classes.icon} onClick={handleOnDelete}>
-                <Close style={{color:'red'}}/>
-            </IconButton>
-        </div>
-    )
-}
+  const handleDeleteMainPhoto = (e : React.MouseEvent): void => {
+    onDeleteMainPhoto(file);
+    e.stopPropagation()
+  };
+
+  return (
+    <div className={classes.main}>
+      <img
+        src={(file.data as string) ?? ""}
+        alt=""
+        className={classes.pictureThumbnail}
+      />
+      <div className={classes.icons}>
+        {selectedPhoto === "" && (
+          <IconButton onClick={handleSetMainPhoto}>
+            <Check style={{ color: "red" }} />
+          </IconButton>
+        )}
+        {selectedPhoto === file.data && (
+          <IconButton
+            onClick={handleDeleteMainPhoto}
+            hidden={selectedPhoto !== "" && selectedPhoto !== file.data}
+          >
+            <Clear style={{ color: "red" }} />
+          </IconButton>
+        )}
+
+        <IconButton onClick={handleOnDelete}>
+          <Delete style={{ color: "red" }} />
+        </IconButton>
+      </div>
+    </div>
+  );
+};
 
 export default ImageElement;

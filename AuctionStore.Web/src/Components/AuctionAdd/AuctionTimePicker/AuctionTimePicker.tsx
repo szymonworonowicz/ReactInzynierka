@@ -61,7 +61,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
     newValue: number
   ) => {
     setSelectedTab(newValue);
-    setValue("isTimeAuction", newValue === 0);
+    setValue("isTimeAuction", newValue === 1);
     setValue('timeStampDuration','');
     setValue('timeStampEnd','');
     setValue('timeStampStart','');

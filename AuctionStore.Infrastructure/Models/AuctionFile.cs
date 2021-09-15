@@ -13,6 +13,7 @@ namespace AuctionStore.Infrastructure.Models
         public string MediumPhotoPath { get; set; }
         public string MiniPhotoPath { get; set; }
         public long TimeStampAdded { get; set; }
+        public bool IsMain { get; set; }
 
         public Guid? AuctionId { get; set; }
     }

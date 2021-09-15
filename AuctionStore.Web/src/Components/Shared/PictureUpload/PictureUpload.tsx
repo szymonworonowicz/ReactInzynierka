@@ -1,48 +1,40 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
 import { IPictureUploadProps } from "./IPictureUploadProps";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../../../shared/hooks/useToast";
 import { DropzoneAreaBase, FileObject } from "material-ui-dropzone";
 import { convertBytesToMbsOrKbs } from "../../../Helpers/constans";
-import { IFileEntity, IFileEntityId, IFileId } from "./Interfaces";
-import {ImageService} from '../../../Services/Image/Image.service';
+import {IFileEntityId, IFileId } from "./Interfaces";
+import ImageElement from "./ImageElement/ImageElement";
+import { ImageService } from "../../../Services/Image/Image.service";
+import {IAuctionPhoto} from '../../../Interfaces/Auctions'
 
 const useStyles = makeStyles(() => ({
   root: {
     minHeight: "90px",
     fontSize: "18px",
-  },
-  picturePreviewContainer: {
+    position: "relative",
     display: "flex",
-    border: "2px solid lightGray",
-    height: "90px",
-    width: "100%",
-    // margin: '20px 0',
-    justifyContent: "space-between",
+    height: "15vh",
+    alignItems: "center",
+    "& .MuiDropzoneArea-textContainer": {
+      display: "none",
+    },
+    "& .MuiDropzonePreviewList-imageContainer": {
+      padding: "0px",
+      "& >button": {
+        display: "none",
+      },
+    },
   },
-  pictureThumbnail: {
-    display: "inline-grid",
-    maxWidth: "150px",
-    maxHeight: "90px",
-    justifyContent: "center",
-    alignContent: "center",
-
-    padding: "10px",
-  },
-  pictureName: {
-    display: "inline-grid",
-    wordBreak: "break-all",
-    fontSize: "20px",
-    justifyContent: "center",
-    alignContent: "center",
-    marginRight: "20px",
-  },
-  deletePictureIcon: {
-    display: "inline-grid",
-    borderLeft: "2px solid lightGray",
-    minWidth: "45px",
+  container: {
+    "& > div": {
+      flexGrow: "0",
+      maxWidth: "12.5%",
+      flexBasis: "12.5%",
+      padding: "0px",
+    },
   },
 }));
 
@@ -53,6 +45,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
 }) => {
   const [files, setFiles] = useState<Array<IFileEntityId>>([]);
   const [selectedFiles, setSelectedFiles] = useState<Array<FileObject>>([]);
+  const [mainPhotoSelected, setMainPhotoSelected] = useState<string>("");
 
   const { t } = useTranslation();
   const classes = useStyles();
@@ -62,100 +55,168 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
     try {
       if (files.length) {
         let loadedFiles: Array<IFileEntityId> = [];
-        let fileEntities : Array<IFileEntity> = [];
-        const newFiles : Array<FileObject> = files.filter(file => !selectedFiles.find(f => f.data === file.data)); 
-        if(newFiles.length === 0) {
-          toast(t('cannot add'), 'success');
+        let fileEntities: Array<IAuctionPhoto> = [];
+        const newFiles: Array<FileObject> = files.filter(
+          (file) => !selectedFiles.find((f) => f.data === file.data)
+        );
+        if (newFiles.length === 0) {
+          toast(t("cannot add"), "success");
           return;
         }
         await Promise.all(
-          newFiles.map(async(file) => {
+          newFiles.map(async (file) => {
             const fileResponse = await ImageService.saveImage(file.file);
             if (fileResponse) {
-              loadedFiles = [...loadedFiles, {
-                file: file,
-                id : fileResponse.id
-              }]; 
-              
+              loadedFiles = [
+                ...loadedFiles,
+                {
+                  file: file,
+                  id: fileResponse.id,
+                },
+              ];
+
               fileEntities = [
                 ...fileEntities,
-                { fileId: fileResponse.id, fileName: file.file.name, deleteFile: false },
-              ]
+                {
+                  photoId: fileResponse.id,
+                  isMain : false
+                },
+              ];
             }
           })
-        )
+        );
         setFiles(loadedFiles);
         setFileEntity(fileEntities);
-        setSelectedFiles(prev => [...prev, ...newFiles])
+        setSelectedFiles((prev) => [...prev, ...newFiles]);
       }
     } catch (error) {}
   };
 
-  const handleDeletePhoto = async (file : FileObject, index:number) : Promise<void> => {
-    const filetoDelete = files.find(x => x.file.data === file.data);
-    const fileId = filetoDelete?.id ?? '';
-    try {
-      await ImageService.deleteImage(fileId);
-      setFiles(prev => {
-        let local = prev;
-        local.splice(index,1);
-        return [...local];
-      })
-    } catch (error) {
-      
-    } 
+  const handleDeletePhoto = async (file: FileObject): Promise<void> => {
+    debugger;
 
-    setSelectedFiles(prev => {
+    try {
+      const index = files.findIndex(x => x.file.file.lastModified === file.file.lastModified && x.file.file.name === file.file.name);
+      const fileId = files[index]?.id ?? "";
+      await ImageService.deleteImage(fileId);
+      setFileEntity(prev => {
+        let local = prev;
+        const idx = local.findIndex(x => x.photoId === fileId);
+        if(idx !== -1) {
+          local.splice(idx,1);
+        }
+
+        return [...local]
+      })
+      setFiles((prev) => {
+        let local = prev;
+        local.splice(index, 1);
+        return [...local];
+      });
+    } catch (error) {}
+
+    const index = selectedFiles.findIndex((x) => x.file.lastModified === file.file.lastModified && x.file.name === file.file.name);
+
+    setSelectedFiles((prev) => {
       let local = prev;
-      local.splice(index,1);
+      local.splice(index, 1);
+      return [...local];
+    });
+
+
+    if(file.data === mainPhotoSelected) {
+      setMainPhotoSelected('')
+    }
+    
+  };
+
+  const handleSetMainPhoto = (file: FileObject): void => {
+    const index = files.findIndex((x) => x.file.data === file.data);
+    files[index].isMain = true;
+    setMainPhotoSelected(file.data as string);
+    setFileEntity(prev => {
+      const local = prev;
+      const id = files[index].id;
+      const idx = fileEntity?.findIndex(x => x.photoId === id) ?? -1;
+      if(idx !== -1) {
+        let obj = local[idx];
+        obj.isMain = true;
+        local.splice(idx, 1 ,obj);
+      }
+
       return [...local];
     })
-    
+  };
+
+  const handleDeleteMainPhoto = (file: FileObject): void => {
+    const index = files.findIndex((x) => x.file.data === file.data);
+    files[index].isMain = false;
+    setMainPhotoSelected("");
+    setFileEntity(prev => {
+      const local = prev;
+      const id = files[index].id;
+      const idx = fileEntity?.findIndex(x => x.photoId === id) ?? -1;
+      if(idx !== -1) {
+        let obj = local[idx];
+        obj.isMain = false;
+        local.splice(idx, 1 ,obj);
+      }
+
+      return [...local];
+    })
   };
   return (
     <>
-        <Grid
-          container
-          style={{ width: "100%", color: "#BABABA", fontSize: "18px" }}
-        >
-          <DropzoneAreaBase
-          dropzoneClass={classes.root}
-          dropzoneText={t("uploadImages")}
-          // onChange={onChange}
-          onAdd={handleChange}
-          onDelete={handleDeletePhoto}
-          filesLimit={storeFileConfig.maxPhotos}
-          acceptedFiles={['image/*']}
-          useChipsForPreview={false}
-          clearOnUnmount={true}
+      <DropzoneAreaBase
+        dropzoneClass={classes.root}
+        dropzoneText={t("uploadImages")}
+        // onChange={onChange}
+        onAdd={handleChange}
+        onDelete={handleDeletePhoto}
+        filesLimit={storeFileConfig.maxPhotos}
+        acceptedFiles={["image/*"]}
+        // useChipsForPreview={false}
+        // showPreviews={false}
 
-          alertSnackbarProps={{
-            anchorOrigin: { vertical: "top", horizontal: "center" },
-          }}
-          getFileLimitExceedMessage={(filesLimit) => t("maxFiles") + filesLimit}
-          getFileRemovedMessage={(fileName) => t("common.form.dropzone.fileRemovedMessage") + fileName}
-          getDropRejectMessage={(
-            rejectedFile,
-            acceptedFiles,
-            maxFileSize
-          ) => {
-            let message = t("common.form.dropzone.fileRejectedMessage") +
-              rejectedFile.name +
-              " ";
-            if (!acceptedFiles.includes(rejectedFile.type)) {
-              message += t("fileTypeNotSupported");
-            }
-            if (rejectedFile.size > maxFileSize) {
-              message +=
-                t("fileExceededMaxSize") +
-                convertBytesToMbsOrKbs(maxFileSize);
-            }
-            return message;
-          } }
-          fileObjects={selectedFiles}          
-          />
-        </Grid>
-
+        clearOnUnmount={true}
+        alertSnackbarProps={{
+          anchorOrigin: { vertical: "top", horizontal: "center" },
+        }}
+        previewGridClasses={{
+          container: classes.container,
+        }}
+        getFileLimitExceedMessage={(filesLimit) => t("maxFiles") + filesLimit}
+        getFileRemovedMessage={(fileName) =>
+          t("common.form.dropzone.fileRemovedMessage") + fileName
+        }
+        getDropRejectMessage={(rejectedFile, acceptedFiles, maxFileSize) => {
+          let message =
+            t("common.form.dropzone.fileRejectedMessage") +
+            rejectedFile.name +
+            " ";
+          if (!acceptedFiles.includes(rejectedFile.type)) {
+            message += t("fileTypeNotSupported");
+          }
+          if (rejectedFile.size > maxFileSize) {
+            message +=
+              t("fileExceededMaxSize") + convertBytesToMbsOrKbs(maxFileSize);
+          }
+          return message;
+        }}
+        fileObjects={selectedFiles}
+        getPreviewIcon={(item) => {
+          return (
+            <ImageElement
+              file={item}
+              onDelete={handleDeletePhoto}
+              onSetMainPhoto={handleSetMainPhoto}
+              onDeleteMainPhoto={handleDeleteMainPhoto}
+              selectedPhoto={mainPhotoSelected}
+            />
+          );
+        }}
+        children={<div></div>}
+      />
     </>
   );
 };

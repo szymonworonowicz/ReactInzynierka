@@ -14,7 +14,7 @@ namespace AuctionStore.Infrastructure.Models
         public long? TimeStampDuration { get; set; }
         public string Description { get; set; }
         public Guid UserId { get; set; }
-        public Guid SubCategoryId { get; set; }
+        public Guid? SubCategoryId { get; set; }
 
 
         public virtual IEnumerable<AuctionFile> AuctionMedias { get; set; }

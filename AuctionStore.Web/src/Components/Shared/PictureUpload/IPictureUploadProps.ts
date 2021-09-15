@@ -1,8 +1,9 @@
-import { IFileEntity, IStoreFileConfig } from "./Interfaces";
+import { IStoreFileConfig } from "./Interfaces";
 import { Dispatch, SetStateAction } from "react";
+import {IAuctionPhoto} from '../../../Interfaces/Auctions'
 
 export interface IPictureUploadProps {
-    fileEntity? : Array<IFileEntity>;
-    setFileEntity : Dispatch<SetStateAction<Array<IFileEntity>>>;
+    fileEntity? : Array<IAuctionPhoto>;
+    setFileEntity : Dispatch<SetStateAction<Array<IAuctionPhoto>>>;
     storeFileConfig : IStoreFileConfig
 }

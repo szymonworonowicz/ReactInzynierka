@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IAddAuctionProps } from "./IAddAuctionFormProps";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
@@ -10,13 +10,13 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { IAddAuction } from "../../Interfaces/Auctions";
+import { IAddAuction,IAuctionPhoto } from "../../Interfaces/Auctions";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { useToast } from "../../shared/hooks/useToast";
 import PictureUpload from "../../Components/Shared/PictureUpload/PictureUpload";
-import { IFileEntity } from "../../Components/Shared/PictureUpload/Interfaces";
 import AuctionTimePicker from '../../Components/AuctionAdd/AuctionTimePicker/AuctionTimePicker';
+import { UserContext } from "../../Context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,17 +35,20 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
   auctionInfo,
   saveData,
 }) => {
-  const [files, setFiles] = useState<Array<IFileEntity>>([]);
+  const [files, setFiles] = useState<Array<IAuctionPhoto>>([]);
+  const context = useContext(UserContext);
   const [auction, setAuction] = useState<IAddAuction>({
-    name: "",
+    title: "",
     photos: [],
     price: 0,
     isTimeAuction: true,
     description: "",
+    userId: context.userId
   });
 
   const classes = useStyles();
   const { t } = useTranslation();
+
   const toast = useToast();
 
   const { register, setValue, handleSubmit } = useFormContext();
@@ -64,18 +67,21 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
 
   const handleSave = async (data: IAddAuction) => {
     debugger;
+    data.isTimeAuction = auction.isTimeAuction;
+    if(!data.photos) {
+      data.photos = [];
+    }
     for (let file of files) {
-      if (file.fileId) {
-        data.photos = [...data.photos, file.fileId];
+      if (file.photoId) {
+        data.photos = [...data.photos, file];
       }
     }
-
     await saveData(data);
   };
 
   return (
     <form>
-      <input type="hidden" {...register("name", { required: true })} />
+      <input type="hidden" {...register("title", { required: true })} />
       <input type="hidden" {...register("price", { required: true })} />
       <input type="hidden" {...register("isTimeAuction", { required: false })} />
       <input type="hidden" {...register("description", { required: true })} />
@@ -85,12 +91,12 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
       <Grid container spacing={1} justify="center" alignContent="center">
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="name">{t("auction_name")}</InputLabel>
+            <InputLabel htmlFor="title">{t("auction_name")}</InputLabel>
             <Input
-              id="name"
+              id="title"
               autoFocus
               fullWidth
-              value={auction.name}
+              value={auction.title}
               onChange={handleChange}
             />
           </FormControl>

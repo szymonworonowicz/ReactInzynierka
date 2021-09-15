@@ -1,4 +1,5 @@
-﻿using AuctionStore.Domain.Commands.Admin;
+﻿using AuctionStore.Domain.Commands;
+using AuctionStore.Domain.Commands.Admin;
 using AuctionStore.Domain.Commands.Auth;
 using AuctionStore.Domain.Commands.Users;
 using AuctionStore.Infrastructure.Models;
@@ -13,6 +14,7 @@ namespace AuctionStore.API.MapperProfile
             CreateMap<CreateUserCommand, User>();
             CreateMap<UpsertAddressCommand, Address>();
             CreateMap<UpsertStoreConfigCommand, StoreConfig>();
+            CreateMap<AddAuctionCommand, Auction>();
         }
     }
 }

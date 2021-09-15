@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuctionStore.Domain.Queries.Auction;
+using AuctionStore.Domain.Commands;
 
 namespace AuctionStore.API.Controllers
 {
@@ -30,6 +31,14 @@ namespace AuctionStore.API.Controllers
             var result = await QueryAsync(new GetAuctionInfoQuery());
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
 
+        }
+
+        [HttpPost("addAuction")]
+        public async Task<IActionResult> AddAuction([FromBody] AddAuctionCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
     }
 }
