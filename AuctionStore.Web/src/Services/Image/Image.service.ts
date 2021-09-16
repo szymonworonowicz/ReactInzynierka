@@ -4,7 +4,8 @@ import {apiClient} from '../APIClient/apiClient';
 
 export interface IImageService {
     saveImage: (file : File) => Promise<IImage>,
-    deleteImage: (id:string) => Promise<boolean> 
+    deleteImage: (id:string) => Promise<boolean>,
+    getImage: (auctionId : string) => Promise<string>
 }
 
 export const ImageService : IImageService = {
@@ -25,5 +26,15 @@ export const ImageService : IImageService = {
         }
 
         return new Promise<boolean>((_resolve, reject) => reject(null));
+    },
+
+    getImage : async (auctionId : string): Promise<string> => {
+        const response = await apiClient.post<IBaseResponse<string>>('/files/getAuctionMainImage',{auctionId});
+        
+        if(response.data.success) {
+            return new Promise<string>((resolve) => resolve(response.data.data));
+        }
+
+        return new Promise<string>((_response, reject) => reject(null));
     }
 }

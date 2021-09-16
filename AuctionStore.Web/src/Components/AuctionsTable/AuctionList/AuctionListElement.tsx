@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { IAuctionListElementProps } from "./IAuctionListElementProps";
 import { Paper, Container, Typography } from "@material-ui/core";
-import moment from 'moment';
+import {ImageService} from '../../../Services/Image/Image.service'
 
 const AuctionListElement: React.FC<IAuctionListElementProps> = ({ data }) => {
-    const [remainingTime, setRemainingTime] = useState<number>((data.timeStampEnd as number) - (new Date().getTime() /1000));
 
-//   setInterval(() => {
-//       debugger;
-//     setRemainingTime(prev => prev -1);
-//     console.log(getEndTime())
-//   },1000)
+  const [photo, setPhoto] = useState<string>('');
 
-//   const getEndTime = ()=> {
-//       return moment.duration(remainingTime,'seconds')
-//   }
+  useEffect(() => {
+    (
+      async () => {
+        const response = await ImageService.getImage(data.id);
+        setPhoto(response);
+      }
+    )()
+  },[data.id])
+
+  const getPhoto = () : string => {
+    if(!photo) {
+      return 'https://via.placeholder.com/150'
+    }
+    return photo;
+  }
+
   return (
     <Paper>
       <Container style={{ display: "flex" }} maxWidth={false}>
         <div>
           <img
-            src="https://via.placeholder.com/150"
+            src={getPhoto()}
             alt=""
             width="150px"
             height="150px"

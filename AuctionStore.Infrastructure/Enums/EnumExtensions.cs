@@ -5,13 +5,10 @@ namespace AuctionStore.Infrastructure.Enums
 {
     public static class EnumExtensions
     {
-        public static string GetDescription<T>(this T enumerationValue) where T : struct
+        public static string GetDescription<T>(this T enumerationValue) where T : Enum
         {
             var type = enumerationValue.GetType();
-            if(!type.IsEnum)
-            {
-                throw new ArgumentException($"{nameof(enumerationValue)} must be of Enum type", nameof(enumerationValue));
-            }
+
 
             var memberInfo = type.GetMember(enumerationValue.ToString());
 

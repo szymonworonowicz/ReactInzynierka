@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IPictureUploadProps } from "./IPictureUploadProps";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../../../shared/hooks/useToast";
 import { DropzoneAreaBase, FileObject } from "material-ui-dropzone";
 import { convertBytesToMbsOrKbs } from "../../../Helpers/constans";
-import {IFileEntityId, IFileId } from "./Interfaces";
+import { IFileEntityId } from "./Interfaces";
 import ImageElement from "./ImageElement/ImageElement";
 import { ImageService } from "../../../Services/Image/Image.service";
-import {IAuctionPhoto} from '../../../Interfaces/Auctions'
+import { IAuctionPhoto } from "../../../Interfaces/Auctions";
+import Popper from "../../../shared/Popper/Popper";
+import ImageCropModal from './ImageCropModal/ImageCropModal'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -46,68 +48,80 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
   const [files, setFiles] = useState<Array<IFileEntityId>>([]);
   const [selectedFiles, setSelectedFiles] = useState<Array<FileObject>>([]);
   const [mainPhotoSelected, setMainPhotoSelected] = useState<string>("");
+  const [isCropped, setIsCropped] = useState<boolean>(true);
+  const [newFiles, setNewFiles] = useState<Array<FileObject>>([]);
 
   const { t } = useTranslation();
   const classes = useStyles();
   const toast = useToast();
 
   const handleChange = async (files: FileObject[]) => {
-    try {
-      if (files.length) {
-        let loadedFiles: Array<IFileEntityId> = [];
-        let fileEntities: Array<IAuctionPhoto> = [];
-        const newFiles: Array<FileObject> = files.filter(
-          (file) => !selectedFiles.find((f) => f.data === file.data)
-        );
-        if (newFiles.length === 0) {
-          toast(t("cannot add"), "success");
-          return;
-        }
-        await Promise.all(
-          newFiles.map(async (file) => {
-            const fileResponse = await ImageService.saveImage(file.file);
-            if (fileResponse) {
-              loadedFiles = [
-                ...loadedFiles,
-                {
-                  file: file,
-                  id: fileResponse.id,
-                },
-              ];
-
-              fileEntities = [
-                ...fileEntities,
-                {
-                  photoId: fileResponse.id,
-                  isMain : false
-                },
-              ];
-            }
-          })
-        );
-        setFiles(loadedFiles);
-        setFileEntity(fileEntities);
-        setSelectedFiles((prev) => [...prev, ...newFiles]);
+    if (files.length) {
+      const filteredFiles: Array<FileObject> = files.filter(
+        (file) => !selectedFiles.find((f) => f.data === file.data)
+      );
+      if (filteredFiles.length === 0) {
+        toast(t("cannot add"), "success");
+        return;
       }
-    } catch (error) {}
+      setNewFiles(filteredFiles);
+      setIsCropped(false);
+    }
   };
+
+  const handleUploadPhoto = useCallback(async (): Promise<void> => {
+    if (isCropped === true) {
+      let loadedFiles: Array<IFileEntityId> = [];
+      let fileEntities: Array<IAuctionPhoto> = [];
+      await Promise.all(
+        newFiles.map(async (file) => {
+          const fileResponse = await ImageService.saveImage(file.file);
+          if (fileResponse) {
+            loadedFiles = [
+              ...loadedFiles,
+              {
+                file: file,
+                id: fileResponse.id,
+              },
+            ];
+
+            fileEntities = [
+              ...fileEntities,
+              {
+                photoId: fileResponse.id,
+                isMain: false,
+              },
+            ];
+          }
+        })
+      );
+      setSelectedFiles((prev) => [...prev, ...newFiles]);
+      setNewFiles([]);
+      setFiles(loadedFiles);
+      setFileEntity(fileEntities);
+    }
+  }, [isCropped, newFiles, setFileEntity]);
 
   const handleDeletePhoto = async (file: FileObject): Promise<void> => {
     debugger;
 
     try {
-      const index = files.findIndex(x => x.file.file.lastModified === file.file.lastModified && x.file.file.name === file.file.name);
+      const index = files.findIndex(
+        (x) =>
+          x.file.file.lastModified === file.file.lastModified &&
+          x.file.file.name === file.file.name
+      );
       const fileId = files[index]?.id ?? "";
       await ImageService.deleteImage(fileId);
-      setFileEntity(prev => {
+      setFileEntity((prev) => {
         let local = prev;
-        const idx = local.findIndex(x => x.photoId === fileId);
-        if(idx !== -1) {
-          local.splice(idx,1);
+        const idx = local.findIndex((x) => x.photoId === fileId);
+        if (idx !== -1) {
+          local.splice(idx, 1);
         }
 
-        return [...local]
-      })
+        return [...local];
+      });
       setFiles((prev) => {
         let local = prev;
         local.splice(index, 1);
@@ -115,7 +129,11 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
       });
     } catch (error) {}
 
-    const index = selectedFiles.findIndex((x) => x.file.lastModified === file.file.lastModified && x.file.name === file.file.name);
+    const index = selectedFiles.findIndex(
+      (x) =>
+        x.file.lastModified === file.file.lastModified &&
+        x.file.name === file.file.name
+    );
 
     setSelectedFiles((prev) => {
       let local = prev;
@@ -123,50 +141,75 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
       return [...local];
     });
 
-
-    if(file.data === mainPhotoSelected) {
-      setMainPhotoSelected('')
+    if (file.data === mainPhotoSelected) {
+      setMainPhotoSelected("");
     }
-    
   };
 
   const handleSetMainPhoto = (file: FileObject): void => {
     const index = files.findIndex((x) => x.file.data === file.data);
     files[index].isMain = true;
     setMainPhotoSelected(file.data as string);
-    setFileEntity(prev => {
+    setFileEntity((prev) => {
       const local = prev;
       const id = files[index].id;
-      const idx = fileEntity?.findIndex(x => x.photoId === id) ?? -1;
-      if(idx !== -1) {
+      const idx = fileEntity?.findIndex((x) => x.photoId === id) ?? -1;
+      if (idx !== -1) {
         let obj = local[idx];
         obj.isMain = true;
-        local.splice(idx, 1 ,obj);
+        local.splice(idx, 1, obj);
       }
 
       return [...local];
-    })
+    });
   };
 
   const handleDeleteMainPhoto = (file: FileObject): void => {
     const index = files.findIndex((x) => x.file.data === file.data);
     files[index].isMain = false;
     setMainPhotoSelected("");
-    setFileEntity(prev => {
+    setFileEntity((prev) => {
       const local = prev;
       const id = files[index].id;
-      const idx = fileEntity?.findIndex(x => x.photoId === id) ?? -1;
-      if(idx !== -1) {
+      const idx = fileEntity?.findIndex((x) => x.photoId === id) ?? -1;
+      if (idx !== -1) {
         let obj = local[idx];
         obj.isMain = false;
-        local.splice(idx, 1 ,obj);
+        local.splice(idx, 1, obj);
       }
 
       return [...local];
-    })
+    });
   };
+
+  const handleFinishCrop = () : void => {
+    
+  }
+
+  const handleCropClose = () => {
+    setIsCropped(true);
+    if(false) {
+      handleUploadPhoto();
+    }
+  }
+
+  const getImageCropComponent = () : JSX.Element => {
+    return (  
+      <ImageCropModal  images={newFiles} setImages={setNewFiles}/>
+    )
+  }
+
   return (
     <>
+      <Popper 
+        open={!isCropped && newFiles.length!==0}
+        title={t('crop_image')}
+        maxWidth='lg'
+        onAgree={handleFinishCrop}
+        showCancel = {false}
+        body={getImageCropComponent()}
+        onCancel={handleCropClose}
+      />
       <DropzoneAreaBase
         dropzoneClass={classes.root}
         dropzoneText={t("uploadImages")}

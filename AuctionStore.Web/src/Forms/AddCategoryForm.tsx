@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import { IAddCategory } from "../Interfaces/Category";
-import { CategoriesApi } from "../Services/Categories/CategoriesApi";
+import { CategoriesApi } from "../Services/Categories/Category.service";
 import {
   Grid,
   TextField,
@@ -15,6 +15,7 @@ import {
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
+import { FilterOptionsState } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +78,52 @@ const AddCategoryForm: React.FC = () => {
     });
     setValue("subCategoryName", value);
   };
+
+  const handleCategoryChange = (_event:React.ChangeEvent<{}>, newValue : string | ExtendedAddCategory | null) => {
+    if (typeof newValue === "string") {
+      setSelectedValue({
+        id: newValue,
+      });
+      setValue("categoryId", newValue);
+      setValue('categoryName','');
+    } else if (newValue && newValue.inputValue) {
+      setSelectedValue({
+        name: newValue.inputValue,
+      });
+      setValue("categoryName", newValue.inputValue);
+      setValue('categoryId','');
+    } else {
+      let value = newValue as IAddCategory;
+      setSelectedValue(value);
+      setValue("categoryId", value?.id ?? "");
+      setValue('categoryName','');
+    }
+  }
+
+  const handleFilterOption = (options : Array<ExtendedAddCategory>,params : FilterOptionsState<ExtendedAddCategory> ) : Array<ExtendedAddCategory> => {
+    const filtered = filter(options, params);
+
+    if (params.inputValue !== "") {
+      filtered.push({
+        inputValue: params.inputValue,
+        name: `${t("Add")} ${params.inputValue}`,
+      });
+    }
+
+    return filtered;
+  }
+
+  const handleOptionLabel = (option : ExtendedAddCategory): string => {
+    if (typeof option === "string") {
+      return option;
+    }
+    if (option.inputValue) {
+      return option.inputValue;
+    }
+
+    return option.name as string;
+  }
+
   return (
     <form>
       <Grid container spacing={1} justify="center" alignContent="center">
@@ -104,48 +151,9 @@ const AddCategoryForm: React.FC = () => {
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
-            onChange={(_event, newValue) => {
-              if (typeof newValue === "string") {
-                setSelectedValue({
-                  id: newValue,
-                });
-                setValue("categoryId", newValue);
-                setValue('categoryName','');
-              } else if (newValue && newValue.inputValue) {
-                setSelectedValue({
-                  name: newValue.inputValue,
-                });
-                setValue("categoryName", newValue.inputValue);
-                setValue('categoryId','');
-              } else {
-                let value = newValue as IAddCategory;
-                setSelectedValue(value);
-                setValue("categoryId", value?.id ?? "");
-                setValue('categoryName','');
-              }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-
-              if (params.inputValue !== "") {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  name: `${t("Add")} ${params.inputValue}`,
-                });
-              }
-
-              return filtered;
-            }}
-            getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-
-              return option.name as string;
-            }}
+            onChange={handleCategoryChange}
+            filterOptions={handleFilterOption}
+            getOptionLabel={handleOptionLabel}
             renderOption={(option) => option.name as string}
             freeSolo
             loading={loading}

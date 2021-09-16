@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ICategoryList } from "../../Interfaces/Api";
-import { CategoriesApi } from "../../Services/Categories/CategoriesApi";
+import { CategoriesApi } from "../../Services/Categories/Category.service";
 import StyledTreeView from "./StyledTreeView/StyledTreeView";
 import styles from './Categories.module.css'
 

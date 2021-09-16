@@ -10,12 +10,13 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { IAddAuction,IAuctionPhoto } from "../../Interfaces/Auctions";
+import { IAddAuction, IAuctionPhoto } from "../../Interfaces/Auctions";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { useToast } from "../../shared/hooks/useToast";
 import PictureUpload from "../../Components/Shared/PictureUpload/PictureUpload";
-import AuctionTimePicker from '../../Components/AuctionAdd/AuctionTimePicker/AuctionTimePicker';
+import AuctionTimePicker from "../../Components/AuctionAdd/AuctionTimePicker/AuctionTimePicker";
+import AuctionAddCategoryPicker from "../../Components/AuctionAdd/AuctionAddCategoryPicker/AuctionAddCategoryPicker";
 import { UserContext } from "../../Context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,13 +44,11 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
     price: 0,
     isTimeAuction: true,
     description: "",
-    userId: context.userId
+    userId: context.userId,
   });
 
   const classes = useStyles();
   const { t } = useTranslation();
-
-  const toast = useToast();
 
   const { register, setValue, handleSubmit } = useFormContext();
 
@@ -64,11 +63,10 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
     setValue(`${id}`, value);
   };
 
-
   const handleSave = async (data: IAddAuction) => {
     debugger;
     data.isTimeAuction = auction.isTimeAuction;
-    if(!data.photos) {
+    if (!data.photos) {
       data.photos = [];
     }
     for (let file of files) {
@@ -83,11 +81,23 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
     <form>
       <input type="hidden" {...register("title", { required: true })} />
       <input type="hidden" {...register("price", { required: true })} />
-      <input type="hidden" {...register("isTimeAuction", { required: false })} />
+      <input
+        type="hidden"
+        {...register("isTimeAuction", { required: false })}
+      />
       <input type="hidden" {...register("description", { required: true })} />
-      <input type="hidden" {...register("timeStampStart", { required: true })} />
+      <input
+        type="hidden"
+        {...register("timeStampStart", { required: true })}
+      />
       <input type="hidden" {...register("timeStampEnd", { required: false })} />
-      <input type="hidden" {...register("timeStampDuration", { required: false })} />
+      <input type="hidden" {...register("userId", { required: false ,value:context.userId})} />
+
+      <input
+        type="hidden"
+        {...register("timeStampDuration", { required: false })}
+      />
+      <input type="hidden" {...register("subCategoryId", { required: true })} />
       <Grid container spacing={1} justify="center" alignContent="center">
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
@@ -101,6 +111,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
             />
           </FormControl>
         </Grid>
+
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
             <InputLabel htmlFor="price">{t("auction_price")}</InputLabel>
@@ -114,11 +125,14 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-            <AuctionTimePicker 
-                auction={auction}
-                setAuction = {setAuction}
-                margin={classes.margin}
-            />
+          <AuctionTimePicker
+            auction={auction}
+            setAuction={setAuction}
+            margin={classes.margin}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <AuctionAddCategoryPicker  setAuction={setAuction} auction={auction}/>
         </Grid>
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
@@ -133,6 +147,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
             />
           </FormControl>
         </Grid>
+
         <Grid item xs={12}>
           <PictureUpload
             setFileEntity={setFiles}

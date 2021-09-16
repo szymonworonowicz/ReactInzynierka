@@ -6,6 +6,7 @@ import { AuctionApi } from "../../Services/Auction/Auction.service";
 import { IAddAuction, IAuctionInfo } from "../../Interfaces/Auctions";
 import { useToast } from "../../shared/hooks/useToast";
 import AddAuctionForm from '../../Forms/Auction/AddAuctionForm';
+import { useHistory } from "react-router-dom";
 
 const AddAuction: React.FC = () => {
   const [auctionInfo, setAuctionInfo] = useState<IAuctionInfo>({
@@ -18,6 +19,7 @@ const AddAuction: React.FC = () => {
   const methods = useForm();
   const toast = useToast();
   const { t } = useTranslation();
+  const history = useHistory();
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,6 +40,16 @@ const AddAuction: React.FC = () => {
 
   const handleSubmitAuction = async(auction :IAddAuction) : Promise<void> => {
     const response = await AuctionApi.addAuction(auction);
+    if(response) {
+      toast(t('added_auction'),'success'); 
+      setTimeout(() => {
+        history.push('/');
+      },3000);
+    }
+    else {
+      toast(t('added_auction_failure'),'error'); 
+
+    }
   }
 
   if (isLoading) {

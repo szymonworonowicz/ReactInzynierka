@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import { useTranslation } from "react-i18next";
 import {CircularProgress} from '@material-ui/core';
 import {IPageRequest} from '../../Interfaces/Paged';
 import GenericTable from "../Shared/GenericTable/GenericTable";

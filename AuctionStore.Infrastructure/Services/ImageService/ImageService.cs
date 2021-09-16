@@ -110,7 +110,7 @@ namespace AuctionStore.Infrastructure.Services.ImageService
 
         public async Task<string> GetImageString(string path)
         {
-            return Convert.ToBase64String(await File.ReadAllBytesAsync(Path.Combine(baseUrl, path)));
+            return Convert.ToBase64String(await File.ReadAllBytesAsync( path));
         }
     }
 }

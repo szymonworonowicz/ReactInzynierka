@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { IPageRequest } from "../../../Interfaces/Paged";
 import { ICategoryList } from "../../../Interfaces/Api";
 import { CircularProgress} from "@material-ui/core";
-import { CategoriesApi } from "../../../Services/Categories/CategoriesApi";
+import { CategoriesApi } from "../../../Services/Categories/Category.service";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import { IGenericTableProps,IGenericTableColumnDefinitionType } from "../../Shared/GenericTable";
 import CategoryPanelElement from './CategoryElement/CategoryPanelElement';

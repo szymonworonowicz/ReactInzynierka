@@ -10,4 +10,5 @@ export interface IAddAuction  {
     timeStampEnd? : number;
     timeStampDuration?: number;
     userId : string | null;
+    subCategoryId? : string;
   };

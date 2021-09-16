@@ -22,6 +22,8 @@ namespace AuctionStore.Domain.Commands
         public long? TimeStampDuration { get; set; }
         public long? TimeStampEnd { get; set; }
         public long? TimeStampStart { get; set; }
+        public Guid? SubCategoryId { get; set; }
+        public Guid UserId { get; set; }
         public List<AuctionAddPhotoDto> Photos { get; set; }
 
         public class AddAuctionCommandHandler : IRequestHandler<AddAuctionCommand, bool>
