@@ -1,5 +1,5 @@
 import {apiClient} from '../APIClient/apiClient';
-import {IAddAuction, IAuction, IAuctionInfo} from '../../Interfaces/Auctions';
+import {IAddAuction, IAuction, IAuctionDetails, IAuctionInfo} from '../../Interfaces/Auctions';
 import {  IBaseResponse } from '../../Interfaces/Api';
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 
@@ -45,5 +45,19 @@ export const AuctionApi = {
       return new Promise<boolean>((_resolve, reject) =>
         reject(null)
       );
+    },
+
+    getAuction: async(auctionId : string) :Promise<IAuctionDetails> => {
+      const response = await apiClient.post<IBaseResponse<IAuctionDetails>>('/auctions/getAuction', {auctionId});
+
+      if(response.data.success) {
+        return new Promise<IAuctionDetails>((resolve) => {
+          resolve(response.data.data);
+        })
+      }
+
+      return new Promise<IAuctionDetails>((_resolve,reject) => {
+        reject(null);
+      })
     }
 }

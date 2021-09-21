@@ -1,7 +1,4 @@
 ﻿using AuctionStore.API.Scheduler;
-using AuctionStore.Domain.Repositories;
-using AuctionStore.Domain.Services;
-using AuctionStore.Infrastructure.Services.SignalR;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -34,14 +31,18 @@ namespace AuctionStore.API.DIConfig
             config.GetSection("Scheduler").Bind(schedulerOption);
             services.RegisterJobs(schedulerOption);
 
+            services.AddSignalR(options => {
+                options.EnableDetailedErrors = true;
+            });
+
             //services.RegisterSignalRComponents();
         }
 
-        private static void RegisterSignalRComponents(this IServiceCollection services)
-        {
-            services.AddSingleton<IWebSocketClientService, WebSocketClientService>();
-            services.AddSingleton<ISignalRMessageRepository, SignalRMessageRepository>();
-            services.AddSingleton<ISignalRClientService, SignalRClientService>();
-        }
+        //private static void RegisterSignalRComponents(this IServiceCollection services)
+        //{
+        //    services.AddSingleton<IWebSocketClientService, WebSocketClientService>();
+        //    services.AddSingleton<ISignalRMessageRepository, SignalRMessageRepository>();
+        //    services.AddSingleton<ISignalRClientService, SignalRClientService>();
+        //}
     }
 }

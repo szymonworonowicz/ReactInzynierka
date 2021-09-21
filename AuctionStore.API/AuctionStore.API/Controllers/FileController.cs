@@ -44,5 +44,13 @@ namespace AuctionStore.API.Controllers
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
 
+        [HttpPost("getAuctionImages")]
+        public async Task<IActionResult> GetAuctionImagesAsync([FromBody] GetAuctionImagesQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
     }
 }

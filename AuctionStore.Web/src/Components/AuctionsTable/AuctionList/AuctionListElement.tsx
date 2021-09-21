@@ -1,16 +1,23 @@
 import React, { useState,useEffect } from "react";
 import { IAuctionListElementProps } from "./IAuctionListElementProps";
 import { Paper, Container, Typography } from "@material-ui/core";
-import {ImageService} from '../../../Services/Image/Image.service'
+import {ImageService} from '../../../Services/Image/Image.service';
+import {useHistory} from 'react-router-dom';
+import {Routes} from '../../../Routing/routes'
+
+type AuctionIdProps = {
+  id : string
+}
 
 const AuctionListElement: React.FC<IAuctionListElementProps> = ({ data }) => {
 
   const [photo, setPhoto] = useState<string>('');
+  const history = useHistory<AuctionIdProps>();
 
   useEffect(() => {
     (
       async () => {
-        const response = await ImageService.getImage(data.id);
+        const response = await ImageService.getMainImage(data.id);
         setPhoto(response);
       }
     )()
@@ -23,9 +30,13 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({ data }) => {
     return photo;
   }
 
+  const handleAuctionClick = () : void => {
+    history.push(`/auction/${data.id}`)
+  }
+
   return (
-    <Paper>
-      <Container style={{ display: "flex" }} maxWidth={false}>
+    <Paper onClick={handleAuctionClick}>
+      <Container style={{ display: "flex" }} maxWidth={false} >
         <div>
           <img
             src={getPhoto()}

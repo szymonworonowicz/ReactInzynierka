@@ -7,6 +7,7 @@ import ResetPassword from '../Pages/ResetPassword';
 import Category from '../Pages/Category';
 import AddAuction from '../Pages/AddAuction';
 import Messages from '../Pages/Messages' 
+import Auction from '../Pages/Auction' 
 import AuctionConfirmation from '../Pages/AuctionConfirmation';
 import { history } from "../Helpers";
 import { UserRoles } from "../Helpers/constans";
@@ -33,6 +34,11 @@ const AppRouter: React.FC = () => {
           <AppRoute 
             path={Routes.category}
             component={Category}
+            layout={DefaultLayout}
+          />
+          <AppRoute 
+            path={Routes.auctionDetails}
+            component={Auction}
             layout={DefaultLayout}
           />
 
