@@ -27,6 +27,7 @@ import {
 } from "@microsoft/signalr";
 import RemainingTimeCounter from './RemainingTimeCounter/RemainingTimeCounter';
 import { IAuctionDetails } from "../../../../Interfaces/Auctions";
+import moment from 'moment';
 
 type timeCounterDataType = Pick<IAuctionDetails,"timeStampDuration" | "timeStampEnd" | "timeStampStart">;
 
@@ -79,6 +80,10 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
           if(data.userId !== user) {
               setActualOffer(parseInt(message));
               toast(t('newOffer'),'error');
+              if(data.timeStampDuration !== null) {
+                data.timeStampStart = moment().unix();
+                data.timeStampEnd = data.timeStampStart + data.timeStampDuration;
+              }
           }
           else {
               toast(t('yourAuction'),'error');

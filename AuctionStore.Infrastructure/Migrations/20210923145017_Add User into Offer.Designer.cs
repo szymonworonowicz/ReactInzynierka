@@ -4,14 +4,16 @@ using AuctionStore.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuctionStore.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210923145017_Add User into Offer")]
+    partial class AddUserintoOffer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,9 +195,6 @@ namespace AuctionStore.Infrastructure.Migrations
 
                     b.Property<Guid>("AuctionId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte>("MessageType")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");

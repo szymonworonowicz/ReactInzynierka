@@ -11,6 +11,8 @@ using AuctionStore.Infrastructure.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using AuctionStore.Infrastructure.Models;
+using AuctionStore.Domain.Repositories;
+using AuctionStore.Infrastructure.Services.Email.EmailMessages;
 
 namespace AuctionStore.Domain.Commands.Auth
 {
@@ -24,15 +26,15 @@ namespace AuctionStore.Domain.Commands.Auth
             private readonly DataContext context;
             private readonly ILogger<ResetPasswordRequestCommand> logger;
             private readonly IOptions<WebUrlOptions> urlOptions;
-            private readonly IEmailService emailService;
+            private readonly ISendEmailRepository emailRepository;
 
             public ResetPasswordRequestCommandHandler(DataContext context, ILogger<ResetPasswordRequestCommand> logger,
-                IOptions<WebUrlOptions> urlOptions,  IEmailService emailService)
+                IOptions<WebUrlOptions> urlOptions, ISendEmailRepository emailRepository )
             {
                 this.context = context;
                 this.logger = logger;
                 this.urlOptions = urlOptions;
-                this.emailService = emailService;
+                this.emailRepository = emailRepository;
             }
 
             public async Task<bool> Handle(ResetPasswordRequestCommand request, CancellationToken cancellationToken)
@@ -64,8 +66,13 @@ namespace AuctionStore.Domain.Commands.Auth
                 await context.UserTemporaryPasswords.AddAsync(userTmpPwd, cancellationToken);
                 await context.SaveChangesAsync(cancellationToken);
 
-                var message = emailService.CreatePasswordResetEmail(user.UserName, resetUrl, tmpPassword);
-                await emailService.SendEmail(message, request.Email, cancellationToken);
+                emailRepository.AddMessage(new PasswordResetMessageModel
+                {
+                    ResetUrl = resetUrl,
+                    TempPassword = tmpPassword,
+                    UserName = user.UserName,
+                    To = request.Email
+                });
 
                 return true;
 

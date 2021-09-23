@@ -80,31 +80,5 @@ namespace AuctionStore.Infrastructure.Services.Email
                 throw new DomainException((int)DictErrorCodes.SmtpAuthenticationError, DictErrorCodes.SmtpAuthenticationError.GetDescription());
             }
         }
-
-        public MimeMessage CreatePasswordResetEmail(string userName, string resetUrl, string tmpPassword)
-        {
-            var message = new MimeMessage();
-
-            message.From.Add(new MailboxAddress("Store", smtpOptions.Sender));
-
-            message.Subject = "Reset Password";
-
-            var builder = new BodyBuilder
-            {
-                HtmlBody = string.Format(@"
-                    Witaj {0}
-                    <p>Otrzymaliśmy prośbę o zresetowanie Twojego hasła.</p>
- 
-					<p>Kliknij <a href={1}>tutaj</a> lub skopiuj ten link {2} <br> a następnie wpisz tymczasowe hasło: <b>{3}</b></p>
-					<p>Link jest ważny 1 godzinę.</p>
- 
-					<p>Jeżeli nie prosiłeś o zresetowanie hasła, zignoruj tą wiadomość.</p>
-                ", userName, resetUrl, resetUrl, tmpPassword)
-            };
-
-            message.Body = builder.ToMessageBody();
-
-            return message;
-        }
     }
 }

@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   root: {
     position: "absolute",
     left: "10%",
+    top: '10%',
     width: "80%",
     flexGrow: 1,
     flexDirection: "row",

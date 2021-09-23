@@ -8,7 +8,6 @@ const EditProfileLayout : React.FC =({children}) => {
         <>
             <Navbar/>
             {children}
-            <Footer/>
 
         </>
     )

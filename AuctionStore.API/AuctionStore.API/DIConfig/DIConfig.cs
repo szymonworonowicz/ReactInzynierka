@@ -25,6 +25,10 @@ namespace AuctionStore.API.DIConfig
                 .Where(x => x.Name.EndsWith("Service"))
                 .AsPublicImplementedInterfaces();
 
+            services.RegisterAssemblyPublicNonGenericClasses(infrastructure)
+                .Where(x => x.Name.EndsWith("Repository"))
+                .AsPublicImplementedInterfaces();
+
             services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
 
             var schedulerOption = new SchedulerOptions();
