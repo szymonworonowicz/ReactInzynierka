@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AuctionStore.Domain.Commands
+namespace AuctionStore.Domain.Commands.Auction
 {
     public class AddAuctionCommand : IRequest<bool>
     {
@@ -39,7 +39,13 @@ namespace AuctionStore.Domain.Commands
 
             public async Task<bool> Handle(AddAuctionCommand request, CancellationToken cancellationToken)
             {
-                var target = mapper.Map<Auction>(request);
+                var target = mapper.Map<Infrastructure.Models.Auction>(request);
+
+                if(request.TimeStampDuration.HasValue) //aukcja czasowa
+                {
+                    target.TimeStampEnd = target.TimeStampStart + target.TimeStampDuration;
+                }
+
                 await context.Auctions.AddAsync(target, cancellationToken);
                 await context.SaveChangesAsync(cancellationToken);
 

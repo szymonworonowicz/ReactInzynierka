@@ -34,6 +34,7 @@ namespace AuctionStore.Domain.Queries.Auction
                 var auctions = await context.Auctions
                     .Where(x => x.SubCategoryId == request.CategoryId)
                     .Where(x => x.TimeStampEnd.Value > currentTime)
+                    .Where(x => x.TimeStampStart.Value < currentTime)
                     .Skip(request.Page * request.ElemPerPage)
                     .Take(request.ElemPerPage)
                     .Include(x => x.AuctionMedias)

@@ -1,7 +1,7 @@
 export interface IMessage {
     id : string;
     text : string;
-    added : string;
+    added : number;
     from? : string;
     
 }

@@ -1,8 +1,13 @@
 .children {
     position: absolute;
     width: 80%;
-    height: 100vh;
+    height: 85vh;
     left: 15%;
     top: 10%;
     margin-right: 10px;
+}
+
+.main { 
+    display:flex;
+    flex-direction: column;
 }

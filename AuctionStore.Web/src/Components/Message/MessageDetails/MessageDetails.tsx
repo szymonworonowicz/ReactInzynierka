@@ -28,7 +28,7 @@ const MessageDetails: React.FC<IMessageDetailsProps> = ({ message }) => {
   const classes = useStyles();
 
   const getMessageDate = () : string => {
-    return moment(message.added).format('DD-MM-YYYY HH:MM')
+    return moment.unix(message.added).format('DD-MM-YYYY HH:MM')
   }
   return (
     <div className={classes.root}>

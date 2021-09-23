@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace AuctionStore.Domain.Queries.Auction
     {
         public Guid AuctionId { get; set; }
 
-        public class GetAuctionQueryHandler :IRequestHandler<GetAuctionQuery,AuctionDetailsDto>
+        public class GetAuctionQueryHandler : IRequestHandler<GetAuctionQuery, AuctionDetailsDto>
         {
             private readonly DataContext context;
             private readonly IMapper mapper;
@@ -30,12 +31,15 @@ namespace AuctionStore.Domain.Queries.Auction
             {
                 var auction = await context.Auctions.FirstOrDefaultAsync(x => x.Id == request.AuctionId, cancellationToken);
 
-                if(auction == null)
+
+                if (auction == null)
                 {
                     return null;
                 }
 
-                return mapper.Map<AuctionDetailsDto>(auction);
+                var result = mapper.Map<AuctionDetailsDto>(auction);
+                result.MaxOffer = await context.AuctionOffer.Where(x => x.AuctionId == request.AuctionId).Select(x => x.NewPrice).FirstOrDefaultAsync(cancellationToken);
+                return result;
             }
         }
     }

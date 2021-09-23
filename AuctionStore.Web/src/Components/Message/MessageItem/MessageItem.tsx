@@ -44,7 +44,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({
   };
 
   const getMessageDate = () : string => {
-    return moment(message.added).format("DD-MM-YYYY HH:MM");
+    return moment.unix(message.added).format("DD-MM-YYYY HH:MM");
   };
   const handleDeleteMessage = () : void => {
     deleteMessage(message.id);

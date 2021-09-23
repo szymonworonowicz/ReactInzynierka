@@ -13,7 +13,6 @@ import {
 import { IAddAuction, IAuctionPhoto } from "../../Interfaces/Auctions";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import { useToast } from "../../shared/hooks/useToast";
 import PictureUpload from "../../Components/Shared/PictureUpload/PictureUpload";
 import AuctionTimePicker from "../../Components/AuctionAdd/AuctionTimePicker/AuctionTimePicker";
 import AuctionAddCategoryPicker from "../../Components/AuctionAdd/AuctionAddCategoryPicker/AuctionAddCategoryPicker";

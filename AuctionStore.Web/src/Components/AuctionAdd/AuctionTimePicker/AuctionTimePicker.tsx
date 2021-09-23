@@ -107,7 +107,8 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
         duration : date
       }
     });
-    setValue("timeStampDuration", date?.unix());
+    debugger;
+    setValue("timeStampDuration",((date?.minutes() ?? 0) * 60 +( date?.seconds() ?? 0)));
   };
   const getSecondLabel = (): string => {
     return selectedTab === 0 ? t("endtime") : t("duration");
@@ -163,7 +164,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
             {selectedTab === 0 ? (
               <KeyboardDateTimePicker
                 autoOk={true}
-                minDate={moment()}
+                minDate={moment(times.startTime)}
                 format="DD/MM/yyyy HH:MM"
                 disablePast
                 value={times.endTime}

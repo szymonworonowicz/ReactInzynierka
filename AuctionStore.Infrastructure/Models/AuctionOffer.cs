@@ -10,5 +10,6 @@ namespace AuctionStore.Infrastructure.Models
         public decimal NewPrice { get; set; }
         public long TimeStampAdded { get; set; }
         public Guid UserId { get; set; }
+        public Guid? AuctionId { get; set; }
     }
 }

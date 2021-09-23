@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionStore.Domain.Queries.Auction;
 using AuctionStore.Domain.Commands;
+using AuctionStore.Domain.Commands.Auction;
 
 namespace AuctionStore.API.Controllers
 {

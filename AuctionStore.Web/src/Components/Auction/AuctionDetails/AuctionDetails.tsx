@@ -4,6 +4,7 @@ import { AuctionApi } from "../../../Services/Auction/Auction.service";
 import { IAuctionDetails } from "../../../Interfaces/Auctions";
 import AuctionDetailsContent from "./AuctionDetailsContent/AuctionDetailsContent";
 import AuctionDetailsHeader from "./AuctionDetailsHeader/AuctionDetailsHeader";
+import AuctionMessage from "./AuctionMessage/AuctionMessage";
 import { CircularProgress } from "@material-ui/core";
 
 const AuctionDetails: React.FC<IAuctionDetailsProps> = ({ id }) => {
@@ -27,6 +28,8 @@ const AuctionDetails: React.FC<IAuctionDetailsProps> = ({ id }) => {
         data={auction as Omit<IAuctionDetails, "description">}
       />
       <AuctionDetailsContent description={auction?.description ?? ""} />
+
+      <AuctionMessage auctionId={id} />
     </div>
   );
 };

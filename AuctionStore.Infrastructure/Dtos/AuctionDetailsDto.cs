@@ -13,6 +13,7 @@ namespace AuctionStore.Infrastructure.Dtos
         public long? TimeStampEnd { get; set; }
         public long? TimeStampDuration { get; set; }
         public string Description { get; set; }
+        public decimal MaxOffer { get; set; }
 
         public Guid UserId { get; set; }
 

@@ -1,4 +1,4 @@
-import { IMessage } from "../../Interfaces/Message";
+import { IMessage, ISendMessage } from "../../Interfaces/Message";
 import {apiClient} from '../APIClient/apiClient'
 import { IBaseResponse } from '../../Interfaces/Api';
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
@@ -6,7 +6,8 @@ import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 
 export interface IMessageService {
     getMessages : (userId : string | null, page: IPageRequest) => Promise<IPageResponse<IMessage>>;
-    deleteMessage : (messageId : string) => Promise<boolean>
+    deleteMessage : (messageId : string) => Promise<boolean>;
+    sendMessage : (message : ISendMessage) => Promise<boolean>
 }
 
 export const MessageService : IMessageService = {
@@ -19,8 +20,20 @@ export const MessageService : IMessageService = {
 
         return new Promise<IPageResponse<IMessage>>((_resolve, reject) => reject(null));
     },
+
     deleteMessage: async(messageId : string) : Promise<boolean> => {
         const response = await apiClient.post<IBaseResponse<any>>('/messages/delete',{messageId});
+
+        if(response.data.success) {
+            return new Promise<boolean> ((resolve) => resolve(true));
+        }
+
+        return new Promise<boolean>((_resolve, reject) => reject(null));
+    },
+
+
+    sendMessage : async(message: ISendMessage) : Promise<boolean> => {
+        const response = await apiClient.post<IBaseResponse<any>>('/messages/sendMessage',message);
 
         if(response.data.success) {
             return new Promise<boolean> ((resolve) => resolve(true));

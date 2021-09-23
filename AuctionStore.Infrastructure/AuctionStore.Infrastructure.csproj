@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="Migrations\AddSQLSPForUpdatePrice.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\AddSQLSPForUpdatePrice.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,5 +33,4 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
   </ItemGroup>
-
 </Project>
