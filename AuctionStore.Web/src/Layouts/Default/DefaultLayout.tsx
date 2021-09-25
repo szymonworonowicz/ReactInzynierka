@@ -8,11 +8,18 @@ const DefaultLayout: React.FC = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <Categories />
-      <div className={styles.main}>
-        <div className={styles.children}>{children}</div>
-        <Footer />
+      <div className={styles.content}>
+        <Categories />
+        {/* <div className={styles.main}> */}
+        <div className={styles.children}>
+        {children}
+
+        </div>
       </div>
+
+      {/* <div className={styles.children}></div> */}
+      <Footer />
+      {/* </div> */}
     </div>
   );
 };

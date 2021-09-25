@@ -15,6 +15,7 @@
             "@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$";
 
         public const string User = "User"; 
-        public const string Admin = "Admin"; 
+        public const string Admin = "Admin";
+        public const long Secons3Days = 259200;
     }
 }

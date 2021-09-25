@@ -11,3 +11,18 @@
     display:flex;
     flex-direction: column;
 }
+
+.content { 
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    position: relative;
+    height: 85vh;
+    padding: 20px;
+}
+
+.children {
+    position: absolute;
+    width: 80%;
+    left: 15%;
+}

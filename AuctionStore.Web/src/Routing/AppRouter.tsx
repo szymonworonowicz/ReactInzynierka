@@ -9,6 +9,7 @@ import AddAuction from '../Pages/AddAuction';
 import Messages from '../Pages/Messages' 
 import Auction from '../Pages/Auction' 
 import AuctionConfirmation from '../Pages/AuctionConfirmation';
+import NewsletterForm from '../Pages/Newsletter';
 import { history } from "../Helpers";
 import { UserRoles } from "../Helpers/constans";
 import { Routes } from "./routes";
@@ -40,7 +41,13 @@ const AppRouter: React.FC = () => {
             path={Routes.auctionDetails}
             component={Auction}
             layout={DefaultLayout}
-          />
+          />          
+          
+          <AppRoute 
+          path={Routes.newsletter}
+          component={NewsletterForm}
+          layout={DefaultLayout}
+        />
 
           <SecurityRoute
             Path={Routes.addAuction}

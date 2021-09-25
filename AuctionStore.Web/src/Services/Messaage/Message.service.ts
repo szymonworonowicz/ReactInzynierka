@@ -4,7 +4,7 @@ import { IBaseResponse } from '../../Interfaces/Api';
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 
 
-export interface IMessageService {
+interface IMessageService {
     getMessages : (userId : string | null, page: IPageRequest) => Promise<IPageResponse<IMessage>>;
     deleteMessage : (messageId : string) => Promise<boolean>;
     sendMessage : (message : ISendMessage) => Promise<boolean>

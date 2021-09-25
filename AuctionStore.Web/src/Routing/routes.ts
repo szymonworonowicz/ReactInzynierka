@@ -7,5 +7,6 @@ export const Routes = {
   addAuction : '/add_auction',
   messages: '/messages',
   confirmAuction:'/confirm_auction',
-  auctionDetails:'/auction/:id'
+  auctionDetails:'/auction/:id',
+  newsletter: '/newsletter'
 };

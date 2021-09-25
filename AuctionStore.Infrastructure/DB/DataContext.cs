@@ -29,6 +29,8 @@ namespace AuctionStore.Infrastructure.DB
         public DbSet<Address> Addresses { get; set; }
         public DbSet<StoreConfig> StoreConfig { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
+        public DbSet<NewsletterSubCategory> NewsletterSubCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +39,11 @@ namespace AuctionStore.Infrastructure.DB
             modelBuilder.Entity<UserRoles>(entity =>
             {
                 entity.HasKey(x => new { x.RoleId, x.UserId });
+            });
+
+            modelBuilder.Entity<NewsletterSubCategory>(entity =>
+            {
+                entity.HasKey(x => new { x.NewsletterId, x.SubCategoryId });
             });
 
             modelBuilder.Entity<Category>().HasMany(x => x.SubCategories).WithOne(x => x.Category).OnDelete(DeleteBehavior.Cascade);

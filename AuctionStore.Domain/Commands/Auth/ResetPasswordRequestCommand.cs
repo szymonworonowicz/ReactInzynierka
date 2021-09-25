@@ -27,14 +27,16 @@ namespace AuctionStore.Domain.Commands.Auth
             private readonly ILogger<ResetPasswordRequestCommand> logger;
             private readonly IOptions<WebUrlOptions> urlOptions;
             private readonly ISendEmailRepository emailRepository;
+            private readonly IOptions<SmtpOptions> smtpOptions;
 
             public ResetPasswordRequestCommandHandler(DataContext context, ILogger<ResetPasswordRequestCommand> logger,
-                IOptions<WebUrlOptions> urlOptions, ISendEmailRepository emailRepository )
+                IOptions<WebUrlOptions> urlOptions, ISendEmailRepository emailRepository, IOptions<SmtpOptions> smtpOptions)
             {
                 this.context = context;
                 this.logger = logger;
                 this.urlOptions = urlOptions;
                 this.emailRepository = emailRepository;
+                this.smtpOptions = smtpOptions;
             }
 
             public async Task<bool> Handle(ResetPasswordRequestCommand request, CancellationToken cancellationToken)
@@ -66,7 +68,7 @@ namespace AuctionStore.Domain.Commands.Auth
                 await context.UserTemporaryPasswords.AddAsync(userTmpPwd, cancellationToken);
                 await context.SaveChangesAsync(cancellationToken);
 
-                emailRepository.AddMessage(new PasswordResetMessageModel
+                emailRepository.AddMessage(new PasswordResetMessageModel(smtpOptions)
                 {
                     ResetUrl = resetUrl,
                     TempPassword = tmpPassword,
