@@ -59,5 +59,33 @@ export const AuctionApi = {
       return new Promise<IAuctionDetails>((_resolve,reject) => {
         reject(null);
       })
-    }
+    },
+
+    deleteAuction: async(auctionId : string)  :Promise<boolean> => {
+      const response =  await apiClient.post<IBaseResponse<any>>('/auctions/deleteAuction', {auctionId});
+
+      if (response.data.success) {
+        return new Promise<boolean>((resolve) =>
+          resolve(response.data.success)
+        );
+      }
+  
+      return new Promise<boolean>((_resolve, reject) =>
+        reject(null)
+      );
+    },
+
+    getUserAuction : async(userId : string, isWinning : boolean, data : IPageRequest) : Promise<IPageResponse<IAuction>>  => {
+      const response = await apiClient.post<IBaseResponse<IPageResponse<IAuction>>>('/auctions/userAuction',{userId, isWinning,...data});
+
+      if (response.data.success) {
+          return new Promise<IPageResponse<IAuction>>((resolve) =>
+            resolve(response.data.data)
+          );
+        }
+    
+        return new Promise<IPageResponse<IAuction>>((_resolve, reject) =>
+          reject(null)
+        );
+  },
 }

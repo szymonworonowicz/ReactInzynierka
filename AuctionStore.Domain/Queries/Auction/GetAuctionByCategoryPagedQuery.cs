@@ -42,6 +42,19 @@ namespace AuctionStore.Domain.Queries.Auction
                     .ProjectTo<AuctionDto>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
+                foreach (var auction in auctions)
+                {
+                    try
+                    {
+                        auction.Price = await context.AuctionOffer.Where(x => x.AuctionId == auction.Id).MaxAsync(x => x.NewPrice, cancellationToken);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+
+
                 var CountOfElements = await context.Auctions
                     .Where(x => x.SubCategoryId == request.CategoryId)
                     .Where(x => x.TimeStampEnd.Value > currentTime)

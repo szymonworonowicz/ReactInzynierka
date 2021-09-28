@@ -36,7 +36,7 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({categoryId}) => {
                 key:'id',
                 generate:(rowData) => {
                     return (
-                        <AuctionListElement  data={rowData} key={rowData.id}/>
+                        <AuctionListElement  data={rowData} key={rowData.id} hideStatus={true}/>
                     )
                 }
             }

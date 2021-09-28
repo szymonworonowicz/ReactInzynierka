@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IAuctionDetailsHeaderProps } from "./IAuctionDetailsHeaderProps";
 import {
   Paper,
@@ -14,7 +10,7 @@ import {
   Input,
   Button,
 } from "@material-ui/core";
-import { Lock, Delete } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import { UserContext } from "../../../../Context/UserContext";
 import { makeStyles } from "@material-ui/styles";
 import { useTranslation } from "react-i18next";
@@ -25,11 +21,17 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
-import RemainingTimeCounter from './RemainingTimeCounter/RemainingTimeCounter';
+import RemainingTimeCounter from "./RemainingTimeCounter/RemainingTimeCounter";
 import { IAuctionDetails } from "../../../../Interfaces/Auctions";
-import moment from 'moment';
+import moment from "moment";
+import { AuctionApi } from "../../../../Services/Auction/Auction.service";
+import { useHistory } from "react-router-dom";
+import { AuctionStatus } from "../../../../Helpers/constans";
 
-type timeCounterDataType = Pick<IAuctionDetails,"timeStampDuration" | "timeStampEnd" | "timeStampStart">;
+type timeCounterDataType = Pick<
+  IAuctionDetails,
+  "timeStampDuration" | "timeStampEnd" | "timeStampStart"
+>;
 
 const useStyles = makeStyles({
   buttons: {
@@ -48,6 +50,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const toast = useToast();
+  const history = useHistory();
 
   const [connection, setConnection] = useState<HubConnection>();
   const [newPrice, setNewPrice] = useState<number>();
@@ -63,42 +66,39 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
           })
           .configureLogging(LogLevel.Information)
           .build();
-  
+
         await connection.start();
-  
+
         await connection.invoke("JoinGroup", {
           UserId: context.userId?.toString(),
           AuctionId: data.id.toString(),
         });
-  
+
         connection.onreconnected(async () => {
-            await connection.start()
+          await connection.start();
         });
-  
+
         connection.on("getOffer", (user, message) => {
-          debugger;
-          if(data.userId !== user) {
-              setActualOffer(parseInt(message));
-              toast(t('newOffer'),'error');
-              if(data.timeStampDuration !== null) {
-                data.timeStampStart = moment().unix();
-                data.timeStampEnd = data.timeStampStart + data.timeStampDuration;
-              }
-          }
-          else {
-              toast(t('yourAuction'),'error');
+          if (data.userId !== user) {
+            setActualOffer(parseInt(message));
+            toast(t("newOffer"), "error");
+            if (data.timeStampDuration !== null) {
+              data.timeStampStart = moment().unix();
+              data.timeStampEnd = data.timeStampStart + data.timeStampDuration;
+            }
+          } else {
+            toast(t("yourAuction"), "error");
           }
         });
-  
+
         setConnection(connection);
       } catch (error) {
         console.log(error);
       }
     })();
     //@TODO sprawdzic tablice
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   const handleNewValueChange = (
     e: React.ChangeEvent<{ value: string }>
@@ -118,6 +118,18 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
     }
   };
 
+  const handleDeleteAuction = async (): Promise<void> => {
+    const response = await AuctionApi.deleteAuction(data.id);
+    if (response) {
+      toast(t("success_delete_auction"), "success");
+      setTimeout(() => {
+        history.push("/");
+      }, 5000);
+    } else {
+      toast(t("failure_delete_auction"), "success");
+    }
+  };
+
   return (
     <div>
       <Paper>
@@ -132,27 +144,27 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
             <Typography variant="h5">{data.title}</Typography>
           </Grid>
           <Grid item xs={5} className={classes.buttons}>
-            {context.userId === data.userId && (
+            {(context.userId === data.userId && data.status === AuctionStatus.New) && (
               <div>
-                <IconButton>
-                  <Lock />
-                </IconButton>
-                <IconButton>
+                <IconButton onClick={handleDeleteAuction}>
                   <Delete />
                 </IconButton>
               </div>
             )}
           </Grid>
-          <Grid item xs={4}>
-            <RemainingTimeCounter data = {data as timeCounterDataType}/>
-          </Grid>
+
+          {data.status === AuctionStatus.New && (
+            <Grid item xs={4}>
+              <RemainingTimeCounter data={data as timeCounterDataType} />
+            </Grid>
+          )}
+
           <Grid item xs={3}>
             <div> actualOffer : {actualOffer}</div>
           </Grid>
           <Grid item xs={5}>
-            {
-              context.userId !== data.userId && (
-                <div>
+            {context.userId !== data.userId && (
+              <div>
                 <FormControl fullWidth>
                   <InputLabel htmlFor="newPrice">{t("newPrice")}</InputLabel>
                   <Input
@@ -165,8 +177,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
                 </FormControl>
                 <Button onClick={handleAddOffer}>{t("AddOffer")}</Button>
               </div>
-              )
-            }
+            )}
           </Grid>
         </Grid>
       </Paper>

@@ -6,4 +6,5 @@ export interface IAuction {
   timeStampStart : number | null;
   timeStampEnd : number | null;
   timeStampDuration : number | null;
+  status: number;
 }

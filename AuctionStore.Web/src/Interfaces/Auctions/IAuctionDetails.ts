@@ -7,5 +7,6 @@ export interface IAuctionDetails {
     timeStampEnd : number | null;
     timeStampDuration : number | null;
     maxOffer : number;
+    status : number;
     userId : string;
 }

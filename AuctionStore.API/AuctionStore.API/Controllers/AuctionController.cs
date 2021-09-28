@@ -49,5 +49,22 @@ namespace AuctionStore.API.Controllers
 
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
+        
+        [HttpPost("deleteAuction")]
+        public async Task<IActionResult> DeleteAuction([FromBody] DeleteAuctionCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
+        [HttpPost("userAuction")]
+        public async Task<IActionResult> AddAuction([FromBody] GetUserAuctionPagedQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
     }
 }

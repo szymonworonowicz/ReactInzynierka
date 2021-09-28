@@ -5,6 +5,7 @@ import { Paper, Tabs, Tab } from "@material-ui/core";
 import TabPanel from "../Shared/Tabs/TabPanel";
 import UserInfo from '../Shared/UserInfo/UserInfo';
 import UserAddresses from './UserAddresses/UserAddresses';
+import AuctionList from './AuctionList/AuctionList';
 
 const useStyles = makeStyles({
   root: {
@@ -52,10 +53,15 @@ const UserProfile: React.FC = () => {
               id={`nav-tab-${1}`}
               aria-controls={`nav-tabpanel-${1}`}
             />
-            <Tab
-              label={t("winningAuctions")}
+             <Tab
+              label={t("auctions")}
               id={`nav-tab-${2}`}
               aria-controls={`nav-tabpanel-${2}`}
+            />
+            <Tab
+              label={t("winningAuctions")}
+              id={`nav-tab-${3}`}
+              aria-controls={`nav-tabpanel-${3}`}
             />
           </Tabs>
         </Paper>
@@ -67,7 +73,12 @@ const UserProfile: React.FC = () => {
             <TabPanel value={selectedTab} index={1}>
                 <UserAddresses />
             </TabPanel>
-
+            <TabPanel value={selectedTab} index={2}>
+              <AuctionList isWinning={false}/>
+            </TabPanel>
+            <TabPanel value={selectedTab} index={3}>
+              <AuctionList isWinning={true}/>
+            </TabPanel>
       </div>
     </div>
   );

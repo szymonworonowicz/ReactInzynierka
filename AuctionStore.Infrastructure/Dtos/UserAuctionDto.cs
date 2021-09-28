@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AuctionStore.Infrastructure.Dtos
 {
-    public class AuctionDetailsDto
+    public class UserAuctionDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -14,11 +14,6 @@ namespace AuctionStore.Infrastructure.Dtos
         public long? TimeStampEnd { get; set; }
         public long? TimeStampDuration { get; set; }
         public string Description { get; set; }
-        public decimal MaxOffer { get; set; }
         public AuctionStatus Status { get; set; }
-
-
-        public Guid UserId { get; set; }
-
     }
 }
