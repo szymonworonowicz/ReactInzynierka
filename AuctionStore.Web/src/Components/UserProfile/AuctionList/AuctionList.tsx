@@ -1,4 +1,4 @@
-import React,{useState,useCallback,useEffect,useContext} from "react";
+import React,{useState,useContext} from "react";
 import {IAuctionListProps} from './IAuctionListProps';
 import {IAuction} from '../../../Interfaces/Auctions';
 import {CircularProgress} from '@material-ui/core';
@@ -8,35 +8,22 @@ import AuctionListElement from '../../AuctionsTable/AuctionList/AuctionListEleme
 import { IGenericTableProps,IGenericTableColumnDefinitionType} from "../../Shared/GenericTable/index";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import {UserContext} from '../../../Context/UserContext';
+import usePaged from '../../../shared/hooks/usePaged/usePaged';
 
 
 const AuctionList:React.FC<IAuctionListProps> = ({isWinning}) => {
-    const [auctions,setAuctions ] = useState<Array<IAuction>>([]);
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [countOfElements, setCountOfElements] = useState<number>(0);
     const context = useContext(UserContext);
     const [query,setQuery] = useState<IPageRequest>({
         elemPerPage:10,
         page : 0
     });
 
-    const fetchData = useCallback(async() => {
-        const data = await  AuctionApi.getUserAuction(context.userId as string, isWinning, query);
-        setCountOfElements(data.countOfElements);
-        setAuctions(data.pageElements);
-        setIsLoaded(false);
-    },[context.userId, isWinning,query]);
-
-    useEffect(() => {
-        setIsLoaded(true);
-        (
-            async () => {
-                await fetchData();
-            }
-        )()
-    },[fetchData]);
-
-
+    const [auctions, isLoaded, countOfElements] = usePaged<IAuction>({
+        apiCall : AuctionApi.getUserAuction,
+        query : query,
+    },
+    context.userId as string,
+    isWinning);
 
     const generateColumns = (): Array<IGenericTableColumnDefinitionType<IAuction, keyof IAuction>> => {
         return [

@@ -5,7 +5,7 @@ import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 
 
 export const AuctionApi = {
-    getAllByCategory : async (categoryId : string, data :IPageRequest) : Promise<IPageResponse<IAuction>>  => {
+    getAllByCategory : async ( data :IPageRequest,categoryId : string) : Promise<IPageResponse<IAuction>>  => {
         const response = await apiClient.post<IBaseResponse<IPageResponse<IAuction>>>('auctions/',{categoryId, ...data});
 
         if (response.data.success) {
@@ -75,7 +75,8 @@ export const AuctionApi = {
       );
     },
 
-    getUserAuction : async(userId : string, isWinning : boolean, data : IPageRequest) : Promise<IPageResponse<IAuction>>  => {
+    getUserAuction : async(data : IPageRequest, userId : string, isWinning : boolean) : Promise<IPageResponse<IAuction>>  => {
+      debugger;
       const response = await apiClient.post<IBaseResponse<IPageResponse<IAuction>>>('/auctions/userAuction',{userId, isWinning,...data});
 
       if (response.data.success) {

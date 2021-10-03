@@ -5,13 +5,13 @@ import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 
 
 interface IMessageService {
-    getMessages : (userId : string | null, page: IPageRequest) => Promise<IPageResponse<IMessage>>;
+    getMessages : ( page: IPageRequest, userId : string) => Promise<IPageResponse<IMessage>>;
     deleteMessage : (messageId : string) => Promise<boolean>;
     sendMessage : (message : ISendMessage) => Promise<boolean>
 }
 
 export const MessageService : IMessageService = {
-    getMessages: async (userId: string | null, page: IPageRequest): Promise<IPageResponse<IMessage>> =>{
+    getMessages: async (page: IPageRequest, userId: string): Promise<IPageResponse<IMessage>> =>{
         const response = await apiClient.post<IBaseResponse<IPageResponse<IMessage>>>('/messages',{...page, userId});
 
         if(response.data.success) {

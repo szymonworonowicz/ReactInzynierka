@@ -13,6 +13,7 @@ import MessageItem from "./MessageItem/MessageItem";
 import { useToast } from "../../shared/hooks/useToast";
 import Popper from "../../shared/Popper/Popper";
 import MessageDetails from "./MessageDetails/MessageDetails";
+import usePaged from "../../shared/hooks/usePaged/usePaged";
 
 const useStyles = makeStyles({
   root: {
@@ -29,9 +30,9 @@ const useStyles = makeStyles({
 });
 
 const MessageView: React.FC = () => {
-  const [messages, setMessages] = useState<Array<IMessage>>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [countOfElements, setCountOfElements] = useState<number>(0);
+  // const [messages, setMessages] = useState<Array<IMessage>>([]);
+  // const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  // const [countOfElements, setCountOfElements] = useState<number>(0);
   const [query, setQuery] = useState<IPageRequest>({
     elemPerPage: 10,
     page: 0,
@@ -41,25 +42,17 @@ const MessageView: React.FC = () => {
 
   const context = useContext(UserContext);
 
+  const [messages, isLoaded, countOfElements] = usePaged<IMessage>(
+    {
+      apiCall: MessageService.getMessages,
+      query: query,
+    },
+    context.userId as string
+  );
+
   const { t } = useTranslation();
   const toast = useToast();
   const classes = useStyles();
-
-  const loadData = useCallback(async (): Promise<void> => {
-    setIsLoaded(true);
-
-    const data = await MessageService.getMessages(context.userId, query);
-    setCountOfElements(data.countOfElements);
-    setMessages(data.pageElements);
-
-    setIsLoaded(false);
-  }, [context.userId, query]);
-
-  useEffect(() => {
-    (async () => {
-      await loadData();
-    })();
-  }, [loadData]);
 
   const showMessageMore = (messageId: string): void => {
     const message = messages.find((x) => x.id === messageId);
@@ -80,7 +73,7 @@ const MessageView: React.FC = () => {
 
     if (response) {
       toast(t("success_remove_message"), "success");
-      await loadData();
+      query.page = 0;
     } else {
       toast(t("failure_remove_message"), "error");
     }
@@ -133,7 +126,7 @@ const MessageView: React.FC = () => {
           showSave={false}
           title={t("message_details")}
           body={getMessageDetailsBody()}
-          maxWidth='lg'
+          maxWidth="lg"
         />
       )}
 

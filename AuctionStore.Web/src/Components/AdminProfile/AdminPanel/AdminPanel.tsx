@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import { useTranslation } from "react-i18next";
 import { IAdmin } from "../../../Interfaces/Admin";
 import {AdminApi} from '../../../Services/Admin/AdminApi';
@@ -10,13 +10,11 @@ import {IGenericTableColumnDefinitionType} from '../../Shared/GenericTable/Gener
 import moment from 'moment'
 import { useToast } from "../../../shared/hooks/useToast";
 import { Check, Clear, Delete, BeachAccess } from "@material-ui/icons";
+import usePaged from '../../../shared/hooks/usePaged/usePaged';
 
 
 const AdminPanel : React.FC = () => {
 
-    const [admins, setAdmins] = useState<Array<IAdmin>>([]);
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [countOfElements, setCountOfElements] = useState<number>(0);
     const [query,setQuery] = useState<IPageRequest>({
         elemPerPage:10,
         page : 0
@@ -25,17 +23,12 @@ const AdminPanel : React.FC = () => {
     const {t} = useTranslation();
     const toast = useToast()
 
-    useEffect(() => {
-        setIsLoaded(true);
-        (
-            async() => {
-                const data = await  AdminApi.getAdmins(query);
-                setCountOfElements(data.countOfElements);
-                setAdmins(data.pageElements);
-                setIsLoaded(false); 
-            }
-        )()
-    },[setIsLoaded, query])
+    const [adminsResponse,isLoaded, countOfElements] = usePaged<IAdmin>({
+        apiCall:AdminApi.getAdmins,
+        query: query
+    });
+
+    const [admins, setAdmins] = useState<Array<IAdmin>>(adminsResponse);
 
     const handleHoliday = async (id : string) : Promise<void> => {
         const response = await AdminApi.AdminHoliday(id);
