@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     }
 })
 
-const ImageCrop: React.FC<IImageCropProps> = ({ currentImage }) => {
+const ImageCrop: React.FC<IImageCropProps> = ({ currentImage, setImages, currentStep }) => {
   const [crop, setCrop] = useState<Point>({
     x: 0,
     y: 0,
@@ -31,14 +31,28 @@ const ImageCrop: React.FC<IImageCropProps> = ({ currentImage }) => {
   const [zoom, setZoom] = useState<number>(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>();
   
-  console.log(currentImage);
   const classes = useStyles();
 
   const onCropComplete = useCallback(
-      (croppedArea :Area, croppedAreaPixels : Area) => {
+      async (croppedArea :Area, croppedAreaPixels : Area) => {
           setCroppedAreaPixels(croppedAreaPixels);
+          const croppedImage = await getCroppedImg(
+            currentImage.data,
+            croppedAreaPixels as Area
+          )
+          console.log(typeof croppedImage)
+          debugger;
+          // setImages(prev => {
+          //   const local = prev;
+          //   local.splice(currentStep, 1, {
+          //     data : croppedImage,
+          //     file: currentImage.file
+          //   });
+
+          //   return [...local]
+          // })
       }
-  ,[])
+  ,[currentImage.data])
 
   const handleCropChange= (location: Point) => {
     setCrop(location);
@@ -49,11 +63,22 @@ const ImageCrop: React.FC<IImageCropProps> = ({ currentImage }) => {
       showCroppedImage()
   }
   const showCroppedImage = useCallback(async () => {
+    debugger;
     try {
       const croppedImage = await getCroppedImg(
         currentImage.data,
         croppedAreaPixels as Area
       )
+
+      setImages(prev => {
+        const local = prev;
+        local.splice(currentStep, 1, {
+          data : croppedImage,
+          file: currentImage.file
+        });
+
+        return [...local]
+      })
       console.log('donee', { croppedImage })
     } catch (e) {
       console.error(e)

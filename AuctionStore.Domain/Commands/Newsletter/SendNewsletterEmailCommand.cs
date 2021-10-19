@@ -40,12 +40,14 @@ namespace AuctionStore.Domain.Commands.Newsletter
                 this.imageService = imageService;
             }
             public async Task<Unit> Handle(SendNewsletterEmailCommand request, CancellationToken cancellationToken)
+
             {
+                var currentTime = DateTimeOffset.Now.ToUnixTimeSeconds();
                 var newsletters = await context.Newsletters.Include(x => x.Subcategories)
-                    .Where(x => x.LastNewsletterTimeStamp < DateTimeOffset.Now.ToUnixTimeSeconds())
+                    .Where(x => x.LastNewsletterTimeStamp < currentTime)
                     .ToListAsync(cancellationToken);
 
-                foreach(var newsletter in newsletters)
+                foreach (var newsletter in newsletters)
                 {
                     newsletter.LastNewsletterTimeStamp += Constants.Secons3Days;
 
@@ -58,13 +60,13 @@ namespace AuctionStore.Domain.Commands.Newsletter
                         .ProjectTo<AuctionNewsletterDto>(mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken);
 
-                    foreach(var auction in auctions)
+                    foreach (var auction in auctions)
                     {
                         var file = await context.AuctionFiles.FirstOrDefaultAsync(x => x.AuctionId == auction.Id && x.IsMain, cancellationToken);
 
                         var img = imageService.GetImageString(file.MediumPhotoPath);
                         auction.PhotoString = $"data:image/{GetType(file.FileExtensions)};base64,{img}";
-                    }   
+                    }
 
                     var newsletterMessage = new NewsletterMessageModel(smtpOptions)
                     {

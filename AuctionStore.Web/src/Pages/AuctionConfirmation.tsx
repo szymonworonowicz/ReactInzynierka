@@ -5,6 +5,7 @@ import AuctionConfirmationFooter from '../Components/AuctionConfirm/Confirmation
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { IAuctionConfirmation } from "../Interfaces/Auctions";
 import AuctionConfirmDetails from '../Components/Auction/AuctionConfirmDetail/AuctionConfirmDetails';
+import AuctionConfirmDelivery from '../Components/Auction/AuctionConfirmDelivery/AuctionConfirmDelivery'
 
 
 const useStyles = makeStyles({
@@ -51,6 +52,10 @@ const AuctionConfirmation : React.FC<IAuctionConfirmationProps> = ({match}) => {
                 {selectedStep === 0 && (
                     <AuctionConfirmDetails confirmation={auctionConfirmation} id={id} setConfirmation={setAuctionConfirmation}/>
                 )}
+                {selectedStep === 1 && (
+                    <AuctionConfirmDelivery />
+                )
+                }
             </div>
             <div className={classes.footer}>
                 <AuctionConfirmationFooter setCurrentStep = {setSelectedStep} currentStep={selectedStep}/>

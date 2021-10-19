@@ -27,11 +27,10 @@ const ImageCropModal: React.FC<IImageCropModalProps> = ({images, setImages}) => 
     const [currentStep, setCurrentStep] = useState<number>(0);
     const classes = useStyles();
 
-    console.log(images)
     return (
         <div className={classes.root}>
             <div className={classes.content}>
-                <ImageCrop currentImage={images[currentStep]}/>
+                <ImageCrop currentImage={images[currentStep]} setImages={setImages} currentStep= {currentStep}/>
             </div>
             <div className={classes.footer}>
                 <ImageCropModalFooter currentStep={currentStep} setCurrentStep={setCurrentStep} steps={images.length}/>

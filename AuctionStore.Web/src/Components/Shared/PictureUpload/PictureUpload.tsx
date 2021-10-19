@@ -48,14 +48,13 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
   const [files, setFiles] = useState<Array<IFileEntityId>>([]);
   const [selectedFiles, setSelectedFiles] = useState<Array<FileObject>>([]);
   const [mainPhotoSelected, setMainPhotoSelected] = useState<string>("");
-  const [isCropped, setIsCropped] = useState<boolean>(true);
-  const [newFiles, setNewFiles] = useState<Array<FileObject>>([]);
 
   const { t } = useTranslation();
   const classes = useStyles();
   const toast = useToast();
 
   const handleChange = async (files: FileObject[]) => {
+    debugger;
     if (files.length) {
       const filteredFiles: Array<FileObject> = files.filter(
         (file) => !selectedFiles.find((f) => f.data === file.data)
@@ -64,15 +63,15 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
         toast(t("cannot add"), "success");
         return;
       }
-      setNewFiles(filteredFiles);
-      setIsCropped(false);
+      await handleUploadPhoto(filteredFiles)
     }
   };
 
-  const handleUploadPhoto = useCallback(async (): Promise<void> => {
-    if (isCropped === true) {
+  const handleUploadPhoto = useCallback(async (newFiles : Array<FileObject>): Promise<void> => {
+    if (true) {
       let loadedFiles: Array<IFileEntityId> = [];
       let fileEntities: Array<IAuctionPhoto> = [];
+      debugger;
       await Promise.all(
         newFiles.map(async (file) => {
           const fileResponse = await ImageService.saveImage(file.file);
@@ -96,11 +95,10 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
         })
       );
       setSelectedFiles((prev) => [...prev, ...newFiles]);
-      setNewFiles([]);
       setFiles(loadedFiles);
       setFileEntity(fileEntities);
     }
-  }, [isCropped, newFiles, setFileEntity]);
+  }, [ setFileEntity]);
 
   const handleDeletePhoto = async (file: FileObject): Promise<void> => {
     debugger;
@@ -182,26 +180,10 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
     });
   };
 
-  const handleFinishCrop = () : void => {
-    
-  }
-
-  const handleCropClose = () => {
-    setIsCropped(true);
-    if(false) {
-      handleUploadPhoto();
-    }
-  }
-
-  const getImageCropComponent = () : JSX.Element => {
-    return (  
-      <ImageCropModal  images={newFiles} setImages={setNewFiles}/>
-    )
-  }
 
   return (
     <>
-      <Popper 
+      {/* <Popper 
         open={!isCropped && newFiles.length!==0}
         title={t('crop_image')}
         maxWidth='lg'
@@ -209,7 +191,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
         showCancel = {false}
         body={getImageCropComponent()}
         onCancel={handleCropClose}
-      />
+      /> */}
       <DropzoneAreaBase
         dropzoneClass={classes.root}
         dropzoneText={t("uploadImages")}

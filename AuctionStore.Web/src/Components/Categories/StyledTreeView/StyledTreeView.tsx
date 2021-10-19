@@ -26,14 +26,12 @@ const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
               key={elem.id}
               nodeId={`${index + 1}`}
               labelText={elem.name}
-              labelIcon={Home}
             />
           ) : (
             <StyledTreeItem
               key={elem.id}
               nodeId={elem.id}
               labelText={elem.name}
-              labelIcon={Home}
             >
               {elem.subCategories.map((subcategory) => {
                 return (
@@ -41,7 +39,6 @@ const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
                     key={subcategory.id}
                     nodeId={subcategory.id}
                     labelText={subcategory.name}
-                    labelIcon={Home}
                   />
                 );
               })}

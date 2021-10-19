@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyledTreeItem: React.FC<IStyledTreeItem> = ({
-  labelIcon,
   labelText,
   bgColor,
   color,
@@ -67,7 +66,6 @@ const StyledTreeItem: React.FC<IStyledTreeItem> = ({
   children,
 }) => {
   const classes = useStyles();
-  const LabelIcon = labelIcon;
   const history = useHistory();
 
   const handleClick = () => {
@@ -87,7 +85,6 @@ const StyledTreeItem: React.FC<IStyledTreeItem> = ({
       key={nodeId}
       label={
         <div className={classes.labelRoot}>
-          <LabelIcon color="inherit" className={classes.labelIcon} />
           <Typography variant="body2" className={classes.labelText}>
             {labelText}
           </Typography>

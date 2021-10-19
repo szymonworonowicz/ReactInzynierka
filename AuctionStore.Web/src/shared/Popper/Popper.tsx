@@ -13,18 +13,18 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 type Props = {
-  width : string;
-}
+  width: string;
+};
 
 // const useStyles  = (props : Props) => {
 //     const {width} = props;
-    
+
 //     return makeStyles({
 //       root: {
 //         width: width
 //       }
 //     })
-// } 
+// }
 
 const Popper: React.FC<IPopperProps> = ({
   body,
@@ -34,7 +34,7 @@ const Popper: React.FC<IPopperProps> = ({
   open,
   showCancel = true,
   showSave = true,
-  maxWidth = 'sm'
+  maxWidth = "sm",
 }) => {
   const { t } = useTranslation();
   // const classes = useStyles({width})
@@ -48,9 +48,13 @@ const Popper: React.FC<IPopperProps> = ({
     >
       {title && <DialogTitle id="alert-dialog-title"> {title}</DialogTitle>}
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {body}
-        </DialogContentText>
+        {typeof body === "string" ? (
+          <DialogContentText id="alert-dialog-description">
+            {body}
+          </DialogContentText>
+        ) : (
+          body 
+        )}
       </DialogContent>
       <DialogActions>
         {showCancel && (

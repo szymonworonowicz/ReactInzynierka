@@ -30,7 +30,7 @@ namespace AuctionStore.Domain.Queries.Auction
 
             public async Task<BasePagedQueryResponse<AuctionDto>> Handle(GetAuctionByCategoryPagedQuery request, CancellationToken cancellationToken)
             {
-                var currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var currentTime = DateTimeOffset.Now.ToUnixTimeSeconds();
                 var auctions = await context.Auctions
                     .Where(x => x.SubCategoryId == request.CategoryId)
                     .Where(x => x.TimeStampEnd.Value > currentTime)
