@@ -1,5 +1,6 @@
 ﻿using AuctionStore.Infrastructure.Dtos;
 using AuctionStore.Infrastructure.Services.Auth;
+using AuctionStore.Infrastructure.Services.Payment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,6 +64,8 @@ namespace AuctionStore.API.DIConfig
             services.Configure<WebUrlOptions>(configuration.GetSection("WebUrlOptions"));
             services.Configure<SmtpOptions>(configuration.GetSection("SmtpOptions"));
             services.Configure<ImageOptions>(configuration.GetSection("ImageOptions"));
+            services.Configure<DotpayOptions>(configuration.GetSection("Dotpay"));
+            services.Configure<DotpayAuthOptions>(configuration.GetSection("DotpayAuth"));
         }
     }
 }

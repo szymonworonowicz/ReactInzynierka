@@ -57,11 +57,6 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
       return `${elem.city} ${t("ul")} ${elem.street} ${elem.houseNo}`;
     };
 
-    const handleCloseModal = () => {
-      setEditAddress(false);
-    };
-
-    const handleAddAddress = (address: IAddress) => {};
     return (
       <>
         <FormControl className={classes.formControl}>
@@ -92,17 +87,6 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
             data={addressTable[selectedItem]}
             setEditAddress={setEditAddress}
           />
-        )}
-
-        {editAddress && (
-          <Modal
-            header={t("add_address")}
-            isOpen={editAddress}
-            handleClose={handleCloseModal}
-            handleSave={handleAddAddress}
-          >
-            <AddressForm />
-          </Modal>
         )}
       </>
     );

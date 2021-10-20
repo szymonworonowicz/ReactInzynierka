@@ -12,11 +12,13 @@ const AuctionDetails: React.FC<IAuctionDetailsProps> = ({ id }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    (async () => {
-      const response = await AuctionApi.getAuction(id);
-      setAuction(response);
-      setIsLoaded(true);
-    })();
+       AuctionApi.getAuction(id).then(response => {
+        setAuction(response);
+       })
+       .finally(() => {
+        setIsLoaded(true);
+       })
+
   }, [id]);
 
   if (!isLoaded) {

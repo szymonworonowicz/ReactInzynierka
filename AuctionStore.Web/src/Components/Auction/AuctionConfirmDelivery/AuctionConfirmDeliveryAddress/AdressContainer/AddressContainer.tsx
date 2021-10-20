@@ -20,17 +20,10 @@ const AddressContainer: React.FC<IAddressContainerProps> = ({ data,setEditAddres
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const handleEditClick = () => {
-      setEditAddress(true);
-  }
 
   return (
     <div className={classes.root}>
-        <div className={classes.button}>
-            <IconButton onClick={handleEditClick}>
-                <Edit/>
-            </IconButton>
-        </div>
+
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Typography variant="h5">
