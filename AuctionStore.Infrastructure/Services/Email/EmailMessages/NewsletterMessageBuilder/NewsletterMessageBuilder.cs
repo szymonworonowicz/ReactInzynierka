@@ -19,7 +19,7 @@ namespace AuctionStore.Infrastructure.Services.Email.EmailMessages.NewsletterEma
             string title = $"<p style=\"fontSize:16px\">{auction.Title}</p>";
             string price = $"<div style=\"display:flex; justify-content=flex-end;\"><p>{auction.Price}</p></div>";
 
-            stringBuilder.Append($"<div style=\"displayflex; height:300px; width:200px; flex-direction:column; justify-content:center; align-items:center;\"> {img} {title} {price}</div>");
+            stringBuilder.Append($"<div style=\"display:flex; height:300px; width:200px; flex-direction:column; justify-content:center; align-items:center;\"> {img} {title} {price}</div>");
         }
 
         public void CreateView()

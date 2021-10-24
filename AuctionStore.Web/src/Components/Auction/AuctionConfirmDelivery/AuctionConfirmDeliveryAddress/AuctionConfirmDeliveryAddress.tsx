@@ -7,8 +7,8 @@ import { UserApi } from "../../../../Services/User/UserApi";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddressContainer from "./AdressContainer/AddressContainer";
-import Modal from "../../../../shared/Modal/Modal";
-import AddressForm from "../../../../Forms/AddressForm";
+import { useFormContext } from "react-hook-form";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,12 +32,14 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
     const context = useContext(UserContext);
     const { t } = useTranslation();
     const classes = useStyles();
+    const {setValue} = useFormContext();
 
     const fetchData = useCallback(async () => {
       const response = await UserApi.getAddresses(context.userId);
       setAddressTable(response);
+      setValue('address.selectedAddressId', response[0].id ?? 0)
       setIsLoaded(true);
-    }, [context.userId]);
+    }, [context.userId, setValue]);
 
     useEffect(() => {
       (async () => {
@@ -51,6 +53,8 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
       const index = event.target.value as number;
       setSelectedItem(index);
       setSelectedCity(addressTable[index].city);
+
+      setValue('selectedAddressId',addressTable[index].id)
     };
 
     const generateMenuItemText = (elem: IAddress): string => {

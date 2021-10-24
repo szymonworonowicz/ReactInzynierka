@@ -28,11 +28,11 @@ const SameAddress: React.FC = () => {
   const classes = useStyles();
 
   const [address, setAddress] = useState<IAddress>({
-    city: getValues()["city"],
-    houseNo: getValues()["houseNo"],
+    city: getValues()["address.city"],
+    houseNo: getValues()["address.houseNo"],
     id: "",
-    postCode: getValues()["postCode"],
-    street: getValues()["street"],
+    postCode: getValues()["address.postCode"],
+    street: getValues()["address.street"],
   });
 
   const handleChangeDeliveryAddress = (
@@ -49,10 +49,10 @@ const SameAddress: React.FC = () => {
     setAddress((prev) => {
       return {
         ...prev,
-        [id]: value,
+        [`address.${id}`]: value,
       };
     });
-    setValue(`${id}`, value);
+    setValue(`address.${id}`, value);
   };
 
   return (
@@ -73,13 +73,13 @@ const SameAddress: React.FC = () => {
         </Grid>
         {!sameDeliveryAddress && (
           <Grid container spacing={1} className={classes.margin}>
-            <input type="hidden" {...register("city", { required: true })} />
+            {/* <input type="hidden" {...register("city", { required: true })} />
             <input type="hidden" {...register("houseNo", { required: true })} />
             <input
               type="hidden"
               {...register("postCode", { required: true })}
             />
-            <input type="hidden" {...register("street", { required: true })} />
+            <input type="hidden" {...register("street", { required: true })} /> */}
 
             <Grid item xs={3}>
               <FormControl fullWidth>

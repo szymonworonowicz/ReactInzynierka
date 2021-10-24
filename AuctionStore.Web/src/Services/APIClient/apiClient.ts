@@ -7,7 +7,7 @@ interface IApiClient extends AxiosInstance {
 }
 
 export const apiClient = axios.create({
-  baseURL: "https://localhost:44315/api",
+  baseURL: "https://localhost:5001/api",
   timeout: 100000,
 }) as IApiClient;
 
@@ -24,7 +24,7 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  } 
 );
 
 apiClient.interceptors.response.use(
@@ -81,7 +81,6 @@ apiClient.interceptors.response.use(
     }
 
     //try request with new Token
-    debugger;
     // try {
     //   return new Promise((resolve, reject) => {
     //     const refreshToken = sessionStorage.getItem("refresh_token");

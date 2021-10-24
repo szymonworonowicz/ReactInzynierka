@@ -13,6 +13,7 @@ import {
 import { IAuctionDetails } from "../../../Interfaces/Auctions";
 import { makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import { useFormContext } from "react-hook-form";
 
 const useStyles = makeStyles({
   buttons: {
@@ -38,6 +39,9 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const {setValue} = useFormContext();
+
+
   const fetchData = useCallback(async () => {
     const response = await AuctionApi.getAuction(id);
     setAuction(response);
@@ -59,6 +63,7 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
         message: value,
       };
     });
+    setValue('message', value);
   };
 
   if (!isLoaded) {

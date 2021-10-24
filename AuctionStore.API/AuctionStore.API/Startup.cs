@@ -31,32 +31,29 @@ namespace AuctionStore.API
             services.AddDbContext<DataContext>(opt =>
             {
                 string connectionString = Configuration.GetConnectionString("DataContext");
-                opt.UseSqlServer(connectionString, options =>
-                {
-                    options.MigrationsAssembly("AuctionStore.Infrastructure");
-                });
+                opt.UseSqlServer(connectionString,
+                    options => { options.MigrationsAssembly("AuctionStore.Infrastructure"); });
             });
 
             services.AddControllers(opt =>
-            {
-                opt.EnableEndpointRouting = false;
-                //opt.Filters.Add(typeof(ValidateModelStateattribute))
-            })
+                {
+                    opt.EnableEndpointRouting = false;
+                    //opt.Filters.Add(typeof(ValidateModelStateattribute))
+                })
                 .AddNewtonsoftJson(opt =>
-            {
-                opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                opt.UseCamelCasing(true);
-            });
+                {
+                    opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    opt.UseCamelCasing(true);
+                });
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddResponseCaching();
 
-            services.ConfigureDI(Configuration);
-
+            services.ConfigureDi(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,  ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, ILogger<Startup> logger)
         {
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
@@ -69,9 +66,9 @@ namespace AuctionStore.API
 
             logger.LogInformation("App started");
 
-            //if (env.IsDevelopment())
+            // (env.IsDevelopment())
             //{
-            //    app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage();
             //    app.UseSwagger();
             //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuctionStore.API v1"));
             //}

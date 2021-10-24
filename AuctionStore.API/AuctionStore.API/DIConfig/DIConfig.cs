@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace AuctionStore.API.DIConfig
 {
-    public static class DIConfig
+    public static class DiConfig
     {
-        public static void ConfigureDI(this IServiceCollection services , IConfiguration config)
+        public static void ConfigureDi(this IServiceCollection services , IConfiguration config)
         {
             var infrastructure = AppDomain.CurrentDomain.Load("AuctionStore.Infrastructure");
             var domain = AppDomain.CurrentDomain.Load("AuctionStore.Domain");

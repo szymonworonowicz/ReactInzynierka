@@ -55,7 +55,7 @@ namespace AuctionStore.API.Controllers
         {
             var result = await CommandAsync(command);
 
-            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+            return result ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
 
         [HttpPost("userAuction")]
@@ -63,6 +63,14 @@ namespace AuctionStore.API.Controllers
         {
             var result = await QueryAsync(query);
 
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
+
+        [HttpPost("confirmAuctionDeliveyry")]
+        public async Task<IActionResult> ConfirmAuction([FromBody] ConfirmAuctionCommand command)
+        {
+            var result = await CommandAsync(command);
+            
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
 

@@ -28,5 +28,6 @@ namespace AuctionStore.Infrastructure.Models
 
         public virtual UserRoles UserRoles {get;set;}
         public virtual IEnumerable<Address> Addresses { get; set; }
+        public virtual BankAccount BankAccount { get; set; }
     }
 }

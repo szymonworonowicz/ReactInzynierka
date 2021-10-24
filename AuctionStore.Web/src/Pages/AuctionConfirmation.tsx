@@ -6,6 +6,10 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { IAuctionConfirmation } from "../Interfaces/Auctions";
 import AuctionConfirmDetails from "../Components/Auction/AuctionConfirmDetail/AuctionConfirmDetails";
 import AuctionConfirmDelivery from "../Components/Auction/AuctionConfirmDelivery/AuctionConfirmDelivery";
+import AuctionConfirmPayment from "../Components/Auction/AuctionConfirmPayment/AuctionConfirmPayment";
+import AuctionDeliveryConfirmation from "../Components/Auction/AuctionDeliveryConfirmation/AuctionDeliveryConfirmation";
+import { useForm, FormProvider } from "react-hook-form";
+import {IAuctionConfirmationForm} from '../Interfaces/Auctions'
 
 const useStyles = makeStyles({
   root: {
@@ -13,8 +17,8 @@ const useStyles = makeStyles({
     margin: " 10vh 10% 10vh",
     flexDirection: "column",
     width: "80%",
-    height: '80vh',
-    justifyContent: 'space-between'
+    height: "80vh",
+    justifyContent: "space-between",
   },
   content: {
     marginTop: "50px",
@@ -24,9 +28,7 @@ const useStyles = makeStyles({
     justifyContent: "flex-end",
   },
   footerButtons: {},
-  body: {
-
-  }
+  body: {},
 });
 
 type AuctionDefailsRouteInfo = {
@@ -47,29 +49,42 @@ const AuctionConfirmation: React.FC<IAuctionConfirmationProps> = ({
   const classes = useStyles();
 
   const { id } = match.params;
+  const methods = useForm<IAuctionConfirmationForm>({
+    defaultValues : {
+      auctionId:id,
+      inpost : true,
+      address : {
+        
+      }
+    }
+  });
 
   return (
     <div className={classes.root}>
-      <div className={classes.body}>
-        <ConfirmationStepper actualStep={selectedStep} />
-        <div className={classes.content}>
-          {selectedStep === 0 && (
-            <AuctionConfirmDetails
-              confirmation={auctionConfirmation}
-              id={id}
-              setConfirmation={setAuctionConfirmation}
-            />
-          )}
-          {selectedStep === 1 && <AuctionConfirmDelivery />}
+      <FormProvider {...methods}>
+        <div className={classes.body}>
+          <ConfirmationStepper actualStep={selectedStep} />
+          <div className={classes.content}>
+            {selectedStep === 0 && (
+              <AuctionConfirmDetails
+                confirmation={auctionConfirmation}
+                id={id}
+                setConfirmation={setAuctionConfirmation}
+              />
+            )}
+            {selectedStep === 1 && <AuctionConfirmDelivery />}
+            {selectedStep === 2 && <AuctionConfirmPayment />}
+            {selectedStep === 3 && <AuctionDeliveryConfirmation />}
+          </div>
         </div>
-      </div>
 
-      <div className={classes.footer}>
-        <AuctionConfirmationFooter
-          setCurrentStep={setSelectedStep}
-          currentStep={selectedStep}
-        />
-      </div>
+        <div className={classes.footer}>
+          <AuctionConfirmationFooter
+            setCurrentStep={setSelectedStep}
+            currentStep={selectedStep}
+          />
+        </div>
+      </FormProvider>
     </div>
   );
 };

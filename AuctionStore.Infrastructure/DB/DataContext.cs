@@ -31,6 +31,7 @@ namespace AuctionStore.Infrastructure.DB
         public DbSet<Message> Messages { get; set; }
         public DbSet<Newsletter> Newsletters { get; set; }
         public DbSet<NewsletterSubCategory> NewsletterSubCategories { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

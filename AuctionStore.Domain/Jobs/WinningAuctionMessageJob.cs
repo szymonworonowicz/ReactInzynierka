@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AuctionStore.Domain.Jobs
 {
     [DisallowConcurrentExecution]
-    public class WinningAuctionMessageJob : IJob
+    public class  WinningAuctionMessageJob : IJob
     {
         private readonly IMediator mediator;
         private readonly ILogger<WinningAuctionMessageJob> logger;

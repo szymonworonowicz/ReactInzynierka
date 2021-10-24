@@ -1,4 +1,7 @@
-import {ICategoryList} from '../../../Interfaces/Api/ICategory'
-export interface IStyledTreeView {
-    data : Array<ICategoryList>
+import {ICategoryList} from '../../../Interfaces/Api/ICategory';
+import { IDataComponentProps } from '../../IDataComponentProps';
+
+export interface IStyledTreeView extends IDataComponentProps<Array<ICategoryList>>  {
+
+
 }

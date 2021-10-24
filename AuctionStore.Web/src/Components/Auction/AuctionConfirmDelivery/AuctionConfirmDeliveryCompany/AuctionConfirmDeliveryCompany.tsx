@@ -31,20 +31,21 @@ const AuctionConfirmDeliveryCompany: React.FC<IAuctionConfirmDeliveryCompanyProp
   ({ city }) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const {setValue} = useFormContext();
+    const {setValue, getValues} = useFormContext();
 
     const [openInpostModal, setOpenInpostModal] = useState<boolean>(false);
-    const [selectedOption, setSelectedOption] = useState<number>(0);
+    const [selectedOption, setSelectedOption] = useState<number>(!Boolean(getValues()['inpost']) ? 0 : 1);
 
     const handleInpostClick = (): void => {
       setOpenInpostModal(true);
       setSelectedOption(0);
+      setValue('inpost', true);
     };
 
     const handleDPDClick = (): void => {
       setSelectedOption(1);
       setValue('inpost', false);
-
+      
     };
 
     return (
