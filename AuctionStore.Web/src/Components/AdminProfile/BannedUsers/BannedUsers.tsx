@@ -29,7 +29,12 @@ const BannedUsers :React.FC = () => {
         AdminApi.UnBanUser(id)
         .then(_response => {
             toast(t('successUnban'), 'success');
-            query.page = 0;
+            setQuery(prev => {
+                return {
+                    ...prev,
+                    page:0
+                }
+            })
         })
         .catch(() => {
             toast(t('failureUnban'), 'error');

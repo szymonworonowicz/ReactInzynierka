@@ -95,6 +95,14 @@ namespace AuctionStore.API.Controllers
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
 
         }
+
+        [HttpPost("banUser")]
+        public async Task<IActionResult> BanUser([FromBody] BanUserCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
     }
 
 }

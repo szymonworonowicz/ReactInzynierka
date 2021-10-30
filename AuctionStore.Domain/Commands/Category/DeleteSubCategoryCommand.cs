@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Category
 {
-    public class DeleteSubCategoryCommand : IRequest<bool>
+    public class DeleteSubCategoryCommand : ICommand<bool>
     {
         public Guid Id { get; set; }
 
-        public class DeleteSubCategoryCommandHandler : IRequestHandler<DeleteSubCategoryCommand, bool>
+        public class DeleteSubCategoryCommandHandler : ICommandHandler<DeleteSubCategoryCommand, bool>
         {
             private readonly DataContext context;
 

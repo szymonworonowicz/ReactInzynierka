@@ -130,5 +130,15 @@ export const AdminApi = {
     }
 
     return new Promise<IAuctionInfo>((_resolve, reject) => reject(null));
+  },
+  banUser : async(userId:string) : Promise<boolean> => {
+    const response = await apiClient.post<IBaseResponse<boolean>>('admins/banUser',{userId});
+    
+    if(response.data.success) {
+      return new Promise<boolean>((resolve) => resolve(response.data.data));
+    }
+
+    return new Promise<boolean>((_resolve, reject) => reject(null));
+
   }
 };

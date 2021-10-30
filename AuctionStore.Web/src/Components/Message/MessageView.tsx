@@ -73,7 +73,12 @@ const MessageView: React.FC = () => {
       .then(response => {
         if (response) {
           toast(t("successRemoveMessage"), "success");
-          query.page = 0;
+          setQuery(prev => {
+            return {
+              ...prev,
+              query: 0
+            }
+          })
         } else {
           toast(t("failureRemoveMessage"), "error");
         }

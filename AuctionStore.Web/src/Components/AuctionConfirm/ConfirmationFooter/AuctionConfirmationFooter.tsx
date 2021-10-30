@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IAuctionConfirmationFooterProps } from "./IAuctionConfirmationFooterProps";
 import { Button } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
+import { useFormContext } from "react-hook-form";
+import {IAuctionConfirmationForm} from '../../../Interfaces/Auctions'
+import { AuctionApi } from "../../../Services/Auction/Auction.service";
+import { UserContext } from "../../../Context/UserContext";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -18,6 +23,9 @@ const AuctionConfirmationFooter: React.FC<IAuctionConfirmationFooterProps> = ({
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const {handleSubmit} = useFormContext();
+  const context = useContext(UserContext);
+  const history = useHistory();
 
   const handlePrev = (): void => {
     setCurrentStep((prev) => prev - 1);
@@ -27,7 +35,14 @@ const AuctionConfirmationFooter: React.FC<IAuctionConfirmationFooterProps> = ({
     setCurrentStep((prev) => prev + 1);
   };
 
-  const handleSave = (): void => {
+  const handleSave = (data : IAuctionConfirmationForm): void => {
+    AuctionApi.confirmAuction(data, context.userId)
+      .then(response => {
+        const {paymentLink } = response;
+        if(paymentLink !== '' ) {
+          window.location.href = paymentLink
+        }
+      })
 
   };
   
@@ -49,7 +64,7 @@ const AuctionConfirmationFooter: React.FC<IAuctionConfirmationFooterProps> = ({
           {t("next")}
         </Button>
       ) : (
-        <Button variant="contained" onClick={handleSave}>
+        <Button variant="contained" onClick={handleSubmit(handleSave)}>
           {t("save")}
         </Button>
       )}

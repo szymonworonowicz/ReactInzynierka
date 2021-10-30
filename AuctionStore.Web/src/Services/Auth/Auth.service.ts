@@ -1,4 +1,4 @@
-import { ILoginCredentials,IRegisterCredentials } from "../../Interfaces/Api";
+import { IBaseResponse, ILoginCredentials,IRegisterCredentials,ILoginResult } from "../../Interfaces/Api";
 import { apiClient } from "../APIClient/apiClient";
 import JWTDecode from "jwt-decode";
 import { history } from "../../Helpers";
@@ -24,7 +24,7 @@ export interface IUserAuthData {
 export const authService: IAuthService = {
   login: async (credentials: ILoginCredentials): Promise<boolean> => {
     try {
-      const response = await apiClient.post("auths/login", {
+      const response = await apiClient.post<IBaseResponse<ILoginResult>>("auths/login", {
         UserName: credentials.username,
         Password: credentials.password,
       });
@@ -33,6 +33,12 @@ export const authService: IAuthService = {
         return new Promise<boolean>((_resolve, reject) => {
           reject(response.data.errors[0].message);
         });
+      }
+
+      if(response.data.data.isBanned === true ) {
+        return new Promise<boolean>((_resolve, reject) => {
+          reject(true);
+        })
       }
 
       localStorage.setItem("access_token", response.data.data.accessToken);

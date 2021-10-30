@@ -93,5 +93,10 @@
     "deleted":"Usunięty",
     "createdAt" : "Utworzono",
     "lastLoginAt" :"Ostatnie logowanie",
-    "changePassword" : "Zmiana hasła"
+    "changePassword" : "Zmiana hasła",
+    "admins" : "Administratorzy",
+    "addAdminSuccess" : "Udało się dodać administratora",
+    "addAdminFailure" : "Nie udało się dodać administratora",
+    "successBanUser": "Udało się zablokować użytkownika",
+    "failureBanUser": "Nie udało się zablokować użytkownika"
 }

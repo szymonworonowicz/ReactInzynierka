@@ -43,7 +43,7 @@ const RegisterForm: React.FC = () => {
     password: "",
     userName: "",
     confirmPassword: "",
-    userType: "User",
+    userType: "",
   });
 
   const handleCredentialChange = (e: any) => {
@@ -60,7 +60,7 @@ const RegisterForm: React.FC = () => {
         <input
           type="hidden"
           {...register("email", {
-            required: true,
+            //required: true,
             // pattern: {
             //   value: validators.get(ValidatorType.Email) ?? /$/,
             //   message: "must be a email",
@@ -73,7 +73,7 @@ const RegisterForm: React.FC = () => {
         <input
           type="hidden"
           {...register("password", {
-            required: true,
+            //required: true,
             // pattern: {
             //   value: validators.get(ValidatorType.Password) ?? /$/,
             //   message: "password Validation",
@@ -83,9 +83,9 @@ const RegisterForm: React.FC = () => {
         <input
           type="hidden"
           {...register("confirmPassword", {
-            required: true,
-            validate: (value) =>
-              value === password.current || "Password not matched",
+            // required: true,
+            // validate: (value) =>
+            //   value === password.current || "Password not matched",
           })}
         />
 

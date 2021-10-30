@@ -66,7 +66,7 @@ namespace AuctionStore.API.Controllers
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
 
-        [HttpPost("confirmAuctionDeliveyry")]
+        [HttpPost("confirmAuctionDelivery")]
         public async Task<IActionResult> ConfirmAuction([FromBody] ConfirmAuctionCommand command)
         {
             var result = await CommandAsync(command);

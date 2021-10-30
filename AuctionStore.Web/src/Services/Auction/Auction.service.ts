@@ -1,5 +1,5 @@
 import {apiClient} from '../APIClient/apiClient';
-import {IAddAuction, IAuction, IAuctionDetails, IAuctionInfo} from '../../Interfaces/Auctions';
+import {IAddAuction, IAuction, IAuctionDetails, IAuctionInfo, IAuctionConfirmationForm, IAuctionConfirmResult} from '../../Interfaces/Auctions';
 import {  IBaseResponse } from '../../Interfaces/Api';
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 
@@ -127,5 +127,19 @@ export const AuctionApi = {
     return new Promise<Array<IAuction>>((_resolve, reject) =>
         reject(null)
       );
+  },
+  confirmAuction : async(data :IAuctionConfirmationForm, winningUserId : string | null) : Promise<IAuctionConfirmResult> => {
+    const response = await apiClient.post<IBaseResponse<IAuctionConfirmResult>>('/auctions/confirmAuctionDelivery',{...data, winningUserId});
+
+    if(response.data.success) {
+      return new Promise<IAuctionConfirmResult>((resolve) =>
+          resolve(response.data.data)
+        );
+    }
+
+    return new Promise<IAuctionConfirmResult>((_resolve, reject) =>
+        reject(null)
+      );
   }
+  
 }

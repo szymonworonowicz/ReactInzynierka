@@ -10,7 +10,7 @@ import {
   Input,
   Button,
 } from "@material-ui/core";
-import { Delete } from "@material-ui/icons";
+import { Delete, Lock } from "@material-ui/icons";
 import { UserContext } from "../../../../Context/UserContext";
 import { makeStyles } from "@material-ui/styles";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,8 @@ import { IAuctionDetails } from "../../../../Interfaces/Auctions";
 import moment from "moment";
 import { AuctionApi } from "../../../../Services/Auction/Auction.service";
 import { useHistory } from "react-router-dom";
-import { AuctionStatus } from "../../../../Helpers/constans";
+import { AuctionStatus, UserRoles } from "../../../../Helpers/constans";
+import { AdminApi } from "../../../../Services/Admin/AdminApi";
 
 type timeCounterDataType = Pick<
   IAuctionDetails,
@@ -60,7 +61,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
     (async () => {
       try {
         const connection: HubConnection = new HubConnectionBuilder()
-          .withUrl("https://localhost:44315/hub", {
+          .withUrl("https://localhost:5001/hub", {
             skipNegotiation: true,
             transport: HttpTransportType.WebSockets,
           })
@@ -119,18 +120,31 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
   };
 
   const handleDeleteAuction = (): void => {
-    AuctionApi.deleteAuction(data.id)
-      .then(response => {
-        if (response) {
-          toast(t("success_delete_auction"), "success");
-          setTimeout(() => {
-            history.push("/");
-          }, 5000);
-        } else {
-          toast(t("failure_delete_auction"), "success");
-        }
-      })
+    AuctionApi.deleteAuction(data.id).then((response) => {
+      if (response) {
+        toast(t("success_delete_auction"), "success");
+        setTimeout(() => {
+          history.push("/");
+        }, 5000);
+      } else {
+        toast(t("failure_delete_auction"), "success");
+      }
+    });
   };
+
+  const handleLockAuthor = () : void => {
+    AdminApi.banUser(data.userId).then(response => {
+      if(response) {
+        toast(t("successBanUser"), "success");
+        setTimeout(() => {
+          history.push("/");
+        }, 5000);
+      }else {
+        toast(t("failureBanUser"), "error");
+      }
+    })
+  }
+  console.log(context)
 
   return (
     <div>
@@ -146,13 +160,23 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
             <Typography variant="h5">{data.title}</Typography>
           </Grid>
           <Grid item xs={5} className={classes.buttons}>
-            {(context.userId === data.userId && data.status === AuctionStatus.New) && (
-              <div>
-                <IconButton onClick={handleDeleteAuction}>
-                  <Delete />
-                </IconButton>
-              </div>
-            )}
+            {(context.userId === data.userId &&
+              data.status === AuctionStatus.New) && (
+                <div>
+                  <IconButton onClick={handleDeleteAuction}>
+                    <Delete />
+                  </IconButton>
+                </div>
+              )}
+            {(context.userId !== data.userId &&
+              data.status === AuctionStatus.New &&
+              context.userRole === UserRoles.Admin) && (
+                <div>
+                  <IconButton onClick={handleLockAuthor}>
+                    <Lock />
+                  </IconButton>
+                </div>
+              )}
           </Grid>
 
           {data.status === AuctionStatus.New && (

@@ -6,3 +6,4 @@ export * from './IAuctionDetails';
 export * from './IAuctionConfirmation';
 export * from './IAuctionConfirmAddress';
 export * from './IAuctionConfirmationForm';
+export * from './IAuctionConfirmResult';

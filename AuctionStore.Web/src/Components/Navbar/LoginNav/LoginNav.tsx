@@ -58,6 +58,9 @@ const LoginNav: React.FC = () => {
         }
         
       })
+      .catch(err => {
+        toast(t('bannedAccout'),'error');
+      })
   };
   return (
     <>

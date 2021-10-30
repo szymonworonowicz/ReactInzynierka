@@ -2,7 +2,7 @@
 {
     public enum PaymentTypeEnum : byte
     {
-        Dotpay = 1,
-        Cash = 2
+        Dotpay = 0,
+        Cash = 1
     }
 }

@@ -77,7 +77,7 @@ namespace AuctionStore.API.DIConfig
             services.Configure<SmtpOptions>(configuration.GetSection("SmtpOptions"));
             services.Configure<ImageOptions>(configuration.GetSection("ImageOptions"));
             services.Configure<DotpayOptions>(configuration.GetSection("Dotpay"));
-            services.Configure<DotpayAuthOptions>(configuration.GetSection("DotpayAuth"));
+            services.Configure<DotpayAuthOptions>(configuration.GetSection("DotpayAuthorize"));
         }
     }
 }

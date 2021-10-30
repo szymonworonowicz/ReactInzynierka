@@ -1,4 +1,5 @@
 export interface IBaseResponse<T> {
     success : boolean,
-    data: T
+    data: T,
+    errors: Array<any>
 }

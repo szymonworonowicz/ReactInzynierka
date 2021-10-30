@@ -28,20 +28,20 @@ const AuctionPhotos: React.FC<IAuctionPhotosProps> = ({ id }) => {
   const classes = useStyles();
 
   const carouselItems: Array<JSX.Element> = useMemo(() => {
+    if (auctionImages.length === 0) {
+      return [<CarouselItem photo="https://via.placeholder.com/150" />];
+    }
     return auctionImages.map((elem, index) => {
       return <CarouselItem photo={elem.photoString} key={index} />;
     });
   }, [auctionImages]);
 
   useEffect(() => {
-
-      ImageService.getAuctionImages(id)
-        .then(response => {
-          setAuctionImages(response);
-        })
-        .catch(() => {
-          
-        })
+    ImageService.getAuctionImages(id)
+      .then((response) => {
+        setAuctionImages(response);
+      })
+      .catch(() => {});
   }, [id]);
 
   return (

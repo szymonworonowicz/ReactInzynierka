@@ -43,6 +43,14 @@ namespace AuctionStore.Domain.Commands.Auth
                 if (!authService.VerifyPassword(request.Password, targetUser.PasswordHash))
                     return null;
 
+                if (targetUser.IsBanned && targetUser.EndOffBan > DateTime.Now)
+                {
+                    return new JwtUserTokensDto()
+                    {
+                        isBanned = true
+                    };
+                }
+
                 var userRoles = await context.UserRoles.Where(x => x.UserId == targetUser.Id).Select(x => x.Role.Name).ToListAsync(cancellationToken);
 
                 var userName = targetUser.FirstName + " " + targetUser.LastName;
@@ -55,8 +63,14 @@ namespace AuctionStore.Domain.Commands.Auth
 
                tokens.RefreshToken = await CheckDbTokens(dbToken, targetUser.Id, tokens.RefreshToken, cancellationToken);
                 
-
+                
                 targetUser.LastLoginDateUtc = DateTime.UtcNow;
+                if (targetUser.IsBanned && targetUser.EndOffBan < DateTime.Now)
+                {
+                    targetUser.IsBanned = false;
+                    targetUser.EndOffBan = null;
+                }
+                
                 await context.SaveChangesAsync(cancellationToken);
 
                 return tokens;
