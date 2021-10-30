@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Admin
 {
-    public class UpsertStoreConfigCommand : IRequest<StoreConfigDto>
+    public class UpsertStoreConfigCommand : ICommand<StoreConfigDto>
     {
         [Required]
         public decimal MaxPhotoSize { get; set; }
@@ -21,7 +21,7 @@ namespace AuctionStore.Domain.Commands.Admin
         [Required]
         public int MaxPhotos { get; set; }
 
-        public class UpsertStoreConfigCommandHandler :IRequestHandler<UpsertStoreConfigCommand, StoreConfigDto>
+        public class UpsertStoreConfigCommandHandler :ICommandHandler<UpsertStoreConfigCommand, StoreConfigDto>
         {
             private readonly DataContext context;
             private readonly IMapper mapper;

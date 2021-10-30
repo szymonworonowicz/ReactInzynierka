@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Admin
 {
-    public class UnBanUserCommand : IRequest<bool>
+    public class UnBanUserCommand : ICommand<bool>
     {
         public Guid Id { get; set; }
 
-        public class UnbanUserCommandHandler : IRequestHandler<UnBanUserCommand, bool>
+        public class UnbanUserCommandHandler : ICommandHandler<UnBanUserCommand, bool>
         {
             private readonly DataContext context;
 

@@ -17,6 +17,7 @@ namespace AuctionStore.Infrastructure.Models
         public Guid UserId { get; set; }
         public Guid? SubCategoryId { get; set; }
         public AuctionStatus Status { get; set; }
+        public int CountOfEntries { get; set; }
 
 
         public virtual IEnumerable<AuctionFile> AuctionMedias { get; set; }

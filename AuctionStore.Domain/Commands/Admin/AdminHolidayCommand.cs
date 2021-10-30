@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Admin
 {
-    public class AdminHolidayCommand  :IRequest<bool>
+    public class AdminHolidayCommand  :ICommand<bool>
     {
         public Guid Id { get; set; }
 
-        public class AdminHolidaysCommandHandler : IRequestHandler<AdminHolidayCommand, bool>
+        public class AdminHolidaysCommandHandler : ICommandHandler<AdminHolidayCommand, bool>
         {
             private readonly DataContext context;
 

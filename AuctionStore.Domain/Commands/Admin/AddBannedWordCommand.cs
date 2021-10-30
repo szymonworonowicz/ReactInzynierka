@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Admin
 {
-    public class AddBannedWordCommand : IRequest<BannedWordDto>
+    public class AddBannedWordCommand : ICommand<BannedWordDto>
     {
         public string NewWord { get; set; }
 
-        public class AddBannedWordCommandHandler : IRequestHandler<AddBannedWordCommand, BannedWordDto>
+        public class AddBannedWordCommandHandler : ICommandHandler<AddBannedWordCommand, BannedWordDto>
         {
             private readonly DataContext context;
             private readonly IMapper mapper;

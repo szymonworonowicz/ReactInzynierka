@@ -101,4 +101,31 @@ export const AuctionApi = {
         reject(null)
       );
   }
+  ,
+  getNewestAuctions : async() :Promise<Array<IAuction>> => {
+    const response = await apiClient.get<IBaseResponse<Array<IAuction>>>('/auctions/getNewestAuctions');
+
+    if(response.data.success) {
+      return new Promise<Array<IAuction>>((resolve) =>
+          resolve(response.data.data)
+        );
+    }
+
+    return new Promise<Array<IAuction>>((_resolve, reject) =>
+        reject(null)
+      );
+  },
+  getTrendingAuctions : async() : Promise<Array<IAuction>> => {
+    const response = await apiClient.get<IBaseResponse<Array<IAuction>>>('/auctions/getTrendingAuctions');
+
+    if(response.data.success) {
+      return new Promise<Array<IAuction>>((resolve) =>
+          resolve(response.data.data)
+        );
+    }
+
+    return new Promise<Array<IAuction>>((_resolve, reject) =>
+        reject(null)
+      );
+  }
 }

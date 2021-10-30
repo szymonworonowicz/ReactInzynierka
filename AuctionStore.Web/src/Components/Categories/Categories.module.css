@@ -1,9 +1,9 @@
 .component {
     width: 15%;
-    position: absolute;
     height: 85vh;
     display: flex;
     flex-direction: column;
     color: #fff;
     background-color: #3f51b5;
+    margin-right: 20px;
 }

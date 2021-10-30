@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Auction
 {
-    public class AddAuctionCommand : IRequest<bool>
+    public class AddAuctionCommand : ICommand<bool>
     {
         public string Title { get; set; }
         public decimal Price { get; set; }
@@ -26,7 +26,7 @@ namespace AuctionStore.Domain.Commands.Auction
         public Guid UserId { get; set; }
         public List<AuctionAddPhotoDto> Photos { get; set; }
 
-        public class AddAuctionCommandHandler : IRequestHandler<AddAuctionCommand, bool>
+        public class AddAuctionCommandHandler : ICommandHandler<AddAuctionCommand, bool>
         {
             private readonly DataContext context;
             private readonly IMapper mapper;
@@ -63,6 +63,7 @@ namespace AuctionStore.Domain.Commands.Auction
                     };
                 }
                 await context.SaveChangesAsync(cancellationToken);
+                
 
                 return true;
             }

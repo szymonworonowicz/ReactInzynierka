@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AuctionStore.Domain.Commands.Admin
 {
-    public class DeleteAdminCommand : IRequest<bool>
+    public class DeleteAdminCommand : ICommand<bool>
     {
         public Guid Id { get; set; }
 
-        public class DeleteAdminCommandHandler : IRequestHandler<DeleteAdminCommand, bool>
+        public class DeleteAdminCommandHandler : ICommandHandler<DeleteAdminCommand, bool>
         {
             private readonly DataContext context;
 

@@ -19,13 +19,17 @@ const AuctionConfirmationFooter: React.FC<IAuctionConfirmationFooterProps> = ({
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const handleNext = () => {
-      setCurrentStep((prev) => prev + 1);
-  }
+  const handleNext = (): void => {
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const handleSave = (): void => {
+
+  };
   
   return (
     <div className={classes.root}>
@@ -36,13 +40,19 @@ const AuctionConfirmationFooter: React.FC<IAuctionConfirmationFooterProps> = ({
       >
         {t("back")}
       </Button>
-      <Button
-        variant="contained"
-        disabled={currentStep === 3}
-        onClick={handleNext}
-      >
-        {t("next")}
-      </Button>
+      {currentStep !== 3 ? (
+        <Button
+          variant="contained"
+          disabled={currentStep === 3}
+          onClick={handleNext}
+        >
+          {t("next")}
+        </Button>
+      ) : (
+        <Button variant="contained" onClick={handleSave}>
+          {t("save")}
+        </Button>
+      )}
     </div>
   );
 };

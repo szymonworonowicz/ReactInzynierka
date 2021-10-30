@@ -81,5 +81,23 @@ namespace AuctionStore.API.Controllers
 
             return result ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
+
+        [HttpGet("getNewestAuctions")]
+        public async Task<IActionResult> GetNewestAuctions()
+        {
+            var result = await QueryAsync(new GetNewestAuctionsQuery());
+            
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
+        [HttpGet("getTrendingAuctions")]
+        public async Task<IActionResult> GetTrendingAuctions()
+        {
+            var result = await QueryAsync(new GetTrendingAuctionsQuery());
+            
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
+        
     }
 }
