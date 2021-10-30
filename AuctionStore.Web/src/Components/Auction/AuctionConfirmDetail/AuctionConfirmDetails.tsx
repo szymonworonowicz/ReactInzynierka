@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { IAuctionConfirmDetailsProps } from "./IAuctionConfirmDetailsProps";
 import { AuctionApi } from "../../../Services/Auction/Auction.service";
 
@@ -41,18 +41,18 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
 
   const {setValue} = useFormContext();
 
-
-  const fetchData = useCallback(async () => {
-    const response = await AuctionApi.getAuction(id);
-    setAuction(response);
-    setIsLoaded(true);
-  }, [id]);
-
+  
   useEffect(() => {
-    (async () => {
-      fetchData();
-    })();
-  }, [fetchData]);
+    setIsLoaded(false);
+    AuctionApi.getAuction(id)
+    .then(response => {
+      setAuction(response);
+    })
+    .finally(() => {
+      setIsLoaded(true);
+    })
+
+  }, [id]);
 
   const handleMessageChange = (e: React.ChangeEvent<{ value: string }>) => {
     const { value } = e.target;

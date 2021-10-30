@@ -149,10 +149,10 @@ namespace AuctionStore.Infrastructure.Services.Auth
                                 Encoding.ASCII.GetBytes(secretKey)),
                 ValidateIssuer = true,
                 ValidIssuer = jwtTokenIssuer,
-                ValidateAudience = false,
+                //ValidateAudience = false,
                 ClockSkew = TimeSpan.Zero,
-                RequireSignedTokens = true,
-                RequireExpirationTime = true
+                //RequireSignedTokens = true,
+                //RequireExpirationTime = true
             };
         }
         private static SecurityKey GetSymetricSecurityKey(string secretKey)

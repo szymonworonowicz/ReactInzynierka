@@ -34,12 +34,14 @@ const AuctionPhotos: React.FC<IAuctionPhotosProps> = ({ id }) => {
   }, [auctionImages]);
 
   useEffect(() => {
-    try {
-      (async () => {
-        const response = await ImageService.getAuctionImages(id);
-        setAuctionImages(response);
-      })();
-    } catch (error) {}
+
+      ImageService.getAuctionImages(id)
+        .then(response => {
+          setAuctionImages(response);
+        })
+        .catch(() => {
+          
+        })
   }, [id]);
 
   return (

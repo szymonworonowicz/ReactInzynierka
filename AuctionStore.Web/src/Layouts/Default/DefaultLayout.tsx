@@ -10,8 +10,7 @@ const DefaultLayout: React.FC = ({ children }) => {
       <Navbar />
       <div className={styles.content}>
         <Categories />
-        {/* <div className={styles.main}> */}
-        <div className={styles.children}>
+        <div className={styles.main}>
         {children}
 
         </div>

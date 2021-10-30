@@ -43,30 +43,32 @@ const NewsletterForm: React.FC = () => {
   const history = useHistory();
 
   const getCategories = useCallback(async () => {
-    setIsLoaded(false);
-    const response = await CategoriesApi.getAll();
-    let arr: Array<ICategory> = [];
-    response.forEach((category) => {
-        category.subCategories.forEach(subcategory => {
-
-            arr = [...arr, {
-                id : subcategory.id,
-                categoryName : category.name,
-                name: subcategory.name
-            }];
-        })
-    });
-
-    setCategories(arr);
-    setIsLoaded(true);
   }, []);
-
+  
   useEffect(() => {
-    (async () => {
-      await getCategories();
-    })();
-  }, [getCategories]);
+    setIsLoaded(false);
+    CategoriesApi.getAll()
+      .then(response => {
+        let arr: Array<ICategory> = [];
+        response.forEach((category) => {
+            category.subCategories.forEach(subcategory => {
+              
+              arr = [...arr, {
+                    id : subcategory.id,
+                    categoryName : category.name,
+                    name: subcategory.name
+                }];
+              })
+        });
+      
+        setCategories(arr);
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      })
 
+  }, [getCategories]);
+  
   const handleEmailChange = (e: React.ChangeEvent<{ value: string }>): void => {
     const { value } = e.target;
     setData((prev) => {
@@ -95,19 +97,20 @@ const NewsletterForm: React.FC = () => {
       })
   };
 
-  const handleNewsletterSave = async () : Promise<void> => {
-    const response = await NewsletterService.sendNewsletter(data);
-
-    if (response) {
-      toast(t('added_to_newsletter'),'success');
-      setTimeout(() => {
-        history.push('/');
-      },5000);
-    }
-    else {
-      toast(t('added_to_newsletter_failure'),'error');
-
-    }
+  const handleNewsletterSave = () : void => {
+    NewsletterService.sendNewsletter(data)
+      .then(response => {
+        if (response) {
+          toast(t('added_to_newsletter'),'success');
+          setTimeout(() => {
+            history.push('/');
+          },5000);
+        }
+        else {
+          toast(t('added_to_newsletter_failure'),'error');
+    
+        }
+      })
   }
 
   if (!isLoaded) {

@@ -44,7 +44,7 @@ const UserProfile: React.FC = () => {
             aria-label="icon label tabs example"
           >
             <Tab
-              label={t("changeData")}
+              label={t("userdata")}
               id={`nav-tab-${0}`}
               aria-controls={`nav-tabpanel-${0}`}
             />

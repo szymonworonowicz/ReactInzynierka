@@ -9,8 +9,6 @@ import { IFileEntityId } from "./Interfaces";
 import ImageElement from "./ImageElement/ImageElement";
 import { ImageService } from "../../../Services/Image/Image.service";
 import { IAuctionPhoto } from "../../../Interfaces/Auctions";
-import Popper from "../../../shared/Popper/Popper";
-import ImageCropModal from './ImageCropModal/ImageCropModal'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -53,8 +51,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
   const classes = useStyles();
   const toast = useToast();
 
-  const handleChange = async (files: FileObject[]) => {
-    debugger;
+  const handleChange = async (files: FileObject[]) => {    
     if (files.length) {
       const filteredFiles: Array<FileObject> = files.filter(
         (file) => !selectedFiles.find((f) => f.data === file.data)
@@ -71,27 +68,28 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
     if (true) {
       let loadedFiles: Array<IFileEntityId> = [];
       let fileEntities: Array<IAuctionPhoto> = [];
-      debugger;
       await Promise.all(
         newFiles.map(async (file) => {
-          const fileResponse = await ImageService.saveImage(file.file);
-          if (fileResponse) {
-            loadedFiles = [
-              ...loadedFiles,
-              {
-                file: file,
-                id: fileResponse.id,
-              },
-            ];
-
-            fileEntities = [
-              ...fileEntities,
-              {
-                photoId: fileResponse.id,
-                isMain: false,
-              },
-            ];
-          }
+          ImageService.saveImage(file.file)
+            .then(fileResponse => {
+              if (fileResponse) {
+                loadedFiles = [
+                  ...loadedFiles,
+                  {
+                    file: file,
+                    id: fileResponse.id,
+                  },
+                ];
+    
+                fileEntities = [
+                  ...fileEntities,
+                  {
+                    photoId: fileResponse.id,
+                    isMain: false,
+                  },
+                ];
+              }
+            })
         })
       );
       setSelectedFiles((prev) => [...prev, ...newFiles]);
@@ -101,7 +99,6 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
   }, [ setFileEntity]);
 
   const handleDeletePhoto = async (file: FileObject): Promise<void> => {
-    debugger;
 
     try {
       const index = files.findIndex(

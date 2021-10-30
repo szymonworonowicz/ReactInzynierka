@@ -47,13 +47,17 @@ const LoginNav: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const Login = async (data: ILoginCredentials) : Promise<void> => {
-    if (await authService.login(data as ILoginCredentials)) {
-      toast('zalogowano', 'success');
-    }
-    else {
-      toast("bląąd logowania", "error");
-    }
+  const Login = (data: ILoginCredentials) : void => {
+    authService.login(data as ILoginCredentials)
+    .then(response => {
+        if (response) {
+          toast('zalogowano', 'success');
+        }
+        else {
+          toast("bląąd logowania", "error");
+        }
+        
+      })
   };
   return (
     <>

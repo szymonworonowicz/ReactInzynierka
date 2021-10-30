@@ -25,34 +25,39 @@ const UserAddresses: React.FC = () => {
 
   useEffect(() => {
     setIsLoaded(true);
-    (async () => {
-      const data = await UserApi.getAddresses(context.userId);
-      setAddressTable(data);
-      setIsLoaded(false);
-    })();
+      UserApi.getAddresses(context.userId)
+      .then(response => {
+        setAddressTable(response);
+      })
+      .finally(() =>{
+        setIsLoaded(false);
+      })
+
   }, [setIsLoaded, context.userId]);
 
   const handleCancelDeleteAddress = () => {
     setIsDeleteAddress(false);
   };
 
-  const handleAgreeDeleteAddress = async (): Promise<void> => {
-    const response = await UserApi.deleteAddress(actionAddressId);
+  const handleAgreeDeleteAddress = (): void => {
+    UserApi.deleteAddress(actionAddressId)
+      .then(response => {
+        if (response) {
+          toast(`${t("successDeleteAddress")}`, "success");
+          const index = addressTable.findIndex((x) => x.id === actionAddressId);
+          if (index !== -1) {
+            setAddressTable((prev) => {
+              let local = prev;
+              local.splice(index, 1);
+              return [...local];
+            });
+          }
+          setIsDeleteAddress(false);
+        } else {
+          toast(`${t("failureDeleteAddress")}`, "error");
+        }
+      })
 
-    if (response) {
-      toast(`${t("successDeleteAddress")}`, "success");
-      const index = addressTable.findIndex((x) => x.id === actionAddressId);
-      if (index !== -1) {
-        setAddressTable((prev) => {
-          let local = prev;
-          local.splice(index, 1);
-          return [...local];
-        });
-      }
-      setIsDeleteAddress(false);
-    } else {
-      toast(`${t("failureDeleteAddress")}`, "error");
-    }
   };
 
   const handleDeleteAdress = (id: string) => {
@@ -66,26 +71,29 @@ const UserAddresses: React.FC = () => {
   };
 
   const handleUpsertAddress = async (data: IAddress): Promise<void> => {
-      const response = await UserApi.UpsertAddress(data, context.userId);
-      if(response) {
-        toast(data.id ? t('success_add'): t('success_update'), 'success');
-        if(!data.id) {
-          setAddressTable(prev => [...prev, response]);
-        }
-        else {
-          const index = addressTable.findIndex(x => x.id === response.id);
-          if(index !== -1) {
-            const local = addressTable;
-            local.splice(index,1, response);
-            setAddressTable([...local]);
+      UserApi.UpsertAddress(data, context.userId)
+        .then(response => {
+          if(response) {
+            toast(data.id ? t('success_add'): t('success_update'), 'success');
+            if(!data.id) {
+              setAddressTable(prev => [...prev, response]);
+            }
+            else {
+              const index = addressTable.findIndex(x => x.id === response.id);
+              if(index !== -1) {
+                const local = addressTable;
+                local.splice(index,1, response);
+                setAddressTable([...local]);
+              }
+            }
           }
-        }
-      }
-      else {
-        toast(data.id ? t('failure_add'): t('failure_update'), 'error');
-      }
-
-      setAddModal(false);
+          else {
+            toast(data.id ? t('failure_add'): t('failure_update'), 'error');
+          }
+        })
+        .finally(() => {
+          setAddModal(false);
+        })
   };
 
   const getInitAddress = () : IAddress | undefined => {

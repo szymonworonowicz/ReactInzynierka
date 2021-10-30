@@ -6,15 +6,15 @@ import { Edit, Delete } from "@material-ui/icons";
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '10px'
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "10px",
   },
   buttons: {
-      marginRight:'10px'
+    marginRight: "10px",
   },
   header: {
-      marginLeft:'10px'
+    marginLeft: "10px",
   },
 }));
 
@@ -25,31 +25,27 @@ const PaperNav: React.FC<IPaperNav> = ({
   onEdit = () => {},
   hasEdit = false,
   ExternalIcon,
-  externalIconAction
+  externalIconAction,
 }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <div className={classes.header}>
-        <h3>{header}</h3>
-      </div>
+      <div className={classes.header}>{header && <h2>{header}</h2>}</div>
       <div className={classes.buttons}>
-          {
-              ExternalIcon && (
-                  <IconButton onClick = {externalIconAction}>
-                      <ExternalIcon color='primary'/>
-                  </IconButton>
-              )
-          }
+        {ExternalIcon && (
+          <IconButton onClick={externalIconAction}>
+            <ExternalIcon color="primary" />
+          </IconButton>
+        )}
         {hasEdit && (
           <IconButton onClick={onEdit}>
-            <Edit color='primary'/>
+            <Edit color="primary" />
           </IconButton>
         )}
         {hasDelete && (
           <IconButton onClick={onDelete}>
-            <Delete color='primary'/>
+            <Delete color="primary" />
           </IconButton>
         )}
       </div>

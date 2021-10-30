@@ -68,15 +68,17 @@ const MessageView: React.FC = () => {
     return <MessageDetails message={selectedItem as IMessage} />;
   };
 
-  const deleteMessage = async (messageId: string): Promise<void> => {
-    const response = await MessageService.deleteMessage(messageId);
+  const deleteMessage = (messageId: string): void => {
+    MessageService.deleteMessage(messageId)
+      .then(response => {
+        if (response) {
+          toast(t("success_remove_message"), "success");
+          query.page = 0;
+        } else {
+          toast(t("failure_remove_message"), "error");
+        }
+      })
 
-    if (response) {
-      toast(t("success_remove_message"), "success");
-      query.page = 0;
-    } else {
-      toast(t("failure_remove_message"), "error");
-    }
   };
 
   const generateColumns = (): IGenericTableColumnDefinitionType<

@@ -5,10 +5,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace AuctionStore.API.DIConfig
 {
-
     public static class ApiConfig
     {
         private class CommonOptions
@@ -19,6 +24,7 @@ namespace AuctionStore.API.DIConfig
             public string CorsOrigin { get; set; }
             public JwtOptions Jwt { get; set; }
         }
+
         public static void ConfigApi(this IServiceCollection services, IConfiguration configuration,
             Action<JwtBearerOptions> jwtOptions = null)
         {
@@ -33,30 +39,36 @@ namespace AuctionStore.API.DIConfig
                 {
                     options.AddPolicy("CorsPolicy",
                         builder => builder
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader().AllowAnyMethod());
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader().AllowAnyMethod());
                     //WithOrigins(commopOptions.CorsOrigin)
-
                 });
             }
 
             if (commopOptions.UseJwt)
             {
-                services.AddAuthentication(
-                    options =>
+                var bytesSecret = Encoding.ASCII.GetBytes(commopOptions.Jwt.JwtTokenSecretKey);
+                services.AddAuthentication(x =>
                     {
-                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                     })
-                    .AddJwtBearer(options =>
+                    .AddJwtBearer(x =>
                     {
-                        //options.SaveToken = true;
-                        options.TokenValidationParameters = JwtHandler.GetTokenValidationParameters(commopOptions.Jwt.JwtTokenIssuer, commopOptions.Jwt.JwtTokenSecretKey);
-
-                        /*kwtOptions?.Invoke(options);*/
+                        x.SaveToken = true;
+                        x.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(bytesSecret),
+                            ValidateIssuer = true,
+                            ValidIssuer = "AuctionStore.API",
+                            ValidateLifetime = true, // check token's expiration date
+                            ClockSkew = TimeSpan.Zero
+                        };
+                       
                     });
             }
+
             services.AddMvc();
 
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));

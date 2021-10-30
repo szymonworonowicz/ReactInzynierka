@@ -25,7 +25,7 @@ namespace AuctionStore.Infrastructure.MapperProfile
             CreateMap<Auction, AuctionDetailsDto>().ReverseMap();
             CreateMap<Auction, AuctionNewsletterDto>();
             CreateMap<Auction, UserAuctionDto>();
-            CreateMap<BankAccount, BankAccountDto>();
+            CreateMap<BankAccount, BankAccountDto>().ReverseMap();
             
         }
     }

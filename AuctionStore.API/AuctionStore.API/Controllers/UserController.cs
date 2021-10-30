@@ -27,7 +27,7 @@ namespace AuctionStore.API.Controllers
         {
             var result = await CommandAsync(command);
 
-            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
 
         [HttpPost("changePassword")]
@@ -79,6 +79,23 @@ namespace AuctionStore.API.Controllers
 
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
 
+        }
+
+        [HttpPost("getBankAccount")]
+        public async Task<IActionResult> GetBankAccount([FromBody] GetBankAccountQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
+
+        }
+
+        [HttpPost("upsertBankAccount")]
+        public async Task<IActionResult> UpsertBankAccount([FromBody] UpsertBankAccountCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
         }
     }
 }

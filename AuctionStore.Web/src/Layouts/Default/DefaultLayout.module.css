@@ -13,12 +13,13 @@
 }
 
 .content { 
+    width: 95vw;
+    height:  100vw;
     display: flex;
     flex-direction: row;
     margin-top: 20px;
     position: relative;
-    height: 85vh;
-    padding: 20px;
+    margin-left: 5px;
 }
 
 .children {

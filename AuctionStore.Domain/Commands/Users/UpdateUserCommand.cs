@@ -10,13 +10,14 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using AuctionStore.Infrastructure.ModelDtos;
 
 namespace AuctionStore.Domain.Commands.Users
 {
-    public class UpdateUserCommand : IRequest<bool>
+    public class UpdateUserCommand : IRequest<UserDto>
     {
 
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
         [Required]
         [MinLength(2)]
@@ -29,10 +30,7 @@ namespace AuctionStore.Domain.Commands.Users
         [MaxLength(30)]
         //[RegularExpression(Constants.Alphabetic)]
         public string LastName { get; set; }
-
-        [MinLength(6)]
-        [MaxLength(50)]
-        public string Password { get; set; }
+        
 
         [Required]
         [MaxLength(50)]
@@ -40,7 +38,7 @@ namespace AuctionStore.Domain.Commands.Users
         public string Email { get; set; }
 
 
-        public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
+        public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserDto>
         {
             private readonly DataContext context;
             private readonly IMapper mapper;
@@ -52,20 +50,22 @@ namespace AuctionStore.Domain.Commands.Users
                 this.mapper = mapper;
                 this.logger = logger;
             }
-            public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+            public async Task<UserDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
-                var target = await GetUser(request.Id, cancellationToken);
+                var target = await GetUser(request.UserId, cancellationToken);
 
                 if(target == null)
                 {
                     throw new DomainException((int)DictErrorCodes.UserNotFound,DictErrorCodes.UserNotFound.GetDescription());
                 }
 
-                mapper.Map(request, target);
+                target.LastName = request.LastName;
+                target.FirstName = request.FirstName;
+                target.Email = request.Email;
 
                 await context.SaveChangesAsync(cancellationToken);
 
-                return true;
+                return mapper.Map<UserDto>(target);
             }
 
             private async Task<User> GetUser(Guid id, CancellationToken ct)

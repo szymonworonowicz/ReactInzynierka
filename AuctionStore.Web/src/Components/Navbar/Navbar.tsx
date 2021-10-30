@@ -8,6 +8,7 @@ import LanguageSelect from './LanguageSelect/LanguageSelect'
 import { UserContext } from "../../Context/UserContext";
 import LoginNav from "./LoginNav/LoginNav";
 import NavbarMenu from "./NavbarMenu/NavbarMenu";
+import logo from '../../Logos/logo.png'
 
 const Navbar: React.FC = () => {
   const classes = useStyles();
@@ -25,7 +26,7 @@ const Navbar: React.FC = () => {
         <Toolbar>
           <div className={classes.container}>
             <img
-              src="./logo.png"
+              src={logo}
               alt="logo"
               onClick={handleHome}
               height="50px"

@@ -26,51 +26,54 @@ const CategoryPanel: React.FC = () => {
 
   useEffect(() => {
     setIsLoaded(true);
-    (async () => {
-      const data = await CategoriesApi.getAll();
-      setCategories(data);
-      setIsLoaded(false);
-    })();
+    CategoriesApi.getAll()
+      .then(response => {
+        setCategories(response);
+      })
+      .finally(() => {
+        setIsLoaded(false);
+      })
   }, [query, setIsLoaded]);
 
-  const DeleteCategory = async (id : string) : Promise<void> => {
-      const response = await CategoriesApi.deleteCategory(id);
-      if(response) {
-        setCategories(prev => {
-          let index = prev.findIndex(x => x.id === id);
-          if(index === -1) {
-            return [...prev];
+  const DeleteCategory =  (id : string) : void => {
+      CategoriesApi.deleteCategory(id)
+        .then(response => {
+          if(response) {
+            setCategories(prev => {
+              let index = prev.findIndex(x => x.id === id);
+              if(index === -1) {
+                return [...prev];
+              }
+              let arr = prev;
+              arr.splice(index, 1)
+              return [...arr];
+            })
           }
-          let arr = prev;
-          arr.splice(index, 1)
-          return [...arr];
-        })
-        return new Promise ((resolve) => resolve()); 
-      }
-      return new Promise((_resolve, reject) => reject(null));
+        }
+      )
   }
 
-  const DeleteSubCategory = async (id:string) : Promise<void> => {
-    const response = await CategoriesApi.deleteSubCategory(id);
-      if(response) {
-        setCategories(prev => {
-          let index = prev.findIndex(x => x.subCategories.some(x => x.id === id));
-          if(index === -1) {
-            return [...prev];
-          }
-          let arr = prev;
-          let elem = prev[index];
-          let subCategoryIndex = elem.subCategories.findIndex(x => x.id === id);
-          elem.subCategories.splice(subCategoryIndex, 1);
-          arr.splice(index, 1, elem)
-          return [...arr];
-        })
-        return new Promise ((resolve) => resolve()); 
-      }
-      return new Promise((_resolve, reject) => reject(null));
+  const DeleteSubCategory = (id:string) : void => {
+    CategoriesApi.deleteSubCategory(id)
+      .then(response => {
+        if(response) {
+          setCategories(prev => {
+            let index = prev.findIndex(x => x.subCategories.some(x => x.id === id));
+            if(index === -1) {
+              return [...prev];
+            }
+            let arr = prev;
+            let elem = prev[index];
+            let subCategoryIndex = elem.subCategories.findIndex(x => x.id === id);
+            elem.subCategories.splice(subCategoryIndex, 1);
+            arr.splice(index, 1, elem)
+            return [...arr];
+          })
+        }
+      })
   }
 
-  const addCategory = async (data :IAddCategory) : Promise<void> => {
+  const addCategory = (data :IAddCategory) : void => {
     let value = {}
     if(data.id === undefined || data.id === '') {
       value = {
@@ -79,24 +82,26 @@ const CategoryPanel: React.FC = () => {
       }
     }
     //@TODO ADD Category/Subcategory into table
-    const response = await CategoriesApi.AddCategory(value);
-    debugger;
-    if(data.id === undefined) {
-      setCategories(prev => {
-        return [...prev, response];
+    CategoriesApi.AddCategory(value)
+      .then(response => {
+        if(data.id === undefined) {
+          setCategories(prev => {
+            return [...prev, response];
+          })
+        }
+        else {
+          let index = categories.findIndex(x => x.id === data.id);
+          setCategories(prev => {
+            let category = prev[index];
+            category.subCategories = [...category.subCategories, ...response.subCategories];
+            let local = prev;
+            local.splice(index,1,category);
+            return [...local];
+          })
+        }
+        setAddModal(false);
       })
-    }
-    else {
-      let index = categories.findIndex(x => x.id === data.id);
-      setCategories(prev => {
-        let category = prev[index];
-        category.subCategories = [...category.subCategories, ...response.subCategories];
-        let local = prev;
-        local.splice(index,1,category);
-        return [...local];
-      })
-    }
-    setAddModal(false);
+
   }
 
   const generateColumns = (): IGenericTableColumnDefinitionType<

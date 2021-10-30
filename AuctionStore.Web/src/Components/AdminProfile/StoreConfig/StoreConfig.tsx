@@ -23,16 +23,17 @@ const StoreConfig: React.FC = () => {
 
   useEffect(() => {
     setIsLoaded(true);
-    (async () => {
-      try {
-        const response = await AdminApi.GetAuctionInfo();
+    AdminApi.GetAuctionInfo()
+      .then((response) => {
         setAuctionInfo(response);
-      } catch (error) {
+      })
+      .catch(() => {
         toast(t("error"), "error");
-      } finally {
+      })
+      .finally(() => {
         setIsLoaded(false);
-      }
-    })();
+      })
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,16 +41,18 @@ const StoreConfig: React.FC = () => {
     setHandleModal(true);
   };
   const handleEdit = async (data: IAuctionInfo): Promise<void> => {
-      try {
-        const response = await AdminApi.UpsertAuctionInfo(data);
+    AdminApi.UpsertAuctionInfo(data)
+      .then(response => {
         setAuctionInfo(response);
         toast(t("success"), "success");
-      } catch (error) {
+      })
+      .catch(() => {
         toast(t("error"), "error");
-      }
-      finally{
-          setHandleModal(false);
-      }
+      })
+      .finally(() => {
+        setHandleModal(false);
+
+      })
   };
 
   if (isLoaded) {

@@ -32,25 +32,31 @@ const BannedWords: React.FC = () => {
     query : query
   })
 
-  const DeleteWord = async (id: string): Promise<void> => {
-    if (await AdminApi.deleteBannedWord(id)) {
-      toast(t("deleteBannedWord"), "success");
-      query.page=0;
-    } else {
-      toast(t("deleteBannedWordFailure"), "error");
-    }
+  const DeleteWord = (id: string): void => {
+    AdminApi.deleteBannedWord(id)
+      .then(resp => {
+        if(resp) {
+          toast(t("deleteBannedWord"), "success");
+          query.page=0;
+        }
+        else {
+          toast(t("deleteBannedWordFailure"), "error");
+        }
+      })
   };
 
-  const AddNewWord = async (word : string) : Promise<void> => {
-    const response = await AdminApi.AddNewBannedWord(word);
-    if(response !== null) {
-        query.page=0;
-        toast(t("addedBannedWord"), "success");
-        setAddModal(false);
-    }
-    else {
-        toast(t("AddBanedWordFailure"), "error");
-    }
+  const AddNewWord = (word : string) : void => {
+    AdminApi.AddNewBannedWord(word)
+      .then(response => {
+        if(response !== null) {
+            query.page=0;
+            toast(t("addedBannedWord"), "success");
+            setAddModal(false);
+        }
+        else {
+            toast(t("AddBanedWordFailure"), "error");
+        }
+      })
   }
 
   const generateColumns = (): IGenericTableColumnDefinitionType<

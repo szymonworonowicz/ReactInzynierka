@@ -18,6 +18,7 @@ namespace AuctionStore.API.MapperProfile
             CreateMap<UpsertStoreConfigCommand, StoreConfig>();
             CreateMap<AddAuctionCommand, Auction>();
             CreateMap<AddMessageCommand, Message>();
+            CreateMap<UpsertBankAccountCommand, BankAccount>();
         }
     }
 }

@@ -49,13 +49,12 @@ const AddCategoryForm: React.FC = () => {
       return undefined;
     }
 
-    (async () => {
-      const response = await CategoriesApi.getCategories();
-
-      if (active) {
-        setCategories(response as ExtendedAddCategory[]);
-      }
-    })();
+      CategoriesApi.getCategories()
+        .then(response => {
+          if (active) {
+            setCategories(response as ExtendedAddCategory[]);
+          }
+        })
 
     return () => {
       active = false;

@@ -17,6 +17,7 @@ import {
 } from "../../../Helpers/constans";
 import { AccessTime } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
+import { useToast } from "../../../shared/hooks/useToast";
 
 const useStyles = makeStyles({
   root: {
@@ -61,13 +62,17 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({
   const history = useHistory<AuctionIdProps>();
   const classes = useStyles();
   const { t } = useTranslation();
+  const toast = useToast();
 
   useEffect(() => {
-    (async () => {
-      const response = await ImageService.getMainImage(data.id);
-      setPhoto(response);
-    })();
-  }, [data.id]);
+      ImageService.getMainImage(data.id)
+        .then(response => {
+          setPhoto(response);
+        })
+        .catch(() => {
+          toast(t('cannotGetPhoto'), 'error');
+        })
+  }, [data.id, t, toast]);
 
   const getPhoto = (): string => {
     if (!photo) {

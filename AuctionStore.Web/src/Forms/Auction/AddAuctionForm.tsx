@@ -62,8 +62,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
     setValue(`${id}`, value);
   };
 
-  const handleSave = async (data: IAddAuction) => {
-    debugger;
+  const handleSave = (data: IAddAuction) => {
     data.isTimeAuction = auction.isTimeAuction;
     if (!data.photos) {
       data.photos = [];
@@ -73,7 +72,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
         data.photos = [...data.photos, file];
       }
     }
-    await saveData(data);
+    saveData(data);
   };
 
   return (

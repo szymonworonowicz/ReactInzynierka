@@ -1,6 +1,6 @@
 import {apiClient} from '../APIClient/apiClient'
 import { IBaseResponse } from '../../Interfaces/Api'
-import {IUserDto, IChangePassword, IAddress } from '../../Interfaces/user';
+import {IUserDto, IChangePassword, IAddress, IBankAccount } from '../../Interfaces/user';
 
 export const UserApi = {
     getUser: async(userId : string | null): Promise<IUserDto> => {
@@ -56,5 +56,33 @@ export const UserApi = {
         }
         
         return new Promise<IAddress>((_resolve, reject) => reject(null));
+    },
+    getBankAccount : async (userId : string | null)  : Promise<IBankAccount> => {
+        const response = await apiClient.post<IBaseResponse<IBankAccount>>('users/getBankAccount', {userId});
+
+        if(response.data.success) {
+            return new Promise<IBankAccount>((resolve) => resolve(response.data.data));
+        }
+        
+        return new Promise<IBankAccount>((_resolve, reject) => reject(null));
+    },
+
+    upsertBankAccount : async(data: IBankAccount): Promise<IBankAccount> => {
+        const response = await apiClient.post<IBaseResponse<IBankAccount>>('users/upsertBankAccount', {data});
+
+        if(response.data.success) {
+            return new Promise<IBankAccount>((resolve) => resolve(response.data.data));
+        }
+        
+        return new Promise<IBankAccount>((_resolve, reject) => reject(null));
+    },
+    UpdateUserData : async (data : IUserDto, userId : string | null) : Promise<IUserDto> => {
+        const response = await apiClient.post<IBaseResponse<IUserDto>>('users/update', {...data, userId});
+
+        if(response.data.success) {
+            return new Promise<IUserDto>((resolve) => resolve(response.data.data));
+        }
+        
+        return new Promise<IUserDto>((_resolve, reject) => reject(null));
     }
 }

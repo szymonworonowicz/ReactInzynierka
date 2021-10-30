@@ -23,33 +23,43 @@ const AddAuction: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
+        AuctionApi.getAuctionInfo()
+          .then(response => {
+            if (response) {
+              setAuctionInfo(response);
+            }
+          })
+          .catch(() => {
+            toast(t("error"), "error");
+          })
+          .finally(() => {
+            setIsLoading(false);
 
-    (async () => {
-      try {
-        var response = await AuctionApi.getAuctionInfo();
-        if (response) {
-          setAuctionInfo(response);
-        }
-      } catch (error) {
-        toast(t("error"), "error");
-      }
-      setIsLoading(false);
-    })();
+          })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmitAuction = async(auction :IAddAuction) : Promise<void> => {
-    const response = await AuctionApi.addAuction(auction);
-    if(response) {
-      toast(t('added_auction'),'success'); 
-      setTimeout(() => {
-        history.push('/');
-      },3000);
-    }
-    else {
-      toast(t('added_auction_failure'),'error'); 
+  const handleSubmitAuction = (auction :IAddAuction) : void => {
 
-    }
+    setIsLoading(true);
+    AuctionApi.checkWrongWord(auction.description,auction.title)
+      .then(() => {
+        AuctionApi.addAuction(auction)
+          .then(_resp => {
+            toast(t('added_auction'),'success'); 
+            setTimeout(() => {
+              history.push('/');
+            },3000);
+          }).catch(_err => {
+            toast(t('added_auction_failure'),'error'); 
+          });
+      })
+      .catch(() => {
+        toast(t('containsWrongWords'),'error')
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   if (isLoading) {

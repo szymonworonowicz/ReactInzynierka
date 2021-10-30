@@ -53,14 +53,16 @@ const AuctionMessage: React.FC<IAuctionMessageProps> = ({ auctionId }) => {
       text : message
     };
 
-    const response = await MessageService.sendMessage(sendMessage);
+    MessageService.sendMessage(sendMessage)
+      .then(response => {
+        if(response) {
+          toast(t('success_send_message'),'success')
+        }
+        else {
+          toast(t('failure_send_message'),'error')
+        }
+      })
 
-    if(response) {
-      toast(t('success_send_message'),'success')
-    }
-    else {
-      toast(t('failure_send_message'),'error')
-    }
   };
 
   return (

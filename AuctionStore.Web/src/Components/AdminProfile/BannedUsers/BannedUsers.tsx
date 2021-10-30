@@ -25,15 +25,17 @@ const BannedUsers :React.FC = () => {
         query : query
     })
     
-    const unlockUser  = async (id : string) : Promise<void> => {
-        const response = await AdminApi.UnBanUser(id);
-        if(response) {
+    const unlockUser  = (id : string) : void => {
+        AdminApi.UnBanUser(id)
+        .then(_response => {
             toast(t('successUnban'), 'success');
             query.page = 0;
-        }
-        else {
+        })
+        .catch(() => {
             toast(t('failureUnban'), 'error');
-        }
+
+        })
+
     }
 
     const generateColumns = () : IGenericTableColumnDefinitionType<IBannedUser, keyof IBannedUser>[]  => {

@@ -9,5 +9,7 @@ namespace AuctionStore.Infrastructure.Models
         public string OwnerFirstName { get; set; }
         public string OwnerLastName { get; set; }
         public string OwnerAddress { get; set; }
+        
+        public Guid UserId { get; set; }
     }
 }

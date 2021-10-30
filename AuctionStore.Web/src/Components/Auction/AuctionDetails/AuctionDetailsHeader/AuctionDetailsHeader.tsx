@@ -118,16 +118,18 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
     }
   };
 
-  const handleDeleteAuction = async (): Promise<void> => {
-    const response = await AuctionApi.deleteAuction(data.id);
-    if (response) {
-      toast(t("success_delete_auction"), "success");
-      setTimeout(() => {
-        history.push("/");
-      }, 5000);
-    } else {
-      toast(t("failure_delete_auction"), "success");
-    }
+  const handleDeleteAuction = (): void => {
+    AuctionApi.deleteAuction(data.id)
+      .then(response => {
+        if (response) {
+          toast(t("success_delete_auction"), "success");
+          setTimeout(() => {
+            history.push("/");
+          }, 5000);
+        } else {
+          toast(t("failure_delete_auction"), "success");
+        }
+      })
   };
 
   return (

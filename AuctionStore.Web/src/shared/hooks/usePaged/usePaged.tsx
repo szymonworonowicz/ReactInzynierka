@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect,  useState } from "react";
 import { IUsePagedProps } from "./IUsePAgedProps";
 
 const usePaged = <T,>(
@@ -9,21 +9,20 @@ const usePaged = <T,>(
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [countOfElements, setCountOfElements] = useState<number>(0);
 
-  const fetchData = useCallback(async () => {
-    const data = await apiCall(query, ...params);
-    setCountOfElements(data.countOfElements);
-    setResponse(data.pageElements);
-    setIsLoaded(false);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ query,apiCall]);
-
+  
   useEffect(() => {
     setIsLoaded(true);
-    (async () => {
-      await fetchData();
-    })();
-  }, [fetchData]);
+    apiCall(query, ...params)
+    .then(data => {
+      setCountOfElements(data.countOfElements);
+      setResponse(data.pageElements);
+    })
+    .finally(() => {
+      setIsLoaded(false);
+    })
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiCall,  query]);
 
   return [response, isLoaded, countOfElements];
 };

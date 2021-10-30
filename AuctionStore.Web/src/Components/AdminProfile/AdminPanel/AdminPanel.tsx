@@ -30,40 +30,42 @@ const AdminPanel : React.FC = () => {
 
     const [admins, setAdmins] = useState<Array<IAdmin>>(adminsResponse);
 
-    const handleHoliday = async (id : string) : Promise<void> => {
-        const response = await AdminApi.AdminHoliday(id);
-        if(response) {
+    const handleHoliday = (id : string) : void => {
+        AdminApi.AdminHoliday(id)
+        .then(response => {
             toast(t('successHoliday'), 'success');
             setAdmins(prev => {
                 let index = prev.findIndex(x => x.id === id);
                 if(index !== -1) {
                     prev[index].isDisabled = !prev[index].isDisabled;
                 }
-
+    
                 return [...prev]
             })
-        }
-        else {
+
+        })
+        .catch(() => {
             toast(t('failureHoliday'), 'error');
-        }
+        })
     }
 
-    const handleDelete = async (id : string) : Promise<void> => {
-        const response = await AdminApi.AdminHoliday(id);
-        if(response) {
-            toast(t('successDelete'), 'success');
-            setAdmins(prev => {
-                let index = prev.findIndex(x => x.id === id);
-                if(index !== -1) {
-                    prev[index].isDeleted = !prev[index].isDeleted;
-                }
-
-                return [...prev]
+    const handleDelete = (id : string) : void => {
+        AdminApi.AdminDelete(id)
+            .then(response => {
+                toast(t('successDelete'), 'success');
+                setAdmins(prev => {
+                    let index = prev.findIndex(x => x.id === id);
+                    if(index !== -1) {
+                        prev[index].isDeleted = !prev[index].isDeleted;
+                    }
+    
+                    return [...prev]
+                })
             })
-        }
-        else {
-            toast(t('failureDelete'), 'error');
-        }
+            .catch(() => {
+                toast(t('failureDelete'), 'error');
+
+            })
     }
 
     const generateColumns = () : IGenericTableColumnDefinitionType<IAdmin, keyof IAdmin> [] => {

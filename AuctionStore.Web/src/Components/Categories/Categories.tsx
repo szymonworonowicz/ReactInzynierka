@@ -15,11 +15,15 @@ const Categories: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    (async () => {
-      const data = await CategoriesApi.getAll();
-      setCategories(data);
-      setIsLoaded(true);
-    })();
+    setIsLoaded(false);
+
+      CategoriesApi.getAll()
+      .then(response => {
+        setCategories(response);
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      })
   }, []);
 
   const handleNewsletter = () =>  {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState,  useEffect, useContext } from "react";
 import { IAuctionConfirmDeliveryAddressProps } from "./IAuctionConfirmDeliveryAddressProps";
 import { UserContext } from "../../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
@@ -33,19 +33,19 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
     const { t } = useTranslation();
     const classes = useStyles();
     const {setValue} = useFormContext();
-
-    const fetchData = useCallback(async () => {
-      const response = await UserApi.getAddresses(context.userId);
-      setAddressTable(response);
-      setValue('address.selectedAddressId', response[0].id ?? 0)
-      setIsLoaded(true);
-    }, [context.userId, setValue]);
-
+    
     useEffect(() => {
-      (async () => {
-        await fetchData();
-      })();
-    }, [fetchData]);
+      setIsLoaded(false);
+      UserApi.getAddresses(context.userId)
+      .then((response ) => {
+        setAddressTable(response);
+        setValue('address.selectedAddressId', response[0].id ?? 0)        
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      })
+
+    }, [context.userId, setValue]);
 
     const handleChangeAddress = (
       event: React.ChangeEvent<{ value: unknown }>

@@ -76,7 +76,6 @@ export const AuctionApi = {
     },
 
     getUserAuction : async(data : IPageRequest, userId : string, isWinning : boolean) : Promise<IPageResponse<IAuction>>  => {
-      debugger;
       const response = await apiClient.post<IBaseResponse<IPageResponse<IAuction>>>('/auctions/userAuction',{userId, isWinning,...data});
 
       if (response.data.success) {
@@ -89,4 +88,17 @@ export const AuctionApi = {
           reject(null)
         );
   },
+  checkWrongWord : async(description : string, title:  string) :Promise<boolean> => {
+    const response = await apiClient.post<IBaseResponse<boolean>>('/auctions/checkBadWords',{title, description});
+
+    if(response.data.data) {
+      return new Promise<boolean>((resolve) =>
+          resolve(response.data.success)
+        );
+    }
+
+    return new Promise<boolean>((_resolve, reject) =>
+        reject(null)
+      );
+  }
 }

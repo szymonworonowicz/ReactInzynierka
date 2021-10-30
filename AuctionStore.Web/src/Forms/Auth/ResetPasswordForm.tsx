@@ -57,15 +57,18 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
   };
 
   const submitData = async (data : IResetPassword) : Promise<void> => {
-    if(await authService.resetPassword(data)) {
-        toast(t('success_password_change'),'success')
-        setTimeout(() => {
-            history.push('/');
-        },3000)
-    }
-    else {
-        toast(t('success_password_change'),'success')
-    }
+    authService.resetPassword(data)
+    .then(response => {
+      if(response) {
+          toast(t('success_password_change'),'success')
+          setTimeout(() => {
+              history.push('/');
+          },3000)
+      }
+      else {
+          toast(t('success_password_change'),'success')
+      }
+    })
   }
 
   return (

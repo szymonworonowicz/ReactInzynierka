@@ -74,5 +74,12 @@ namespace AuctionStore.API.Controllers
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
 
+        [HttpPost("checkBadWords")]
+        public async Task<IActionResult> CheckBadWords([FromBody] CheckBadWordsCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+        }
     }
 }

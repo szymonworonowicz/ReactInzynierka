@@ -32,26 +32,25 @@ const AuctionAddCategoryPicker: React.FC<IAuctionAddCategoryPickerProps> = ({
       return undefined;
     }
 
-    (async () => {
-      const response = await CategoriesApi.getAll();
-      if (active) {
-        let categories: Array<ICategorySelect> = [];
-        response.forEach((category) => {
-          category.subCategories.forEach((subcategory) => {
-            categories = [
-              ...categories,
-              {
-                categoryName: category.name,
-                id: subcategory.id,
-                name: subcategory.name,
-              },
-            ];
-          });
-        });
-        setCategories([...categories]);
-      }
-    })();
-
+      CategoriesApi.getAll()
+        .then((response) => {
+          if (active) {
+            let categories: Array<ICategorySelect> = [];
+            response.forEach((category) => {
+              category.subCategories.forEach((subcategory) => {
+                categories = [
+                  ...categories,
+                  {
+                    categoryName: category.name,
+                    id: subcategory.id,
+                    name: subcategory.name,
+                  },
+                ];
+              });
+            });
+            setCategories([...categories]);
+          }
+        })
     return () => {
       active = false;
     };
