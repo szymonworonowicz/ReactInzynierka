@@ -41,7 +41,7 @@ const BannedUsers :React.FC = () => {
     const generateColumns = () : IGenericTableColumnDefinitionType<IBannedUser, keyof IBannedUser>[]  => {
         return [
             {
-                header : t('userName'),
+                header : t('nick'),
                 key : 'userName',
             },
             {

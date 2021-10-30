@@ -25,7 +25,7 @@ const ChangePasswordForm: React.FC = () => {
   const { register, setValue } = useFormContext();
   const context = useContext(UserContext);
   const classes = useStyles();
-  const { t } = useTranslation();
+  
   const [changePasswordData, setChangePasswordData] = useState<IChangePassword>(
     {
       newPassword: "",

@@ -7,7 +7,7 @@ import { Delete, Edit } from "@material-ui/icons";
 
 const useStyles = makeStyles(() => ({
   root: {
-    // padding:'4vw 10% 5%',
+    padding:'0 10px 20px'
   },
   content: {},
   iconStyle: {},
@@ -40,22 +40,22 @@ const UserAddressContainerPapper: React.FC<IUserAddressContainerPapperProps> =
               <Edit/>
             </IconButton>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Typography variant="h5">
               {t("city")}: {address.city}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Typography variant="h5">
               {t("postCode")}: {address.postCode}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Typography variant="h5">
               {t("street")}: {address.street}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Typography variant="h5">
               {t("houseNo")}: {address.houseNo}
             </Typography>

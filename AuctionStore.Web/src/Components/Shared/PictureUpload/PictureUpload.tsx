@@ -57,7 +57,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
         (file) => !selectedFiles.find((f) => f.data === file.data)
       );
       if (filteredFiles.length === 0) {
-        toast(t("cannot add"), "success");
+        toast(t("cannotAdd"), "success");
         return;
       }
       await handleUploadPhoto(filteredFiles)
@@ -209,11 +209,11 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
         }}
         getFileLimitExceedMessage={(filesLimit) => t("maxFiles") + filesLimit}
         getFileRemovedMessage={(fileName) =>
-          t("common.form.dropzone.fileRemovedMessage") + fileName
+          t("fileRemovedMessage") + fileName
         }
         getDropRejectMessage={(rejectedFile, acceptedFiles, maxFileSize) => {
           let message =
-            t("common.form.dropzone.fileRejectedMessage") +
+            t("fileRejectedMessage") +
             rejectedFile.name +
             " ";
           if (!acceptedFiles.includes(rejectedFile.type)) {

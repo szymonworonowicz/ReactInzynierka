@@ -20,16 +20,16 @@ const UserInfoPaper: React.FC<IUserInfoPaper> = ({ data }) => {
     <div className={classes.root}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("nick")}: {data?.userName ?? "kabanosiek"}</Typography>
+          <Typography variant="h5">{t("nick")}: {data?.userName}</Typography>
         </Grid>        
         <Grid item xs={12}>
-          <Typography variant="h5">{t("name")}: {data?.firstName ?? "Janusz"} </Typography>
+          <Typography variant="h5">{t("firstName")}: {data?.firstName} </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("surname")}: {data?.lastName ?? "zabieraj"}</Typography>
+          <Typography variant="h5">{t("lastName")}: {data?.lastName}</Typography>
         </Grid>        
         <Grid item xs={12}>
-          <Typography variant="h5">{t("email")}: {data?.email ?? "email@template.com"}</Typography>
+          <Typography variant="h5">{t("email")}: {data?.email}</Typography>
         </Grid>        
       </Grid>
     </div>

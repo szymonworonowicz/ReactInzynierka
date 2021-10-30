@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Grid, FormControl, Input, InputLabel, Typography, Link } from "@material-ui/core";
+import {
+  Grid,
+  FormControl,
+  Input,
+  InputLabel,
+  Typography,
+  Link,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
@@ -21,15 +28,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type ILoginFormProps = {
-  setRegister : React.Dispatch<React.SetStateAction<boolean>>
-  setLogin : React.Dispatch<React.SetStateAction<boolean>>
-  setResetPassword : React.Dispatch<React.SetStateAction<boolean>>
-}
+  setRegister: React.Dispatch<React.SetStateAction<boolean>>;
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setResetPassword: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const LoginForm: React.FC<ILoginFormProps> = ({
   setLogin,
   setRegister,
-  setResetPassword
+  setResetPassword,
 }) => {
   const { register, setValue } = useFormContext();
   const [credentials, setCredentials] = useState<ILoginCredentials>({
@@ -52,14 +59,14 @@ const LoginForm: React.FC<ILoginFormProps> = ({
   };
 
   const handleResetPassword = () => {
-      setLogin(false);
-      setResetPassword(true);
-  }
+    setLogin(false);
+    setResetPassword(true);
+  };
 
   const handleRegister = () => {
     setLogin(false);
     setRegister(true);
-  }
+  };
 
   return (
     <form>
@@ -86,12 +93,21 @@ const LoginForm: React.FC<ILoginFormProps> = ({
             value={credentials.password}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item container xs={12}>
+          <Grid item xs={12}>
             <Typography>
-              <Link href="#" onClick={handleResetPassword}>{t('rememberPassword')}</Link>
-              <Link href="#" onClick={handleRegister}>{t('register')}</Link>
+              <Link href="#" onClick={handleResetPassword}>
+                {t("rememberPassword")}
+              </Link>
             </Typography>
-
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+              <Link href="#" onClick={handleRegister}>
+                {t("register")}
+              </Link>
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     </form>

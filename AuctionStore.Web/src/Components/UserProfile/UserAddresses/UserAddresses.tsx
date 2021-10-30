@@ -130,7 +130,7 @@ const UserAddresses: React.FC = () => {
       />
       {addModal && (
         <Modal
-          header={actionAddressId === "" ? t("add_address") : t("edit_address")}
+          header={actionAddressId === "" ? t("addAddress") : t("editAddress")}
           isOpen={addModal}
           handleClose={() => setAddModal(false)}
           handleSave={(data: IAddress) => handleUpsertAddress(data)}

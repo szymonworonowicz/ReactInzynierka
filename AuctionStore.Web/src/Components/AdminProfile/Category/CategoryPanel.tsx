@@ -111,7 +111,7 @@ const CategoryPanel: React.FC = () => {
 
     return [
         {
-            header:t('Categories'),
+            header:t('categories'),
             key:'id',
             generate: (rowData) =>  
                 <CategoryPanelElement  data={rowData} 
@@ -142,7 +142,7 @@ const CategoryPanel: React.FC = () => {
     <>
       <PaperNav
         ExternalIcon={Add}
-        header={t("banned_words")}
+        header={t("categories")}
         externalIconAction={() => setAddModal(true)}
       />
       {addModal && (

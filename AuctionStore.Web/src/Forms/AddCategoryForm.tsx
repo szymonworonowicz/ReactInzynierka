@@ -105,7 +105,7 @@ const AddCategoryForm: React.FC = () => {
     if (params.inputValue !== "") {
       filtered.push({
         inputValue: params.inputValue,
-        name: `${t("Add")} ${params.inputValue}`,
+        name: `${t("add")} ${params.inputValue}`,
       });
     }
 
@@ -159,7 +159,7 @@ const AddCategoryForm: React.FC = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label={t("Category")}
+                label={t("category")}
                 variant="outlined"
                 InputProps={{
                   ...params.InputProps,

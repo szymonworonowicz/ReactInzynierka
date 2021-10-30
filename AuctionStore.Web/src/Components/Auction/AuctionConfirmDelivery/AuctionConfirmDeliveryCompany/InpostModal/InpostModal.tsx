@@ -50,14 +50,14 @@ const InpostModal : React.FC<IInpostModalProps> = ({
         });
         //@ts-ignore
         const map = easyPack.mapWidget('map', function(point) {;
-          const {name} = point;
+          const {name, address} = point;
           setValue('inpost', true);
           setValue('parcelName', name);
+          setValue('parcelAddress', address)
           handleClose();
         });
         const selectedParcel = getValues()['parcelName'];
-        console.log(selectedParcel)
-        console.log(city)
+
         if(typeof selectedParcel !== 'undefined') {
             map.searchPlace(selectedParcel);
         }

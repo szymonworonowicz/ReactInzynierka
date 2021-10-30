@@ -37,7 +37,12 @@ const BannedWords: React.FC = () => {
       .then(resp => {
         if(resp) {
           toast(t("deleteBannedWord"), "success");
-          query.page=0;
+          setQuery(prev => {
+            return {
+              ...prev,
+              page : 0
+            }
+          })
         }
         else {
           toast(t("deleteBannedWordFailure"), "error");
@@ -49,12 +54,17 @@ const BannedWords: React.FC = () => {
     AdminApi.AddNewBannedWord(word)
       .then(response => {
         if(response !== null) {
-            query.page=0;
+            setQuery(prev => {
+              return {
+                ...prev,
+                page : 0
+              }
+            })
             toast(t("addedBannedWord"), "success");
             setAddModal(false);
         }
         else {
-            toast(t("AddBanedWordFailure"), "error");
+            toast(t("addBannedWordFailure"), "error");
         }
       })
   }
@@ -65,7 +75,7 @@ const BannedWords: React.FC = () => {
   >[] => {
     return [
       {
-        header: t("banned_word"),
+        header: t("bannedWord"),
         key: "word",
       },
       {
@@ -121,7 +131,7 @@ const BannedWords: React.FC = () => {
       </Modal>}
       <PaperNav
         ExternalIcon={Add}
-        header={t("banned_words")}
+        header={t("bannedWord")}
         externalIconAction={() => setAddModal(true)}
       />
       <GenericTable {...generateGenericTableProps()} />

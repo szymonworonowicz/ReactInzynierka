@@ -37,20 +37,25 @@ const UserInfo: React.FC = () => {
   useEffect(() => {
     setIsLoaded(false);
 
-    Promise.all([
-      UserApi.getUser(context.userId),
-      UserApi.getBankAccount(context.userId),
-    ])
-      .then((values) => {
-        setUserData(values[0]);
-        setBankAccount(values[1]);
+    UserApi.getBankAccount(context.userId)
+      .then((response) => {
+        setBankAccount(response);
       })
       .catch((err) => {
         setError(true);
-        alert("error");
       })
       .finally(() => {
         setIsLoaded(true);
+      });
+  }, [context.userId]);
+
+  useEffect(() => {
+    UserApi.getUser(context.userId)
+      .then((response) => {
+        setUserData(response);
+      })
+      .finally(() => {
+        setIsLoaded(false);
       });
   }, [context.userId]);
 
@@ -133,35 +138,40 @@ const UserInfo: React.FC = () => {
 
   return (
     <>
-      <PaperNav
-        hasEdit={true}
-        hasDelete={true}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-        ExternalIcon={Lock}
-        externalIconAction={handleChangePassword}
-      />
       {userData !== null && (
-        <Paper square>
-          <UserInfoPaper data={userData} />
-        </Paper>
+        <>
+          <PaperNav
+            hasEdit={true}
+            hasDelete={true}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+            ExternalIcon={Lock}
+            externalIconAction={handleChangePassword}
+          />
+          <Paper square>
+            <UserInfoPaper data={userData} />
+          </Paper>
+        </>
+      )}
+      {bankAccount !== null && (
+        <>
+          <div style={{ marginTop: "10px" }}>
+            <PaperNav
+              header={t("BankAccountData")}
+              hasEdit={true}
+              hasDelete={false}
+              onEdit={handleEditBankAccount}
+            />
+
+            <Paper square>
+              <BankAccountPaper data={bankAccount} />
+            </Paper>
+          </div>
+        </>
       )}
 
-      <div style={{ marginTop: "10px" }}>
-        <PaperNav
-          header={t("BankAccountData")}
-          hasEdit={true}
-          hasDelete={false}
-          onEdit={handleEditBankAccount}
-        />
-
-        <Paper square>
-          <BankAccountPaper data={bankAccount} />
-        </Paper>
-      </div>
-
       <Modal
-        header={t("change_password")}
+        header={t("changePassword")}
         isOpen={isChangePasswordModalOpen}
         handleClose={() => setIsChangePasswordModalOpen(false)}
         handleSave={ConfirmPasswordChange}

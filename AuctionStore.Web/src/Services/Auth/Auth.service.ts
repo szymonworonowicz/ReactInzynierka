@@ -59,7 +59,7 @@ export const authService: IAuthService = {
       authService.onLogout();
     }
 
-    history.push("/");
+    // history.push("/");
   },
 
   register : async (credentials : IRegisterCredentials) : Promise<boolean> => {

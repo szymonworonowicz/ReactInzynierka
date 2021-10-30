@@ -97,5 +97,22 @@ namespace AuctionStore.API.Controllers
 
             return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
         }
+
+        [HttpPost("getOneAddress")]
+        public async Task<IActionResult> GetOneAddress([FromBody] GetOneAddressQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
+
+        }
+
+        [HttpPost("getBankAccountForAuction")]
+        public async Task<IActionResult> GetBankAccountForAuction([FromBody] GetBankAccountForAuctionQuery query)
+        {
+            var result = await QueryAsync(query);
+
+            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "register failed"));
+        }
     }
 }

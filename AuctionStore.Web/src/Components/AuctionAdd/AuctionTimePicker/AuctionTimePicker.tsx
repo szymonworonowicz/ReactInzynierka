@@ -125,12 +125,12 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
           textColor="secondary"
         >
           <Tab
-            label={t("auction_time")}
+            label={t("auctionTime")}
             id={`nav-tab-${0}`}
             aria-controls={`nav-tabpanel-${0}`}
           />
           <Tab
-            label={t("auction_quick")}
+            label={t("auctionQuick")}
             id={`nav-tab-${1}`}
             aria-controls={`nav-tabpanel-${1}`}
           />
@@ -148,8 +148,8 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
               format="DD/MM/yyyy HH:MM"
               disablePast
               value={times.startTime}
-              label={t("start_time")}
-              okLabel={t("confirm")}
+              label={t("startTime")}
+              okLabel={t("save")}
               cancelLabel={t("cancel")}
               onChange={handleStartDateChange}
               className={classes.picker}
@@ -169,7 +169,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
                 disablePast
                 value={times.endTime}
                 label={getSecondLabel()}
-                okLabel={t("confirm")}
+                okLabel={t("save")}
                 cancelLabel={t("cancel")}
                 onChange={handleEndDateChange}
                 className={classes.picker}
@@ -182,7 +182,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
                 ampm={false}
                 views={["minutes", "seconds"]}
                 label={getSecondLabel()}
-                okLabel={t("confirm")}
+                okLabel={t("save")}
                 cancelLabel={t("cancel")}
                 onChange={handleDuration}
                 className={classes.picker}

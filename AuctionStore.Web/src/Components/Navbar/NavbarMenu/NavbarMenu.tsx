@@ -29,6 +29,7 @@ const NavbarMenu: React.FC = () => {
 
   const handleLogoutClick = (): void => {
     authService.logout();
+    history.push('/')
   };
 
   const handleMessagesClick = (): void => {
@@ -71,7 +72,7 @@ const NavbarMenu: React.FC = () => {
             <ListItemIcon>
               <GavelRounded />
             </ListItemIcon>
-            <ListItemText primary={t("add_auction")} />
+            <ListItemText primary={t("addAuction")} />
           </MenuItem>
         )}
         <MenuItem onClick={handleMessagesClick}>

@@ -6,6 +6,6 @@ export type IAuctionConfirmationForm  = {
     message : string;
     sameAddress : boolean;
     selectedAddressId:string;
-    selectdPayment : number;
+    selectedPayment : number;
     address : IAuctionConfirmAddress
 }

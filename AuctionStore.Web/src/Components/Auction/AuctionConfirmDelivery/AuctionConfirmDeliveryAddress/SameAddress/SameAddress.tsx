@@ -20,19 +20,19 @@ const useStyles = makeStyles({
 })
 
 const SameAddress: React.FC = () => {
-  const [sameDeliveryAddress, setSameDeliveryAddress] =
-    useState<boolean>(false);
-
   const { setValue, getValues, register } = useFormContext();
+  const [sameDeliveryAddress, setSameDeliveryAddress] =
+    useState<boolean>(getValues()['sameAddress'] ?? false);
+
   const { t } = useTranslation();
   const classes = useStyles();
 
   const [address, setAddress] = useState<IAddress>({
-    city: getValues()["address.city"],
-    houseNo: getValues()["address.houseNo"],
+    city: getValues()["address"]['city'],
+    houseNo: getValues()["address"]['houseNo'],
     id: "",
-    postCode: getValues()["address.postCode"],
-    street: getValues()["address.street"],
+    postCode: getValues()["address"]['postCode'],
+    street: getValues()["address"]['street'],
   });
 
   const handleChangeDeliveryAddress = (

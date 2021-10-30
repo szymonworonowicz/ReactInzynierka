@@ -72,10 +72,10 @@ const MessageView: React.FC = () => {
     MessageService.deleteMessage(messageId)
       .then(response => {
         if (response) {
-          toast(t("success_remove_message"), "success");
+          toast(t("successRemoveMessage"), "success");
           query.page = 0;
         } else {
-          toast(t("failure_remove_message"), "error");
+          toast(t("failureRemoveMessage"), "error");
         }
       })
 
@@ -126,7 +126,7 @@ const MessageView: React.FC = () => {
           onCancel={handlePopperClose}
           showCancel={false}
           showSave={false}
-          title={t("message_details")}
+          title={t("messageDetails")}
           body={getMessageDetailsBody()}
           maxWidth="lg"
         />

@@ -34,7 +34,7 @@ const AuctionConfirmDeliveryCompany: React.FC<IAuctionConfirmDeliveryCompanyProp
     const {setValue, getValues} = useFormContext();
 
     const [openInpostModal, setOpenInpostModal] = useState<boolean>(false);
-    const [selectedOption, setSelectedOption] = useState<number>(!Boolean(getValues()['inpost']) ? 0 : 1);
+    const [selectedOption, setSelectedOption] = useState<number>(!Boolean(getValues()['inpost']) ? 1 : 0);
 
     const handleInpostClick = (): void => {
       setOpenInpostModal(true);

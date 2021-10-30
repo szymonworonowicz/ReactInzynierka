@@ -71,7 +71,7 @@ const AdminProfile: React.FC = () => {
               aria-controls={`nav-tabpanel-${4}`}
             />
             <Tab
-              label={t("strore_config")}
+              label={t("storeConfig")}
               id={`nav-tab-${5}`}
               aria-controls={`nav-tabpanel-${5}`}
             />

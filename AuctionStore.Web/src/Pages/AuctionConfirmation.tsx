@@ -22,6 +22,7 @@ const useStyles = makeStyles({
   },
   content: {
     marginTop: "50px",
+    padding: '0rem 10rem'
   },
   footer: {
     display: "flex",
@@ -53,6 +54,8 @@ const AuctionConfirmation: React.FC<IAuctionConfirmationProps> = ({
     defaultValues : {
       auctionId:id,
       inpost : true,
+      selectedPayment : 1,
+      sameAddress:false,
       address : {
         
       }

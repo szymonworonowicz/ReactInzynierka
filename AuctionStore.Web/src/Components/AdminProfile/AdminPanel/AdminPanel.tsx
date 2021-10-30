@@ -71,7 +71,7 @@ const AdminPanel : React.FC = () => {
     const generateColumns = () : IGenericTableColumnDefinitionType<IAdmin, keyof IAdmin> [] => {
         return [
             {
-                header : t('userName'),
+                header : t('nick'),
                 key : 'userName',
             },
             {
@@ -100,7 +100,7 @@ const AdminPanel : React.FC = () => {
                 }    
             },
             {
-                header : t('delete'),
+                header : t('deleted'),
                 key : 'isDeleted',
                 generate : (dataRow) => {
                     return (

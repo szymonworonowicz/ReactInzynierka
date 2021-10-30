@@ -58,7 +58,7 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
     };
 
     const generateMenuItemText = (elem: IAddress): string => {
-      return `${elem.city} ${t("ul")} ${elem.street} ${elem.houseNo}`;
+      return `${elem.city}  ${elem.street} ${elem.houseNo}`;
     };
 
     return (

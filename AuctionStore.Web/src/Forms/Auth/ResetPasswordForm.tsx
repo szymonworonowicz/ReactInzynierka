@@ -95,7 +95,7 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
         </Grid>
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="newPassword">{t("new_password")}</InputLabel>
+            <InputLabel htmlFor="newPassword">{t("newPassword")}</InputLabel>
             <Input
               id="newPassword"
               autoFocus

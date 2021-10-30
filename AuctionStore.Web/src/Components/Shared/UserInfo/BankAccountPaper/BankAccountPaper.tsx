@@ -25,7 +25,7 @@ const BankAccountPaper: React.FC<IDataComponentProps<IBankAccount | null>> = ({
         <Grid container spacing={1}>
           <Grid item xs={12}>
           <Typography variant="h5">
-              {t("accountnr")}: {data?.accountNr}
+              {t("accountNr")}: {data?.accountNr}
             </Typography>
             <Typography variant="h5">
               {t("firstname")}: {data?.ownerFirstName}

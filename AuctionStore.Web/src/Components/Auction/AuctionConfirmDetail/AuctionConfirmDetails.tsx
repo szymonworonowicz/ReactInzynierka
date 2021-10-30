@@ -94,7 +94,7 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
               <FormControl fullWidth>
                 <TextField
                   id="description"
-                  label={t("MessageToAuthor")}
+                  label={t("messageToAuthor")}
                   multiline
                   variant="outlined"
                   fullWidth

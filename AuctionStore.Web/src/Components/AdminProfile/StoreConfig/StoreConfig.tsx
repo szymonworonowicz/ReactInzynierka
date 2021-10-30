@@ -9,6 +9,13 @@ import { AdminApi } from "../../../Services/Admin/AdminApi";
 import StoreConfigPaper from "./StoreConfigPaper/StoreConfigPaper";
 import Modal from "../../../shared/Modal/Modal";
 import StoreConfigForm from "../../../Forms/StoreConfigForm";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  content:{
+
+  }
+})
 
 const StoreConfig: React.FC = () => {
   const [auctionInfo, setAuctionInfo] = useState<IAuctionInfo>({
@@ -20,6 +27,7 @@ const StoreConfig: React.FC = () => {
 
   const { t } = useTranslation();
   const toast = useToast();
+  const classes = useStyles();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -62,15 +70,15 @@ const StoreConfig: React.FC = () => {
   return (
     <>
       <PaperNav
-        header={t("auction_Config")}
+        header={t("auctionConfig")}
         ExternalIcon={Edit}
         externalIconAction={handleOpenModal}
       />
-      <Paper square>
+      <Paper square className={classes.content}>
         <StoreConfigPaper data={auctionInfo} />
       </Paper>
       <Modal
-        header={t("edit_Store_Config")}
+        header={t("editStoreConfig")}
         isOpen={handleModal}
         handleClose={() => setHandleModal(false)}
         handleSave={(data: IAuctionInfo) => handleEdit(data)}

@@ -7,10 +7,10 @@ const StoreConfigPaper: React.FC<IStoreConfigPaperProps> = ({ data }) => {
   const { t } = useTranslation();
   return (
     <Grid container spacing={1}>
-     <Grid item xs={6}>
-          <Typography variant="h5">{t("maxPhotoSize")}: {data   .maxPhotoSize} </Typography>
+     <Grid item xs={12}>
+          <Typography variant="h5">{t("maxPhotoSize")}: {data.maxPhotoSize} </Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Typography variant="h5">{t("maxPhotos")}: {data.maxPhotos }</Typography>
         </Grid>    
     </Grid>

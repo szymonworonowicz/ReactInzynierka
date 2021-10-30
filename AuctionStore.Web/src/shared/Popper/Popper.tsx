@@ -8,13 +8,8 @@ import {
   DialogContentText,
   Button,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import { useTranslation } from "react-i18next";
-import clsx from "clsx";
 
-type Props = {
-  width: string;
-};
 
 // const useStyles  = (props : Props) => {
 //     const {width} = props;

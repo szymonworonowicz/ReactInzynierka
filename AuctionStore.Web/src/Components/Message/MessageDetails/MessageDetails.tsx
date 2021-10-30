@@ -40,7 +40,7 @@ const MessageDetails: React.FC<IMessageDetailsProps> = ({ message }) => {
           spacing={1}
         >
           <Grid item xs={3}>
-            <Typography variant="body1">{t("From")}</Typography>
+            <Typography variant="body1">{t("from")}</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="body1">

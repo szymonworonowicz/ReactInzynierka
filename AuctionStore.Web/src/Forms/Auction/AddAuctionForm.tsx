@@ -99,7 +99,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
       <Grid container spacing={1} justify="center" alignContent="center">
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="title">{t("auction_name")}</InputLabel>
+            <InputLabel htmlFor="title">{t("auctionName")}</InputLabel>
             <Input
               id="title"
               autoFocus
@@ -112,7 +112,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
 
         <Grid item xs={12}>
           <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="price">{t("auction_price")}</InputLabel>
+            <InputLabel htmlFor="price">{t("auctionPrice")}</InputLabel>
             <Input
               id="price"
               autoFocus
@@ -136,7 +136,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
           <FormControl className={clsx(classes.margin)} fullWidth>
             <TextField
               id="description"
-              label={t("auction_desctiption")}
+              label={t("auctionDescription")}
               multiline
               rows={4}
               fullWidth
@@ -157,7 +157,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
           <Grid item xs={10}></Grid>
           <Grid item xs={2}>
             <Button onClick={handleSubmit(handleSave)}>
-              {t("auction_add")}
+              {t("auctionAdd")}
             </Button>
           </Grid>
         </Grid>
