@@ -75,7 +75,7 @@ const AuctionMessage: React.FC<IAuctionMessageProps> = ({ auctionId }) => {
           <FormControl fullWidth>
             <TextField
               id="description"
-              label={t("MessageToAuthor")}
+              label={t("messageToAuthor")}
               multiline
               className={classes.textField}
               variant="outlined"

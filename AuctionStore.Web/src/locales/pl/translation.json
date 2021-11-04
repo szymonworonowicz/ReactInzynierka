@@ -46,7 +46,7 @@
     "endTime" : "Czas końca",
     "duration": "Czas trwania",
     "auctionTime":"Aukcja czasowa",
-    "auctionQuick" : "Auckja szybka",
+    "auctionQuick" : "Aukcja szybka",
     "back":"Powrót",
     "next":"Dalej",
     "pay":"Zapłać",
@@ -98,5 +98,11 @@
     "addAdminSuccess" : "Udało się dodać administratora",
     "addAdminFailure" : "Nie udało się dodać administratora",
     "successBanUser": "Udało się zablokować użytkownika",
-    "failureBanUser": "Nie udało się zablokować użytkownika"
+    "failureBanUser": "Nie udało się zablokować użytkownika",
+    "add_auction":"Dodaj aukcję",
+    "startTime":"Czas startu",
+    "actualOffer" : "Aktualna oferta",
+    "remainingTime" : "Pozostały czas",
+    "sendMessageToAuthor":"Wyślij wiadomość do autora",
+    "send" : "Wyślij"
 }

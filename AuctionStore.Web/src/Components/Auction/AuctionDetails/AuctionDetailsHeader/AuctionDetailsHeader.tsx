@@ -186,7 +186,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
           )}
 
           <Grid item xs={3}>
-            <div> actualOffer : {actualOffer}</div>
+            <div> {t('actualOffer')} : {actualOffer}</div>
           </Grid>
           <Grid item xs={5}>
             {context.userId !== data.userId && (

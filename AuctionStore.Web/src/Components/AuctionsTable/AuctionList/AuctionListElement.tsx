@@ -70,7 +70,6 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({
           setPhoto(response);
         })
         .catch(() => {
-          toast(t('cannotGetPhoto'), 'error');
         })
   }, [data.id, t, toast]);
 
@@ -126,7 +125,7 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({
           </div>
 
           <p>{data.description}</p>
-          <p className={classes.description}>{data.price}</p>
+          <p className={classes.description}>{data.price} zł</p>
           <p></p>
         </div>
       </Container>

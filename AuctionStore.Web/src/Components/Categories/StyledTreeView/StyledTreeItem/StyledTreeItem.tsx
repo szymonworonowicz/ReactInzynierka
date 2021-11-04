@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   labelText: {
     fontWeight: "inherit",
     flexGrow: 1,
+    fontSize:'1rem'
   },
 }));
 
@@ -70,11 +71,15 @@ const StyledTreeItem: React.FC<IStyledTreeItem> = ({
 
   const handleClick = () => {
     if(children == null) {
+      // setTimeout(() => {
+        
+      // },10)
+      // history.push('/')
       history.push({
-        pathname : '/category',
-        state: {
-          id:nodeId
-        }
+        pathname : `/category/${nodeId}`,
+        // state: {
+        //   id:nodeId
+        // }  
       })
     }
   }

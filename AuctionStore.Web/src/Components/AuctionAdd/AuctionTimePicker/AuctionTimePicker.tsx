@@ -47,7 +47,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
 }) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const { setValue } = useFormContext();
-  const { t } = useTranslation();
+  const { t,i18n } = useTranslation();
   const [times, setTimes] = useState<FormTime>({
     duration : null,
     endTime : null,
@@ -111,7 +111,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
     setValue("timeStampDuration",((date?.minutes() ?? 0) * 60 +( date?.seconds() ?? 0)));
   };
   const getSecondLabel = (): string => {
-    return selectedTab === 0 ? t("endtime") : t("duration");
+    return selectedTab === 0 ? t("endTime") : t("duration");
   };
 
   return (
@@ -140,7 +140,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
           <MuiPickersUtilsProvider
             utils={MomentUtils}
             libInstance={moment}
-            locale={"pl"}
+            locale={i18n.language}
           >
             <KeyboardDateTimePicker
               autoOk={true}
@@ -159,7 +159,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
           <MuiPickersUtilsProvider
             utils={MomentUtils}
             libInstance={moment}
-            locale={"pl"}
+            locale={i18n.language}
           >
             {selectedTab === 0 ? (
               <KeyboardDateTimePicker

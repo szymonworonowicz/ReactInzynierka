@@ -55,7 +55,7 @@ const UserInfo: React.FC = () => {
         setUserData(response);
       })
       .finally(() => {
-        setIsLoaded(false);
+        setIsLoaded(true);
       });
   }, [context.userId]);
 

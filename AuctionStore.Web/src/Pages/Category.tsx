@@ -5,11 +5,13 @@ import AuctionsTable from '../Components/AuctionsTable/AuctionsTable'
 type LocationState = {
     id : string
 }
+interface ICategoryProps extends RouteComponentProps<LocationState>{};
 
-const Category:React.FC<RouteComponentProps<{},{},LocationState>> = ({location}) => {
+const Category:React.FC<ICategoryProps> = ({match}) => {
 
+    
     return (
-        <AuctionsTable categoryId ={location.state ? location.state.id : ''}/>
+        <AuctionsTable categoryId ={match.params ? match.params.id : ''}/>
     )
 }
 

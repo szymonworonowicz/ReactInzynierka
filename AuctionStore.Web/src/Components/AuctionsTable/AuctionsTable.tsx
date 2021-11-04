@@ -7,19 +7,31 @@ import {IAuction} from '../../Interfaces/Auctions';
 import {AuctionApi} from '../../Services/Auction/Auction.service';
 import {ICategoriesTableProps} from './IAuctionsTableProps';
 import AuctionListElement from './AuctionList/AuctionListElement';
-import usePaged from "../../shared/hooks/usePaged/usePaged";
 
 const AuctionsTable: React.FC<ICategoriesTableProps> = ({categoryId}) => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const [auctions, setAuctions] = useState<Array<IAuction>>([]);
+    const [countOfElements, setCountOfElements] = useState<number>(0);
+    const [maxPage, setMaxPage] = useState<number>(0);
+
     const [query,setQuery] = useState<IPageRequest>({
         elemPerPage:10,
         page : 0
     });
 
-    const [auctions, isLoaded, countOfElements] = usePaged<IAuction>({
-        apiCall: AuctionApi.getAllByCategory,
-        query : query
-    },
-    categoryId) 
+    React.useEffect(() => {
+        setIsLoaded(false)
+        AuctionApi.getAllByCategory(query, categoryId)
+            .then(response => {
+                setAuctions(response.pageElements)
+                setCountOfElements(response.countOfElements);
+                setMaxPage(response.maxPage);
+            })
+            .finally(() => {
+                setIsLoaded(true);
+            })
+    },[categoryId, query])
+   
 
 
     const generateColumns = (): Array<IGenericTableColumnDefinitionType<IAuction, keyof IAuction>> => {
@@ -46,7 +58,7 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({categoryId}) => {
         }
     }
 
-    if (isLoaded ) {
+    if (!isLoaded ) {
         return <CircularProgress />;
       }
     return (

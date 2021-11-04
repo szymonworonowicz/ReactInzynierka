@@ -3,7 +3,7 @@ export const Routes = {
   resetPassword:'/resetPassword/:token',
   errorPage: '/error_page',
   profile:'/profile',
-  category : '/category',
+  category : '/category/:id',
   addAuction : '/add_auction',
   messages: '/messages',
   confirmAuction:'/confirm_auction/:id',
