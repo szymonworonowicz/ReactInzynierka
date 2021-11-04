@@ -104,5 +104,14 @@
     "actualOffer" : "Aktualna oferta",
     "remainingTime" : "Pozostały czas",
     "sendMessageToAuthor":"Wyślij wiadomość do autora",
-    "send" : "Wyślij"
+    "send" : "Wyślij",
+    "maxLength" : "Maksymalna długość {{length}}",
+    "minLength" : "Minimalna długość {{length}}",
+    "required" : "Wymagane",
+    "passwordNotMatched" : "Hasła nie są zgodne",
+    "invalidEmail" : "Proszę podać poprawny email",
+    "invalidPassword" : "Hasło powinno zawierać wielką literę i znak specjalny",
+    "PasswordNotMatched" : "Hasła nie są zgodne",
+    "alphabeticalValue":"Pole powinno zawierać tylko litery",
+    "alphanumericValue": "Pole może zawierać cyfry i litery"
 }

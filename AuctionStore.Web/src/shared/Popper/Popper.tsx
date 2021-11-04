@@ -10,17 +10,6 @@ import {
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-
-// const useStyles  = (props : Props) => {
-//     const {width} = props;
-
-//     return makeStyles({
-//       root: {
-//         width: width
-//       }
-//     })
-// }
-
 const Popper: React.FC<IPopperProps> = ({
   body,
   title,

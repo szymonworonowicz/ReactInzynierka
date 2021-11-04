@@ -21,8 +21,8 @@ const HomePageAuctionContainer: React.FC<IDataComponentProps<Array<IAuction>>> =
           <Grid item xs={3} />
           {data.map((elem, key) => {
             return (
-              <Grid item xs={2}>
-                <HomePageAuctionElement key={key} data={elem} />
+              <Grid item xs={2} key={key}>
+                <HomePageAuctionElement  data={elem} />
               </Grid>
             );
           })}

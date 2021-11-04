@@ -23,7 +23,7 @@ import { authService } from "../../../Services/Auth/Auth.service";
 const AdminPanel: React.FC = () => {
   const [query, setQuery] = useState<IPageRequest>({
     elemPerPage: 10,
-    page: 0,
+    page: 0, 
   });
   const [addModal, setAddModal] = useState<boolean>(false);
 
