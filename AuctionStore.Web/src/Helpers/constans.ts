@@ -53,14 +53,14 @@ export const getRegexTable = (t: TFunction<"translation">): IRegexTable => {
       value: EmailRegex,
       message: t("invalidEmail"),
     },
-	1: {
-		value:AlphaNumeric,
-		message:t("alphanumericValue")
-	},
-	2: {
-		value:Alphabetic,
-		message:t("alphabeticalValue")
-	},
+    1: {
+      value: AlphaNumeric,
+      message: t("alphanumericValue"),
+    },
+    2: {
+      value: Alphabetic,
+      message: t("alphabeticalValue"),
+    },
     7: {
       value: Password,
       message: t("invalidPassword"),

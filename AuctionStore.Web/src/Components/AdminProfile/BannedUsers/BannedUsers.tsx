@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { useTranslation } from "react-i18next";
-import {CircularProgress, IconButton} from '@material-ui/core'
+import {IconButton} from '@material-ui/core'
 import { IBannedUser } from "../../../Interfaces/Admin";
 import {IPageRequest} from '../../../Interfaces/Paged';
 import {AdminApi} from '../../../Services/Admin/AdminApi';
@@ -94,8 +94,8 @@ const BannedUsers :React.FC = () => {
         }
     }
 
-    if (isLoaded ) {
-        return <CircularProgress />;
+    if (!isLoaded ) {
+        return <></>
       }
     
     return (

@@ -55,7 +55,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
 
   const [connection, setConnection] = useState<HubConnection>();
   const [newPrice, setNewPrice] = useState<number>();
-  const [actualOffer, setActualOffer] = useState<number>(data.maxOffer);
+  const [actualOffer, setActualOffer] = useState<number>(data?.maxOffer ?? 0);
 
   useEffect(() => {
     (async () => {

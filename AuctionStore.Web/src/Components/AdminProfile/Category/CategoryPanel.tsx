@@ -4,7 +4,6 @@ import { Add } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
 import { IPageRequest } from "../../../Interfaces/Paged";
 import { ICategoryList } from "../../../Interfaces/Api";
-import { CircularProgress} from "@material-ui/core";
 import { CategoriesApi } from "../../../Services/Categories/Category.service";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import { IGenericTableProps,IGenericTableColumnDefinitionType } from "../../Shared/GenericTable";
@@ -13,11 +12,12 @@ import Modal from '../../../shared/Modal/Modal';
 import AddCategoryForm from '../../../Forms/AddCategoryForm';
 import {IAddCategory} from '../../../Interfaces/Category';
 import {GuidEmpty} from '../../../Helpers/constans';
+import { LottieContext } from "../../../Context/LottieContext";
 
 const CategoryPanel: React.FC = () => {
   const [addModal, setAddModal] = useState<boolean>(false);
   const [categories, setCategories] = useState<Array<ICategoryList>>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const [query, setQuery] = useState<IPageRequest>({
     elemPerPage: 10,
     page: 0,
@@ -25,15 +25,15 @@ const CategoryPanel: React.FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setIsLoaded(true);
+    setLottieOpen(true);
     CategoriesApi.getAll()
       .then(response => {
         setCategories(response);
       })
       .finally(() => {
-        setIsLoaded(false);
+        setLottieOpen(false);
       })
-  }, [query, setIsLoaded]);
+  }, [query, setLottieOpen]);
 
   const DeleteCategory =  (id : string) : void => {
       CategoriesApi.deleteCategory(id)
@@ -134,8 +134,8 @@ const CategoryPanel: React.FC = () => {
     };
   };
 
-  if (isLoaded) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>
   }
 
   return (

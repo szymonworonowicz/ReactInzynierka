@@ -1,30 +1,30 @@
-import { useEffect,  useState } from "react";
+import React from "react";
 import { IUsePagedProps } from "./IUsePAgedProps";
+import  {LottieContext} from '../../../Context/LottieContext';
 
 const usePaged = <T,>(
   { apiCall, query }: IUsePagedProps<T>,
   ...params: any[]
 ) : [Array<T>, boolean, number ] => {
-  const [response, setResponse] = useState<Array<T>>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [countOfElements, setCountOfElements] = useState<number>(0);
-
+  const [response, setResponse] = React.useState<Array<T>>([]);
+  const [countOfElements, setCountOfElements] = React.useState<number>(0);
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext)
   
-  useEffect(() => {
-    setIsLoaded(true);
+  React.useEffect(() => {
+    setLottieOpen(true);
     apiCall(query, ...params)
     .then(data => {
       setCountOfElements(data.countOfElements);
       setResponse(data.pageElements);
     })
     .finally(() => {
-      setIsLoaded(false);
+      setLottieOpen(false);
     })
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall,  query]);
 
-  return [response, isLoaded, countOfElements];
+  return [response, !isOpen, countOfElements];
 };
 
 export default usePaged;

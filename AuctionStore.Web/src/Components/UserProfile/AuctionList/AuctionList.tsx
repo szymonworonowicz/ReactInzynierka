@@ -1,7 +1,6 @@
 import React,{useState,useContext} from "react";
 import {IAuctionListProps} from './IAuctionListProps';
 import {IAuction} from '../../../Interfaces/Auctions';
-import {CircularProgress} from '@material-ui/core';
 import {IPageRequest} from '../../../Interfaces/Paged';
 import {AuctionApi} from '../../../Services/Auction/Auction.service';
 import AuctionListElement from '../../AuctionsTable/AuctionList/AuctionListElement';
@@ -49,8 +48,8 @@ const AuctionList:React.FC<IAuctionListProps> = ({isWinning}) => {
         }
     }
 
-    if (isLoaded ) {
-        return <CircularProgress />;
+    if (!isLoaded ) {
+        return <>/</>
       }
     return (
         <GenericTable  {...generateGenericTableProps()}/>

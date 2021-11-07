@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { CircularProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { AuctionApi } from "../../Services/Auction/Auction.service";
 import { IAddAuction, IAuctionInfo } from "../../Interfaces/Auctions";
 import { useToast } from "../../shared/hooks/useToast";
 import AddAuctionForm from '../../Forms/Auction/AddAuctionForm';
 import { useHistory } from "react-router-dom";
+import { LottieContext } from "../../Context/LottieContext";
 
 const AddAuction: React.FC = () => {
   const [auctionInfo, setAuctionInfo] = useState<IAuctionInfo>({
     maxPhotoSize: 2,
     maxPhotos: 5,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);  
   // const form 
   const methods = useForm();
   const toast = useToast();
@@ -22,7 +21,7 @@ const AddAuction: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    setIsLoading(true);
+    setLottieOpen(true);
         AuctionApi.getAuctionInfo()
           .then(response => {
             if (response) {
@@ -33,7 +32,7 @@ const AddAuction: React.FC = () => {
             toast(t("error"), "error");
           })
           .finally(() => {
-            setIsLoading(false);
+            setLottieOpen(false);
 
           })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,7 +40,7 @@ const AddAuction: React.FC = () => {
 
   const handleSubmitAuction = (auction :IAddAuction) : void => {
 
-    setIsLoading(true);
+    setLottieOpen(true);
     AuctionApi.checkWrongWord(auction.description,auction.title)
       .then(() => {
         AuctionApi.addAuction(auction)
@@ -58,12 +57,12 @@ const AddAuction: React.FC = () => {
         toast(t('containsWrongWords'),'error')
       })
       .finally(() => {
-        setIsLoading(false);
+        setLottieOpen(false);
       })
   }
 
-  if (isLoading) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>;
   }
 
   return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IAdmin } from "../../../Interfaces/Admin";
 import { AdminApi } from "../../../Services/Admin/AdminApi";
-import { CircularProgress, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { IPageRequest } from "../../../Interfaces/Paged";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import { IGenericTableProps } from "../../Shared/GenericTable/GenericTableInterface/IGenericTableProps";
@@ -46,14 +46,6 @@ const AdminPanel: React.FC = () => {
             page: 0,
           };
         });
-        // setAdmins(prev => {
-        //     let index = prev.findIndex(x => x.id === id);
-        //     if(index !== -1) {
-        //         prev[index].isDisabled = !prev[index].isDisabled;
-        //     }
-
-        //     return [...prev]
-        // })
       })
       .catch(() => {
         toast(t("failureHoliday"), "error");
@@ -70,14 +62,6 @@ const AdminPanel: React.FC = () => {
             page: 0,
           };
         });
-        // setAdmins(prev => {
-        //     let index = prev.findIndex(x => x.id === id);
-        //     if(index !== -1) {
-        //         prev[index].isDeleted = !prev[index].isDeleted;
-        //     }
-
-        //     return [...prev]
-        // })
       })
       .catch(() => {
         toast(t("failureDelete"), "error");
@@ -188,8 +172,8 @@ const AdminPanel: React.FC = () => {
     };
   };
 
-  if (isLoaded) {
-    return <CircularProgress />;
+  if (!isLoaded ) {
+    return <></>
   }
   return (
     <>

@@ -8,6 +8,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddressContainer from "./AdressContainer/AddressContainer";
 import { useFormContext } from "react-hook-form";
+import { LottieContext } from "../../../../Context/LottieContext";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,7 +27,7 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
   ({ setSelectedCity }) => {
     const [addressTable, setAddressTable] = useState<Array<IAddress>>([]);
     const [selectedItem, setSelectedItem] = useState<number>(0);
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const {isOpen, setLottieOpen} = React.useContext(LottieContext);
     const [editAddress, setEditAddress] = useState<boolean>(false);
 
     const context = useContext(UserContext);
@@ -35,17 +36,17 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
     const {setValue} = useFormContext();
     
     useEffect(() => {
-      setIsLoaded(false);
+      setLottieOpen(true);
       UserApi.getAddresses(context.userId)
       .then((response ) => {
         setAddressTable(response);
         setValue('address.selectedAddressId', response[0].id ?? 0)        
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
       })
 
-    }, [context.userId, setValue]);
+    }, [context.userId, setLottieOpen, setValue]);
 
     const handleChangeAddress = (
       event: React.ChangeEvent<{ value: unknown }>
@@ -86,7 +87,7 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
             })}
           </Select>
         </FormControl>
-        {isLoaded && (
+        {(!isOpen && addressTable )&& (
           <AddressContainer
             data={addressTable[selectedItem]}
             setEditAddress={setEditAddress}

@@ -4,7 +4,6 @@ import {
   FormControl,
   Input,
   InputLabel,
-  CircularProgress,
   TextField,
   Button
 } from "@material-ui/core";
@@ -16,6 +15,7 @@ import { makeStyles } from "@material-ui/styles";
 import { INewsletterInfo,ICategory } from "../../Interfaces/Newsletter";
 import { useToast } from "../../shared/hooks/useToast";
 import { useHistory } from "react-router-dom";
+import { LottieContext } from "../../Context/LottieContext";
 
 const useStyles = makeStyles({
 
@@ -31,8 +31,8 @@ const useStyles = makeStyles({
 
 const NewsletterForm: React.FC = () => {
   const [categories, setCategories] = useState<Array<ICategory>>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [data, setData] = useState<INewsletterInfo>({
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
+    const [data, setData] = useState<INewsletterInfo>({
     email: "",
     subcategories: [],
   });
@@ -46,7 +46,7 @@ const NewsletterForm: React.FC = () => {
   }, []);
   
   useEffect(() => {
-    setIsLoaded(false);
+    setLottieOpen(true);
     CategoriesApi.getAll()
       .then(response => {
         let arr: Array<ICategory> = [];
@@ -64,10 +64,10 @@ const NewsletterForm: React.FC = () => {
         setCategories(arr);
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
       })
 
-  }, [getCategories]);
+  }, [getCategories, setLottieOpen]);
   
   const handleEmailChange = (e: React.ChangeEvent<{ value: string }>): void => {
     const { value } = e.target;
@@ -113,8 +113,8 @@ const NewsletterForm: React.FC = () => {
       })
   }
 
-  if (!isLoaded) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>
   }
 
   return (

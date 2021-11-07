@@ -7,13 +7,13 @@ import {
   Typography,
   Grid,
   FormControl,
-  CircularProgress,
   TextField,
 } from "@material-ui/core";
 import { IAuctionDetails } from "../../../Interfaces/Auctions";
 import { makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
+import { LottieContext } from "../../../Context/LottieContext";
 
 const useStyles = makeStyles({
   buttons: {
@@ -34,7 +34,7 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
   confirmation,
 }) => {
   const [auction, setAuction] = useState<IAuctionDetails>();
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -43,16 +43,16 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
 
   
   useEffect(() => {
-    setIsLoaded(false);
+    setLottieOpen(true);
     AuctionApi.getAuction(id)
     .then(response => {
       setAuction(response);
     })
     .finally(() => {
-      setIsLoaded(true);
+      setLottieOpen(false);
     })
 
-  }, [id]);
+  }, [id, setLottieOpen]);
 
   const handleMessageChange = (e: React.ChangeEvent<{ value: string }>) => {
     const { value } = e.target;
@@ -66,8 +66,8 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
     setValue('message', value);
   };
 
-  if (!isLoaded) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>
   }
 
   return (

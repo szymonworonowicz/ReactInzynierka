@@ -1,9 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FieldError, useFormContext } from "react-hook-form";
-import {
-  Grid,
-  TextField,
-} from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { IRegisterCredentials } from "../../Interfaces/Api";
 import { useTranslation } from "react-i18next";
@@ -11,7 +8,7 @@ import PasswordField from "../../Components/Shared/PasswordField/PasswordField";
 import {
   ValidatorType,
   getRegexTable,
-  getValidator
+  getValidator,
 } from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +60,12 @@ const RegisterForm: React.FC = () => {
       true
     ),
     lastName: getValidator(t, null, validators[ValidatorType.Alphabetic], true),
-    userName: getValidator(t, null, validators[ValidatorType.AlphaNumeric], true),
+    userName: getValidator(
+      t,
+      null,
+      validators[ValidatorType.AlphaNumeric],
+      true
+    ),
     email: getValidator(t, null, validators[ValidatorType.Email], true),
     password: getValidator(
       t,
@@ -83,7 +85,9 @@ const RegisterForm: React.FC = () => {
     ),
   };
 
-  const handleCredentialChange = (e: any) => {
+  const handleCredentialChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { value, id } = e.target;
     setCredentials((prev) => {
       return { ...prev, [id]: value };
@@ -124,33 +128,33 @@ const RegisterForm: React.FC = () => {
           {...register("confirmPassword", formValidations.confirmPassword)}
         />
         <Grid item xl={12}>
-            <TextField
-              id="userName"
-              name="userName"
-              error={
-                errors["userName"] && errors["userName"]?.value !== undefined
-              }
-              label={t("userName")}
-              helperText={(errors["userName"] as FieldError)?.message}
-              autoFocus
-              fullWidth
-              value={credentials.userName}
-              onChange={handleCredentialChange}
-              />
+          <TextField
+            id="userName"
+            name="userName"
+            error={
+              errors["userName"] && errors["userName"]?.value !== undefined
+            }
+            label={t("userName")}
+            helperText={(errors["userName"] as FieldError)?.message}
+            autoFocus
+            fullWidth
+            value={credentials.userName}
+            onChange={handleCredentialChange}
+          />
         </Grid>
         <Grid item xl={6}>
-            <TextField
-              id="firstName"
-              name="firstName"
-              error={
-                errors["firstName"] && errors["firstName"]?.value !== undefined
-              }
-              label={t("firstName")}
-              helperText={(errors["firstName"] as FieldError)?.message}
-              fullWidth
-              value={credentials.firstName}
-              onChange={handleCredentialChange}
-            />
+          <TextField
+            id="firstName"
+            name="firstName"
+            error={
+              errors["firstName"] && errors["firstName"]?.value !== undefined
+            }
+            label={t("firstName")}
+            helperText={(errors["firstName"] as FieldError)?.message}
+            fullWidth
+            value={credentials.firstName}
+            onChange={handleCredentialChange}
+          />
         </Grid>
         <Grid item xl={6}>
           <TextField

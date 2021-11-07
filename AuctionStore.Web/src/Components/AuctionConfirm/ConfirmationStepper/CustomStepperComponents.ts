@@ -1,4 +1,4 @@
-import { makeStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { StepConnector } from '@material-ui/core';
 
 export const ColorConnector = withStyles({

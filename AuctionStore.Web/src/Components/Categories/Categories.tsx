@@ -6,25 +6,25 @@ import styles from "./Categories.module.css";
 import {Button} from '@material-ui/core';
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import { LottieContext } from "../../Context/LottieContext";
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<ICategoryList[]>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const {t} = useTranslation();
   const history = useHistory();
 
   useEffect(() => {
-    setIsLoaded(false);
+    setLottieOpen(true);
 
       CategoriesApi.getAll()
       .then(response => {
         setCategories(response);
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
       })
-  }, []);
+  }, [setLottieOpen]);
 
   const handleNewsletter = () =>  {
     history.push('/newsletter');
@@ -32,7 +32,7 @@ const Categories: React.FC = () => {
 
   return (
     <div className={styles.component}>
-      {isLoaded && <StyledTreeView data={categories} />}
+      {!isOpen && <StyledTreeView data={categories} />}
       <Button onClick={handleNewsletter}>{t('newsletter')}</Button>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PaperNav from "../../Shared/PaperNav/PaperNav";
 import { Edit } from "@material-ui/icons";
-import { CircularProgress, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { IAuctionInfo } from "../../../Interfaces/Auctions";
 import { useToast } from "../../../shared/hooks/useToast";
@@ -10,6 +10,7 @@ import StoreConfigPaper from "./StoreConfigPaper/StoreConfigPaper";
 import Modal from "../../../shared/Modal/Modal";
 import StoreConfigForm from "../../../Forms/StoreConfigForm";
 import { makeStyles } from "@material-ui/styles";
+import { LottieContext } from "../../../Context/LottieContext";
 
 const useStyles = makeStyles({
   content:{
@@ -22,7 +23,7 @@ const StoreConfig: React.FC = () => {
     maxPhotoSize: 2,
     maxPhotos: 5,
   });
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const [handleModal, setHandleModal] = useState<boolean>(false);
 
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const StoreConfig: React.FC = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    setIsLoaded(true);
+    setLottieOpen(true);
     AdminApi.GetAuctionInfo()
       .then((response) => {
         setAuctionInfo(response);
@@ -39,7 +40,7 @@ const StoreConfig: React.FC = () => {
         toast(t("error"), "error");
       })
       .finally(() => {
-        setIsLoaded(false);
+        setLottieOpen(false);
       })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,8 +64,8 @@ const StoreConfig: React.FC = () => {
       })
   };
 
-  if (isLoaded) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>
   }
 
   return (

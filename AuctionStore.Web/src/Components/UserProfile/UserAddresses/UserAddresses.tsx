@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
-import { CircularProgress } from "@material-ui/core";
 import { IAddress } from "../../../Interfaces/user";
 import { useToast } from "../../../shared/hooks/useToast";
 import { UserApi } from "../../../Services/User/UserApi";
@@ -11,11 +10,12 @@ import UserAddressesContainer from "./UserAddressesContainer/UserAddressesContai
 import Popper from "../../../shared/Popper/Popper";
 import Modal from "../../../shared/Modal/Modal";
 import AddressForm from '../../../Forms/AddressForm';
+import { LottieContext } from "../../../Context/LottieContext";
 
 const UserAddresses: React.FC = () => {
   const [addressTable, setAddressTable] = useState<Array<IAddress>>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [addModal, setAddModal] = useState<boolean>(false);
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
+    const [addModal, setAddModal] = useState<boolean>(false);
   const [isDeleteAddress, setIsDeleteAddress] = useState<boolean>(false);
   const [actionAddressId, setActionAddressId] = useState<string>("");
   const context = useContext(UserContext);
@@ -24,16 +24,16 @@ const UserAddresses: React.FC = () => {
   const toast = useToast();
 
   useEffect(() => {
-    setIsLoaded(true);
+    setLottieOpen(true);
       UserApi.getAddresses(context.userId)
       .then(response => {
         setAddressTable(response);
       })
       .finally(() =>{
-        setIsLoaded(false);
+        setLottieOpen(false);
       })
 
-  }, [setIsLoaded, context.userId]);
+  }, [context.userId, setLottieOpen]);
 
   const handleCancelDeleteAddress = () => {
     setIsDeleteAddress(false);
@@ -104,8 +104,8 @@ const UserAddresses: React.FC = () => {
     return addressTable[index];
   }
 
-  if (isLoaded) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>;
   }
 
   return (
