@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
-import { Grid, FormControl, Input, InputLabel } from "@material-ui/core";
+import { useFormContext, FieldError } from "react-hook-form";
+import { Grid, TextField} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import { AddBannedWordType } from "../Types/Admin";
+import {
+  getRegexTable,
+  getValidator,
+  ValidatorType,
+} from "../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,33 +25,49 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddWord: React.FC = () => {
-  const [newWord, setNewWord] = useState<string>("");
-  const { register, setValue } = useFormContext();
+  const [newWord, setNewWord] = useState<AddBannedWordType>({
+    newWord: "",
+  });
+  const { register, setValue, formState:{errors} } = useFormContext<AddBannedWordType>();
   const { t } = useTranslation();
   const classes = useStyles();
 
+  const handleNewWordChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target;
 
-  const handleNewWordChange = (e : any) => {
-    const {value} = e.target;
+    setNewWord({
+      newWord: value,
+    });
+    setValue("newWord", value);
+  };
 
-    setNewWord(value);
-    setValue('newWord',value);
+  const regexTable = getRegexTable(t);
+
+  const formValidators = {
+    newWord : getValidator(t,null, regexTable[ValidatorType.AlphaNumeric],true)
   }
+
   return (
     <form>
       <Grid container spacing={1} justify={"center"} alignContent={"center"}>
-        <input type="hidden" {...register("newWord", { required: true })} />
+        <input type="hidden" {...register("newWord", formValidators.newWord)} />
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="newWord">{t("newWord")}</InputLabel>
-            <Input
-              id="newWord"
-              autoFocus
-              fullWidth
-              value={newWord}
-              onChange={handleNewWordChange}
-            />
-          </FormControl>
+        <TextField
+            id="newWord"
+            name="newWord"
+            autoFocus
+            fullWidth
+            value={newWord.newWord}
+            onChange={handleNewWordChange}
+            error={
+              errors.newWord && errors.newWord.message !== undefined
+            }
+            helperText={(errors.newWord as FieldError)?.message}
+            label={t("newWord")}
+            className={clsx(classes.margin)}
+          />
         </Grid>
       </Grid>
     </form>

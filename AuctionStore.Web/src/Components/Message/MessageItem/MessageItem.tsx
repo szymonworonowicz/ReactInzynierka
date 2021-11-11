@@ -1,14 +1,16 @@
 import React from "react";
 import { IMessageItemProps } from "./IMessageItemProps";
-import { Delete } from "@material-ui/icons";
+import { Delete,Visibility, VisibilityOff } from "@material-ui/icons";
 import { makeStyles, IconButton } from "@material-ui/core";
 import moment from "moment";
+import clsx  from 'clsx'
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     width: "auto",
     position: "relative",
+    margin:"-4px",
     "&>p": {
       userSelect: "none",
       WebkitUserSelect: "none",
@@ -29,13 +31,18 @@ const useStyles = makeStyles({
   },
   action: {
     width: "5%",
+    display:'flex'
   },
+  readed : {
+    backgroundColor:'#D6AD60;'
+  }
 });
 
 const MessageItem: React.FC<IMessageItemProps> = ({
   message,
   showMessageMore,
-  deleteMessage
+  deleteMessage,
+  handleMessageReaded
 }) => {
   const classes = useStyles();
 
@@ -50,8 +57,15 @@ const MessageItem: React.FC<IMessageItemProps> = ({
     deleteMessage(message.id);
   }
 
+  const handleUnreadMessage = () : void => {
+    handleMessageReaded(message.id)
+  } 
+
   return (
-    <div className={classes.root}>
+    <div className={clsx({
+      [classes.root] : true,
+      [classes.readed]: !message.isReaded
+    })}>
       <p className={classes.message} onClick={handleExpandMessageMore}>
         {message.text}
       </p>
@@ -59,6 +73,9 @@ const MessageItem: React.FC<IMessageItemProps> = ({
       <div className={classes.action}>
         <IconButton onClick={handleDeleteMessage}>
           <Delete />
+        </IconButton>
+        <IconButton onClick={handleUnreadMessage}>
+        {message.isReaded ? <Visibility /> : <VisibilityOff />}
         </IconButton>
       </div>
     </div>

@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, FieldError } from "react-hook-form";
 import {
   Grid,
-  FormControl,
-  Input,
-  InputLabel,
   Typography,
   Link,
+  TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
-import clsx from "clsx";
 import PasswordField from "../../Components/Shared/PasswordField/PasswordField";
 import { ILoginCredentials } from "../../Interfaces/Api";
+import { getValidator } from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +36,11 @@ const LoginForm: React.FC<ILoginFormProps> = ({
   setRegister,
   setResetPassword,
 }) => {
-  const { register, setValue } = useFormContext();
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ILoginCredentials>();
   const [credentials, setCredentials] = useState<ILoginCredentials>({
     password: "",
     username: "",
@@ -47,15 +49,22 @@ const LoginForm: React.FC<ILoginFormProps> = ({
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const handleCredentialsChange = (e: any) => {
-    const { value, id } = e.target;
+  const formValidators = {
+    username: getValidator(t, null, null, true),
+    password: getValidator(t, null, null, true),
+  };
+
+  const handleCredentialsChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value, id } = e.currentTarget;
     setCredentials((prev) => {
       return {
         ...prev,
         [id]: value,
       };
     });
-    setValue(`${id}`, value);
+    setValue(id as (keyof ILoginCredentials), value);
   };
 
   const handleResetPassword = () => {
@@ -71,19 +80,29 @@ const LoginForm: React.FC<ILoginFormProps> = ({
   return (
     <form>
       <Grid container spacing={1} justify={"center"} alignContent={"center"}>
-        <input type="hidden" {...register("username", { required: true })} />
-        <input type="hidden" {...register("password", { required: true })} />
+        <input
+          type="hidden"
+          {...register("username", formValidators.username)}
+        />
+        <input
+          type="hidden"
+          {...register("password", formValidators.password)}
+        />
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="username">{t("username")}</InputLabel>
-            <Input
-              id="username"
-              autoFocus
-              fullWidth
-              value={credentials.username}
-              onChange={handleCredentialsChange}
-            />
-          </FormControl>
+          <TextField
+            id="username"
+            name="username"
+            autoFocus
+            fullWidth
+            value={credentials.username}
+            onChange={handleCredentialsChange}
+            error={
+              errors.username && errors.username.message !== undefined
+            }
+            helperText={(errors.username as FieldError)?.message}
+            label={t("username")}
+            // className={clsx(classes.margin)}
+          />
         </Grid>
         <Grid item xs={12}>
           <PasswordField

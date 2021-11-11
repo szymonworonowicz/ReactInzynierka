@@ -8,4 +8,5 @@ export interface IGenericTableProps <T, K extends keyof T>  {
     query : IPageRequest
     setQuery: React.Dispatch<React.SetStateAction<IPageRequest>>,
     countOfElements : number;
+    externalMethod?: () => void ;
 }

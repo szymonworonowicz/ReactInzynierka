@@ -1,31 +1,39 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
-import { Grid, FormControl, Input, InputLabel } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { useFormContext, FieldError } from "react-hook-form";
+import {
+  Grid,
+  TextField,
+} from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import clsx from "clsx";
 import { IUserDto } from "../../Interfaces/user";
+import {
+  getRegexTable,
+  getValidator,
+  ValidatorType,
+} from "../../Helpers/constans";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-}));
 
 const ChangeUserDataForm: React.FC = () => {
-  const { register, setValue, getValues } = useFormContext();
+  const {
+    register,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useFormContext<IUserDto>();
+
   const [data, setData] = React.useState<IUserDto>(getValues() as IUserDto);
-  const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleChangeUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const regexTable = getRegexTable(t);
+
+  const validationTable = {
+    fistName: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
+    lastName: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
+    email: getValidator(t, null, regexTable[ValidatorType.Email], true),
+  };
+  const handleChangeUserData = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { value, id } = e.target;
     setData((prev) => {
       return {
@@ -33,48 +41,61 @@ const ChangeUserDataForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(`${id}`, value);
+    setValue(id as (keyof IUserDto), value);
   };
 
   return (
     <>
       <form>
+        <input
+          type="hidden"
+          {...register("firstName", validationTable.fistName)}
+        />
+        <input
+          type="hidden"
+          {...register("lastName", validationTable.lastName)}
+        />
+        <input type="hidden" {...register("email", validationTable.email)} />
         <Grid container spacing={1} justify={"center"} alignContent={"center"}>
           <Grid item xs={12}>
-            <FormControl className={clsx(classes.margin)} fullWidth>
-              <InputLabel htmlFor="firstName">{t("firstName")}</InputLabel>
-              <Input
-                id="firstName"
-                autoFocus
-                fullWidth
-                value={data.firstName}
-                onChange={handleChangeUserData}
-              />
-            </FormControl>
+            <TextField
+              id="firstName"
+              name="firstName"
+              fullWidth
+              label={t("firstName")}
+              value={data.firstName}
+              onChange={handleChangeUserData}
+              error={
+                errors.firstName && errors.firstName?.message !== undefined
+              }
+              helperText={(errors.firstName as FieldError)?.message}
+            />
           </Grid>
           <Grid item xs={12}>
-            <FormControl className={clsx(classes.margin)} fullWidth>
-              <InputLabel htmlFor="lastName">{t("lastName")}</InputLabel>
-              <Input
-                id="lastName"
-                autoFocus
-                fullWidth
-                value={data.lastName}
-                onChange={handleChangeUserData}
-              />
-            </FormControl>
+            <TextField
+              id="lastName"
+              name="lastName"
+              fullWidth
+              label={t("lastName")}
+              value={data.lastName}
+              onChange={handleChangeUserData}
+              error={
+                errors.lastName && errors.lastName?.message !== undefined
+              }
+              helperText={(errors.lastName as FieldError)?.message}
+            />
           </Grid>
           <Grid item xs={12}>
-            <FormControl className={clsx(classes.margin)} fullWidth>
-              <InputLabel htmlFor="email">{t("email")}</InputLabel>
-              <Input
-                id="email"
-                autoFocus
-                fullWidth
-                value={data.email}
-                onChange={handleChangeUserData}
-              />
-            </FormControl>
+            <TextField
+              id="email"
+              name="email"
+              fullWidth
+              label={t("email")}
+              value={data.email}
+              onChange={handleChangeUserData}
+              error={errors.email && errors.email.message !== undefined}
+              helperText={(errors.email as FieldError)?.message}
+            />
           </Grid>
         </Grid>
       </form>

@@ -10,30 +10,31 @@ import {
 } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { IAddress } from "../../../../../Interfaces/user";
 import { makeStyles } from "@material-ui/styles";
+import {
+  IAuctionConfirmAddress,
+  IAuctionConfirmationForm,
+} from "../../../../../Interfaces/Auctions";
+
 
 const useStyles = makeStyles({
-    margin: {
-        marginTop:'20px'
-    }
-})
+  margin: {
+    marginTop: "20px",
+  },
+});
 
 const SameAddress: React.FC = () => {
-  const { setValue, getValues, register } = useFormContext();
-  const [sameDeliveryAddress, setSameDeliveryAddress] =
-    useState<boolean>(getValues()['sameAddress'] ?? false);
+  const { setValue, getValues } = useFormContext<IAuctionConfirmationForm>();
+  const [sameDeliveryAddress, setSameDeliveryAddress] = useState<boolean>(
+    getValues()["sameAddress"] ?? false
+  );
 
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const [address, setAddress] = useState<IAddress>({
-    city: getValues()["address"]['city'],
-    houseNo: getValues()["address"]['houseNo'],
-    id: "",
-    postCode: getValues()["address"]['postCode'],
-    street: getValues()["address"]['street'],
-  });
+  const [address, setAddress] = useState<IAuctionConfirmAddress>(
+    getValues().address
+  );
 
   const handleChangeDeliveryAddress = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -52,8 +53,9 @@ const SameAddress: React.FC = () => {
         [`address.${id}`]: value,
       };
     });
-    setValue(`address.${id}`, value);
+    setValue(`address.{id}` as keyof IAuctionConfirmationForm, value);
   };
+
 
   return (
     <>
@@ -73,14 +75,6 @@ const SameAddress: React.FC = () => {
         </Grid>
         {!sameDeliveryAddress && (
           <Grid container spacing={1} className={classes.margin}>
-            {/* <input type="hidden" {...register("city", { required: true })} />
-            <input type="hidden" {...register("houseNo", { required: true })} />
-            <input
-              type="hidden"
-              {...register("postCode", { required: true })}
-            />
-            <input type="hidden" {...register("street", { required: true })} /> */}
-
             <Grid item xs={3}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="city">{t("city")}</InputLabel>

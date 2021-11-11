@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* tslint:disable */
 import React,{useEffect,useRef} from "react";
 import { IInpostModalProps } from "./IInpostModalProps";

@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     }
 })
 
-const AddressContainer: React.FC<IAddressContainerProps> = ({ data,setEditAddress }) => {
+const AddressContainer: React.FC<IAddressContainerProps> = ({ data }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 

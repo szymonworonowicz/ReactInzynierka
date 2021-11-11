@@ -1,5 +1,5 @@
 import React from "react";  
-import NewsletterForm from '../Components/Newsletter/Newsletter';
+import NewsletterForm from '../Forms/NewsletterForm';
 
 import {makeStyles} from '@material-ui/core';
 

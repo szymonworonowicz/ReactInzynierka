@@ -2,12 +2,14 @@ import { IMessage, ISendMessage } from "../../Interfaces/Message";
 import {apiClient} from '../APIClient/apiClient'
 import { IBaseResponse } from '../../Interfaces/Api';
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
+import {UpdateMessageStateType} from '../../Types/Messages'
 
 
 interface IMessageService {
     getMessages : ( page: IPageRequest, userId : string) => Promise<IPageResponse<IMessage>>;
     deleteMessage : (messageId : string) => Promise<boolean>;
-    sendMessage : (message : ISendMessage) => Promise<boolean>
+    sendMessage : (message : ISendMessage) => Promise<boolean>,
+    setMessageState : (messages : UpdateMessageStateType[]) => Promise<boolean>
 }
 
 export const MessageService : IMessageService = {
@@ -34,6 +36,16 @@ export const MessageService : IMessageService = {
 
     sendMessage : async(message: ISendMessage) : Promise<boolean> => {
         const response = await apiClient.post<IBaseResponse<any>>('/messages/sendMessage',message);
+
+        if(response.data.success) {
+            return new Promise<boolean> ((resolve) => resolve(true));
+        }
+
+        return new Promise<boolean>((_resolve, reject) => reject(null));
+    },
+
+    setMessageState: async(messages : UpdateMessageStateType[]) : Promise<boolean> => {
+        const response = await apiClient.post<IBaseResponse<any>>('/messages/setMessageState',{messages});
 
         if(response.data.success) {
             return new Promise<boolean> ((resolve) => resolve(true));

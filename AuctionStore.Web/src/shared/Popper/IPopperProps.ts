@@ -7,4 +7,5 @@ export interface IPopperProps {
   showSave?: boolean;
   showCancel?: boolean;
   maxWidth?: "lg" | "md" | "sm" | "xl" | "xs" | false;
+  hasCloseIcon?: boolean;
 }

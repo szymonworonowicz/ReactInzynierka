@@ -4,7 +4,7 @@ import { UserContext } from "../../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
 import { IAddress } from "../../../../Interfaces/user";
 import { UserApi } from "../../../../Services/User/UserApi";
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import { Select, MenuItem } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddressContainer from "./AdressContainer/AddressContainer";
 import { useFormContext } from "react-hook-form";
@@ -28,11 +28,9 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
     const [addressTable, setAddressTable] = useState<Array<IAddress>>([]);
     const [selectedItem, setSelectedItem] = useState<number>(0);
     const {isOpen, setLottieOpen} = React.useContext(LottieContext);
-    const [editAddress, setEditAddress] = useState<boolean>(false);
 
     const context = useContext(UserContext);
     const { t } = useTranslation();
-    const classes = useStyles();
     const {setValue} = useFormContext();
     
     useEffect(() => {
@@ -64,11 +62,10 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
 
     return (
       <>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="address-select">{t("chooseAddress")}</InputLabel>
           <Select
             labelId="address-select"
             value={selectedItem}
+            label={t("chooseAddress")}
             onChange={handleChangeAddress}
             MenuProps={{
               anchorOrigin: {
@@ -86,11 +83,9 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
               );
             })}
           </Select>
-        </FormControl>
         {(!isOpen && addressTable )&& (
           <AddressContainer
             data={addressTable[selectedItem]}
-            setEditAddress={setEditAddress}
           />
         )}
       </>

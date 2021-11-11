@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { useTranslation } from "react-i18next";
 import { Grid, Button } from "@material-ui/core";
 import clsx from "clsx";
 import { useFormContext } from "react-hook-form";
@@ -30,7 +29,6 @@ const AuctionConfirmPayment: React.FC = () => {
   );
 
   const classes = useStyles();
-  const { t } = useTranslation();
 
   const handleOptionClick = (elem: number)  => {
     setSelectedOption(elem);

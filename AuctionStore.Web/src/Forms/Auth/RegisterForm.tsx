@@ -25,21 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm: React.FC = () => {
-  const {
-    setValue,
-    register,
-    watch,
-    formState: { errors },
-  } = useFormContext();
-
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  const password = useRef({});
-  const validators = getRegexTable(t);
-
-  password.current = watch("password", "");
-
   type FormCredentials = IRegisterCredentials & { confirmPassword: string };
 
   const [credentials, setCredentials] = useState<FormCredentials>({
@@ -51,6 +36,20 @@ const RegisterForm: React.FC = () => {
     confirmPassword: "",
     userType: "",
   });
+  const {
+    setValue,
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext<FormCredentials>();
+
+  const classes = useStyles();
+  const { t } = useTranslation();
+
+  const password = useRef({});
+  const validators = getRegexTable(t);
+
+  password.current = watch("password", "");
 
   const formValidations: any = {
     firstName: getValidator(
@@ -92,7 +91,7 @@ const RegisterForm: React.FC = () => {
     setCredentials((prev) => {
       return { ...prev, [id]: value };
     });
-    setValue(`${id}`, value);
+    setValue(id as keyof FormCredentials, value);
   };
 
   console.log(errors);
@@ -131,11 +130,9 @@ const RegisterForm: React.FC = () => {
           <TextField
             id="userName"
             name="userName"
-            error={
-              errors["userName"] && errors["userName"]?.value !== undefined
-            }
+            error={errors.userName && errors.userName.message !== undefined}
             label={t("userName")}
-            helperText={(errors["userName"] as FieldError)?.message}
+            helperText={(errors.userName as FieldError)?.message}
             autoFocus
             fullWidth
             value={credentials.userName}
@@ -146,11 +143,9 @@ const RegisterForm: React.FC = () => {
           <TextField
             id="firstName"
             name="firstName"
-            error={
-              errors["firstName"] && errors["firstName"]?.value !== undefined
-            }
+            error={errors.firstName && errors.firstName.message !== undefined}
             label={t("firstName")}
-            helperText={(errors["firstName"] as FieldError)?.message}
+            helperText={(errors.firstName as FieldError)?.message}
             fullWidth
             value={credentials.firstName}
             onChange={handleCredentialChange}
@@ -161,11 +156,9 @@ const RegisterForm: React.FC = () => {
             id="lastName"
             name="lastName"
             fullWidth
-            error={
-              errors["lastName"] && errors["lastName"]?.value !== undefined
-            }
+            error={errors.lastName && errors.lastName.message !== undefined}
             label={t("lastName")}
-            helperText={(errors["lastName"] as FieldError)?.message}
+            helperText={(errors.lastName as FieldError)?.message}
             value={credentials.lastName}
             onChange={handleCredentialChange}
           />
@@ -190,10 +183,10 @@ const RegisterForm: React.FC = () => {
           <TextField
             id="email"
             fullWidth
-            error={errors["email"] && errors["email"]?.value !== undefined}
+            error={errors.email && errors.email.message !== undefined}
             label={t("email")}
             name="email"
-            helperText={(errors["email"] as FieldError)?.message}
+            helperText={(errors.email as FieldError)?.message}
             value={credentials.email}
             onChange={handleCredentialChange}
           />

@@ -191,7 +191,7 @@ const UserInfo: React.FC = () => {
       </Modal>
 
       <Modal
-        header={t("changeUserDAta")}
+        header={t("changeUserData")}
         isOpen={editUserData}
         handleClose={() => setEditUserData(false)}
         handleSave={ConfirmChangeUserData}

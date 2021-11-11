@@ -7,6 +7,10 @@ const useStyles = makeStyles({
     root:{
         padding:'10px',
         marginTop:'5vh'
+    },
+    paragraph:{
+        wordBreak:'break-all',
+        padding:'0.3rem'
     }
 })
 
@@ -16,7 +20,7 @@ const AuctionDetailsContent: React.FC<IAuctionDetailsContentProps> = ({descripti
     return (
         <Paper>
             <div className={classes.root}>
-                <p>
+                <p className={classes.paragraph}>
                     {description}
                 </p>
             </div>

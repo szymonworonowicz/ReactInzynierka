@@ -113,5 +113,22 @@
     "invalidPassword" : "Hasło powinno zawierać wielką literę i znak specjalny",
     "PasswordNotMatched" : "Hasła nie są zgodne",
     "alphabeticalValue":"Pole powinno zawierać tylko litery",
-    "alphanumericValue": "Pole może zawierać cyfry i litery"
+    "alphanumericValue": "Pole może zawierać cyfry i litery",
+    "newestAuctions" : "Najnowsze Aukcje",
+    "trendingAuctions" : "Popularne Aukcje",
+    "Black" : "Czarny",
+    "White": "Biały",
+    "Contrast":"Kontrastowy",
+    "newsletter" :"Newsletter",
+    "BankAccountData" : "Konto bankowe",
+    "changeBankAccount" : "Zmień konto bankowe",
+    "changeUserData":"Zmiana danych użytkownika",
+    "address" : "Adres",
+    "new_auction": "Nowa aukcja",
+    "canceled_auction":"Aukcja anulowana",
+    "payed_auction" : "Aukcja opłacona",
+    "finish_auction":"Aukcja zakończona",
+    "select_categories":"Wybrane kategorie",
+    "add_newsletter":"Zapisz się do newslettera",
+    "added_to_newsletter":"Dodano do newslettera"
 }

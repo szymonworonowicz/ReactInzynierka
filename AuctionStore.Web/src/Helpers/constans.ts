@@ -61,6 +61,22 @@ export const getRegexTable = (t: TFunction<"translation">): IRegexTable => {
       value: Alphabetic,
       message: t("alphabeticalValue"),
     },
+    3:{
+      value: PhoneNumber,
+      message : t('phoneValue')
+    },
+    4:{
+      value: Numbers,
+      message : t('numbersValue')
+    },
+    5:{
+      value: ZipCode,
+      message : t('zipCodeValue')
+    },
+    6:{
+      value: Decimal,
+      message : t('decimalValue')
+    },
     7: {
       value: Password,
       message: t("invalidPassword"),

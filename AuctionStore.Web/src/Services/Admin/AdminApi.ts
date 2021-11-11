@@ -3,6 +3,7 @@ import { IBaseResponse } from "../../Interfaces/Api";
 import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
 import { IAdmin, IBannedUser, IBannedWord } from "../../Interfaces/Admin";
 import { IAuctionInfo } from "../../Interfaces/Auctions";
+import {AddBannedWordType} from '../../Types/Admin/'
 
 export const AdminApi = {
   getBannedUsers: async (
@@ -102,7 +103,7 @@ export const AdminApi = {
     return new Promise<boolean>((_resolve, reject) => reject(null));
   },
 
-  AddNewBannedWord : async (newWord : string) : Promise<IBannedWord> => {
+  AddNewBannedWord : async (newWord : AddBannedWordType) : Promise<IBannedWord> => {
     const response = await apiClient.post<IBaseResponse<IBannedWord>>('admins/addBannedWord', newWord);
 
     if(response.data.success) {

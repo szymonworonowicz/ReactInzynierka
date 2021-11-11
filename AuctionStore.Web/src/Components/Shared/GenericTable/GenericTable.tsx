@@ -4,7 +4,7 @@ import { TableContainer, Table, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GenericTableHeader from "./GenericTableHeader/GenericTableHeader";
 import GenericTableBody from "./GenericTableBody/GenericTableBody";
-import TableFooter from './TableFooter/GenericTableFooter';
+import TableFooter from "./TableFooter/GenericTableFooter";
 import { IGenericTableFooterProps } from "./TableFooter/IGenericTableFooterProps";
 
 const useStyles = makeStyles({
@@ -18,41 +18,48 @@ const GenericTable = <T, K extends keyof T>({
   columns,
   query,
   setQuery,
-  countOfElements
+  countOfElements,
+  externalMethod,
 }: IGenericTableProps<T, K>): JSX.Element => {
   const classes = useStyles();
 
-  const handleNewPage =(e : any, newPage:any) => {
-    setQuery(prev => {
+  const handleNewPage = (e: any, newPage: any) => {
+    if (typeof externalMethod === "function") {
+      externalMethod();
+    }
+    setQuery((prev) => {
       return {
         ...prev,
-         page :parseInt(newPage)
-      }
-    })
-  }
+        page: parseInt(newPage),
+      };
+    });
+  };
 
-  const handleChangeRowsPerPage = (e : any) => {
+  const handleChangeRowsPerPage = (e: any) => {
+    if (typeof externalMethod === "function") {
+      externalMethod();
+    }
     setQuery({
       elemPerPage: parseInt(e.target.value),
-      page : 0
-    })
-  }
+      page: 0,
+    });
+  };
 
-  const generateTableFooterProps = () : IGenericTableFooterProps => {
+  const generateTableFooterProps = (): IGenericTableFooterProps => {
     return {
-        handleChangePage : handleNewPage,
-        handleChangeRowsPerPage : handleChangeRowsPerPage,
-        page: query.page,
-        rowsPerPage : query.elemPerPage,
-        dataCount : countOfElements
-    }
-  }
+      handleChangePage: handleNewPage,
+      handleChangeRowsPerPage: handleChangeRowsPerPage,
+      page: query.page,
+      rowsPerPage: query.elemPerPage,
+      dataCount: countOfElements,
+    };
+  };
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="table">
         <GenericTableHeader columns={columns} />
-        <GenericTableBody columns={columns} data={data}/>
-        <TableFooter {...generateTableFooterProps()}/>
+        <GenericTableBody columns={columns} data={data} />
+        <TableFooter {...generateTableFooterProps()} />
       </Table>
     </TableContainer>
   );

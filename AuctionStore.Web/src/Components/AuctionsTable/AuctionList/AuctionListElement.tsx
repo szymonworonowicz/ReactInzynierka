@@ -70,15 +70,9 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({
           setPhoto(response);
         })
         .catch(() => {
+          setPhoto("https://via.placeholder.com/150")
         })
   }, [data.id, t, toast]);
-
-  const getPhoto = (): string => {
-    if (!photo) {
-      return "https://via.placeholder.com/150";
-    }
-    return photo;
-  };
 
   const handleAuctionClick = (): void => {
     history.push(`/auction/${data.id}`);
@@ -103,7 +97,7 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({
         )}
 
         <div className={classes.photo}>
-          <img src={getPhoto()} alt="" width="150px" height="150px" />
+          <img src={photo} alt="" width="150px" height="150px" />
         </div>
         <div className={classes.content}>
           <div className={classes.navbar}>
@@ -124,7 +118,7 @@ const AuctionListElement: React.FC<IAuctionListElementProps> = ({
             </div>
           </div>
 
-          <p>{data.description}</p>
+          <p style={{wordBreak: 'break-all'}}>{data.description}</p>
           <p className={classes.description}>{data.price} zł</p>
           <p></p>
         </div>

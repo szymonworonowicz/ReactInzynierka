@@ -9,5 +9,6 @@ namespace AuctionStore.Infrastructure.Dtos
         public Guid Id { get; set; }
         public string Text { get; set; }
         public long Added { get; set; }
+        public bool IsReaded { get; set; }
     }
 }

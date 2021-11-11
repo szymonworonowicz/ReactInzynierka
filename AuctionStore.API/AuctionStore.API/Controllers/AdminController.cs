@@ -101,7 +101,7 @@ namespace AuctionStore.API.Controllers
         {
             var result = await CommandAsync(command);
 
-            return result != null ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
     }
 

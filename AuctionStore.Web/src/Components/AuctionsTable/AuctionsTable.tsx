@@ -15,7 +15,6 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   const { isOpen, setLottieOpen } = React.useContext(LottieContext);
   const [auctions, setAuctions] = useState<Array<IAuction>>([]);
   const [countOfElements, setCountOfElements] = useState<number>(0);
-  const [maxPage, setMaxPage] = useState<number>(0);
 
   const [query, setQuery] = useState<IPageRequest>({
     elemPerPage: 10,
@@ -28,7 +27,6 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
       .then((response) => {
         setAuctions(response.pageElements);
         setCountOfElements(response.countOfElements);
-        setMaxPage(response.maxPage);
       })
       .finally(() => {
         setLottieOpen(false);

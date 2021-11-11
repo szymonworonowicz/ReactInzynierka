@@ -5,7 +5,7 @@ import  {LottieContext} from '../../../Context/LottieContext';
 const usePaged = <T,>(
   { apiCall, query }: IUsePagedProps<T>,
   ...params: any[]
-) : [Array<T>, boolean, number ] => {
+) : [Array<T>, boolean, number] => {
   const [response, setResponse] = React.useState<Array<T>>([]);
   const [countOfElements, setCountOfElements] = React.useState<number>(0);
   const {isOpen, setLottieOpen} = React.useContext(LottieContext)

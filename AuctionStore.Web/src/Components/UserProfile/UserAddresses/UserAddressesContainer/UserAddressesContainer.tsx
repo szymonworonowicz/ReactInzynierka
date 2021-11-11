@@ -1,28 +1,15 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { IUserAddressContainerProps } from "./IUserAddressContainerProps";
 import { useTranslation } from "react-i18next";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { IAddress } from "../../../../Interfaces/user";
 import {
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
   Paper,
 } from "@material-ui/core";
 import UserAddressContainerPapper from "./UserAddressContainerPapper/UserAddressContainerPapper";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  })
-);
+
 const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
   data,
   onDeleteAddress,
@@ -32,7 +19,6 @@ const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const selectedAddress = useMemo(() => data[selectedIndex],[selectedIndex, data])
 
-  const classes = useStyles();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -49,8 +35,6 @@ const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
 
   const generateMenu = (): JSX.Element => {
     return (
-      <FormControl className={classes.formControl}>
-        <InputLabel id="address-select">{t("chooseAddress")}</InputLabel>
         <Select
           labelId="address-select"
           value={selectedIndex}
@@ -62,6 +46,7 @@ const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
             },
             getContentAnchorEl: null,
           }}
+          label={t("chooseAddress")}
         >
           {data.map((elem, index) => {
             return (
@@ -71,7 +56,6 @@ const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
             );
           })}
         </Select>
-      </FormControl>
     );
   };
 

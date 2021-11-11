@@ -28,10 +28,10 @@ const BankAccountPaper: React.FC<IDataComponentProps<IBankAccount | null>> = ({
               {t("accountNr")}: {data?.accountNr}
             </Typography>
             <Typography variant="h5">
-              {t("firstname")}: {data?.ownerFirstName}
+              {t("firstName")}: {data?.ownerFirstName}
             </Typography>
             <Typography variant="h5">
-              {t("lastname")}: {data?.ownerLastName}
+              {t("lastName")}: {data?.ownerLastName}
             </Typography>
             <Typography variant="h5">
               {t("address")}: {data?.ownerAddress}

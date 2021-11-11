@@ -14,6 +14,7 @@ import PaperNav from "../../Shared/PaperNav/PaperNav";
 import Modal from "../../../shared/Modal/Modal";
 import AddWord from '../../../Forms/AddWord';
 import usePaged from "../../../shared/hooks/usePaged/usePaged";
+import {AddBannedWordType} from '../../../Types/Admin'
 
 const BannedWords: React.FC = () => {
   const [query, setQuery] = useState<IPageRequest>({
@@ -50,8 +51,8 @@ const BannedWords: React.FC = () => {
       })
   };
 
-  const AddNewWord = (word : string) : void => {
-    AdminApi.AddNewBannedWord(word)
+  const AddNewWord = (newWord : AddBannedWordType) : void => {
+    AdminApi.AddNewBannedWord(newWord)
       .then(response => {
         if(response !== null) {
             setQuery(prev => {
@@ -125,7 +126,7 @@ const BannedWords: React.FC = () => {
         header={t('add_banned_word')}
         isOpen={addModal}
         handleClose={() => setAddModal(false)}
-        handleSave = {(word : string) => AddNewWord(word)}
+        handleSave = {(newWord : AddBannedWordType) => AddNewWord(newWord)}
       >
           <AddWord/>
       </Modal>}
