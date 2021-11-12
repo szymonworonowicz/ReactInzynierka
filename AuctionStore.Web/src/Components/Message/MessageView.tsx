@@ -6,8 +6,9 @@ import { IPageRequest } from "../../Interfaces/Paged";
 import { MessageService } from "../../Services/Messaage/Message.service";
 import { UserContext } from "../../Context/UserContext";
 import GenericTable from "../Shared/GenericTable/GenericTable";
-import { IGenericTableProps } from "../Shared/GenericTable/GenericTableInterface/IGenericTableProps";
-import { IGenericTableColumnDefinitionType } from "../Shared/GenericTable/GenericTableInterface/IGenericTableColumnDefinition";
+import { IGenericTableProps } from "../../Interfaces/Shared/GenericTable";
+
+import { IGenericTableColumnDefinitionProps } from "../../Interfaces/Shared/GenericTable/IGenericTableColumnDefinitionProps";
 import MessageItem from "./MessageItem/MessageItem";
 import { useToast } from "../../shared/hooks/useToast";
 import Popper from "../../shared/Popper/Popper";
@@ -132,7 +133,7 @@ const MessageView: React.FC = () => {
     });
   };
 
-  const generateColumns = (): IGenericTableColumnDefinitionType<
+  const generateColumns = (): IGenericTableColumnDefinitionProps<
     IMessage,
     keyof IMessage
   >[] => {

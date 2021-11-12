@@ -1,5 +1,5 @@
 import React, { useEffect,  useState } from "react";
-import { IAuctionConfirmDetailsProps } from "./IAuctionConfirmDetailsProps";
+import { IAuctionConfirmDetailsProps } from "../../../Interfaces/Auction/AuctionConfirmation";
 import { AuctionApi } from "../../../Services/Auction/Auction.service";
 
 import {

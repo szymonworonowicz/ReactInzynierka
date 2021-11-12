@@ -1,5 +1,5 @@
 import React from "react";
-import { IMessageItemProps } from "./IMessageItemProps";
+import { IMessageItemProps } from "../../../Interfaces/Messages/";
 import { Delete,Visibility, VisibilityOff } from "@material-ui/icons";
 import { makeStyles, IconButton } from "@material-ui/core";
 import moment from "moment";

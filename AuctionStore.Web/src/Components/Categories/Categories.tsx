@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ICategoryList } from "../../Interfaces/Api";
+import {CategoryType } from "../../Types/Categories";
 import { CategoriesApi } from "../../Services/Categories/Category.service";
 import StyledTreeView from "./StyledTreeView/StyledTreeView";
 import styles from "./Categories.module.css";
@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { LottieContext } from "../../Context/LottieContext";
 
 const Categories: React.FC = () => {
-  const [categories, setCategories] = useState<ICategoryList[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const {t} = useTranslation();
   const history = useHistory();

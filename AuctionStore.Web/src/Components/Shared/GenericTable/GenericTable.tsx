@@ -1,11 +1,10 @@
 import React from "react";
-import { IGenericTableProps } from "./GenericTableInterface/IGenericTableProps";
+import { IGenericTableProps,IGenericTableFooterProps } from "../../../Interfaces/Shared/GenericTable";
 import { TableContainer, Table, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GenericTableHeader from "./GenericTableHeader/GenericTableHeader";
 import GenericTableBody from "./GenericTableBody/GenericTableBody";
 import TableFooter from "./TableFooter/GenericTableFooter";
-import { IGenericTableFooterProps } from "./TableFooter/IGenericTableFooterProps";
 
 const useStyles = makeStyles({
   table: {

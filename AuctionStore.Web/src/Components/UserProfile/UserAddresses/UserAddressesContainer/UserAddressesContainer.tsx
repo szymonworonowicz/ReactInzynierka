@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { IUserAddressContainerProps } from "./IUserAddressContainerProps";
+import { IUserAddressContainerProps } from "../../../../Interfaces/UserAddress/";
 import { useTranslation } from "react-i18next";
 import { IAddress } from "../../../../Interfaces/user";
 import {

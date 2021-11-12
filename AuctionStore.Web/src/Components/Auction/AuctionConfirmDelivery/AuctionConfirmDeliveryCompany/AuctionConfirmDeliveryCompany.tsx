@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import inpost from "../../../../Logos/inpost.png";
 import dpd from "../../../../Logos/dpd.jpg";
 import { Grid, Button } from "@material-ui/core";
-import { IAuctionConfirmDeliveryCompanyProps } from "./IAuctionConfirmDeliveryCompanyProps";
+import { IAuctionConfirmDeliveryCompanyProps } from "../../../../Interfaces/Auction/AuctionConfirmation";
 import { makeStyles } from "@material-ui/styles";
 import Popper from "../../../../shared/Popper/Popper";
 import { useTranslation } from "react-i18next";

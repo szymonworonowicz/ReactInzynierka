@@ -1,5 +1,5 @@
 import React from "react";
-import {IGenericTableFooterProps} from './IGenericTableFooterProps';
+import {IGenericTableFooterProps} from '../../../../Interfaces/Shared/GenericTable/IGenericTableFooterProps';
 import { TableFooter, TableRow, TablePagination } from "@material-ui/core";    
 
 const GenericTableFooter : React.FC<IGenericTableFooterProps>  = ({dataCount,rowsPerPage, page, handleChangePage, handleChangeRowsPerPage}) => {

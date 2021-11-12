@@ -1,5 +1,5 @@
 import React from "react";
-import { IGenericTableHeaderProps } from "./IGenericTableHeaderProps";
+import { IGenericTableHeaderProps } from "../../../../Interfaces/Shared/GenericTable"
 import {TableHead, TableRow, TableCell} from '@material-ui/core';
 
 

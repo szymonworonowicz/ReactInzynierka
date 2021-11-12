@@ -1,5 +1,5 @@
 import React from "react";
-import {IAuctionDetailsContentProps} from './IAuctionDetailsContentProps'
+import {IAuctionDetailsContentProps} from '../../../../Interfaces/Auction/'
 import {Paper} from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles"; 
 

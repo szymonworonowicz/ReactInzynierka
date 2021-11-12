@@ -1,18 +1,19 @@
 import {apiClient} from '../APIClient/apiClient'
-import { ICategoryList, IBaseResponse } from '../../Interfaces/Api';
+import {IBaseResponse } from '../../Interfaces/Api';
 import {IAddCategory} from '../../Interfaces/Category';
+import { CategoryType } from '../../Types/Categories';
 
 
 export const CategoriesApi = {
-    getAll : async () : Promise<ICategoryList[]> => { 
+    getAll : async () : Promise<CategoryType[]> => { 
 
-        const response = await apiClient.get<IBaseResponse<ICategoryList[]>>('/categorys');
+        const response = await apiClient.get<IBaseResponse<CategoryType[]>>('/categorys');
 
         if(response.data.success) {
-            return new Promise<ICategoryList[]>((resolve) => resolve(response.data.data) );
+            return new Promise<CategoryType[]>((resolve) => resolve(response.data.data) );
         }
 
-        return new Promise<ICategoryList[]>((_resolve, reject) => reject(null));
+        return new Promise<CategoryType[]>((_resolve, reject) => reject(null));
     },
     deleteCategory : async (id: string) : Promise<boolean> => {
         const response = await apiClient.post<IBaseResponse<any>>(`/categorys/deleteCategory`, {id});
@@ -41,13 +42,13 @@ export const CategoriesApi = {
 
         return new Promise<IAddCategory[]>((_resolve, reject) => reject(null));
     },
-    AddCategory : async(data: IAddCategory) : Promise<ICategoryList> => {
-        const response = await apiClient.post<IBaseResponse<ICategoryList>>('/categorys/AddCategory', data);
+    AddCategory : async(data: IAddCategory) : Promise<CategoryType> => {
+        const response = await apiClient.post<IBaseResponse<CategoryType>>('/categorys/AddCategory', data);
 
         if(response.data.success) {
-            return new Promise<ICategoryList>((resolve) => resolve(response.data.data) );
+            return new Promise<CategoryType>((resolve) => resolve(response.data.data) );
         }
 
-        return new Promise<ICategoryList>((_resolve, reject) => reject(null));
+        return new Promise<CategoryType>((_resolve, reject) => reject(null));
     }
 }

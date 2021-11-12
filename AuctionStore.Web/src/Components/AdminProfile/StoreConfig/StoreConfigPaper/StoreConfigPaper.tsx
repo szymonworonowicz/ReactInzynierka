@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { IStoreConfigPaperProps } from "./IStoreConfigPaperProps";
+import { IStoreConfigPaperProps } from "../../../../Interfaces/Admin/IStoreConfigPaperProps";
 
 const StoreConfigPaper: React.FC<IStoreConfigPaperProps> = ({ data }) => {
   const { t } = useTranslation();

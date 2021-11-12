@@ -1,5 +1,5 @@
 import React from "react";
-import { IDataComponentProps } from "../../../IDataComponentProps";
+import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import { IAuction } from "../../../../Interfaces/Auctions";
 import { Grid, makeStyles } from "@material-ui/core";
 import HomePageAuctionElement from "./HomePageAuctionElement";

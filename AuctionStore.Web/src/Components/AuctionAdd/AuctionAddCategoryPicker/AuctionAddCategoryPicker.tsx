@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IAuctionAddCategoryPickerProps } from "./IAuctionAddCategoryPickerProps";
+import { IAuctionAddCategoryPickerProps } from "../../../Interfaces/Auction/";
 import { CategoriesApi } from "../../../Services/Categories/Category.service";
 import { useFormContext } from "react-hook-form";
 import { TextField, CircularProgress } from "@material-ui/core/";

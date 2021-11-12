@@ -1,5 +1,5 @@
 import React, { useState,  useEffect, useContext } from "react";
-import { IAuctionConfirmDeliveryAddressProps } from "./IAuctionConfirmDeliveryAddressProps";
+import { IAuctionConfirmDeliveryAddressProps } from "../../../../Interfaces/Auction/AuctionConfirmation";
 import { UserContext } from "../../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
 import { IAddress } from "../../../../Interfaces/user";

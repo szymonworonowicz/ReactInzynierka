@@ -9,7 +9,7 @@ import {
 import { AccessTime } from "@material-ui/icons";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { IAuctionTimePickerProps } from "./IAuctionTimePickerProps";
+import { IAuctionTimePickerProps } from "../../../Interfaces/Auction/";
 import moment from "moment";
 import {
   MuiPickersUtilsProvider,
@@ -41,9 +41,7 @@ type FormTime = {
 } 
 
 const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
-  auction,
   setAuction,
-  margin,
 }) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const { setValue } = useFormContext();

@@ -1,5 +1,5 @@
 import React from "react";
-import { IGenericTableBodyProps } from "./IGenericTableBodyProps";
+import { IGenericTableBodyProps } from "../../../../Interfaces/Shared/GenericTable/";
 import { TableBody, TableRow, TableCell } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 

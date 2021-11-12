@@ -1,5 +1,5 @@
 import React from "react";
-import { IDataComponentProps } from "../../../IDataComponentProps";
+import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import { IBankAccount } from "../../../../Interfaces/user";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";

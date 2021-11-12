@@ -1,5 +1,5 @@
 import React from "react";
-import {IHeaderProps} from './IHeaderProps';
+import {IHeaderProps} from '../../../Interfaces/Shared/Header/';
 import { Typography } from "@material-ui/core";
 
 const Header: React.FC<IHeaderProps> = ({header}) => {

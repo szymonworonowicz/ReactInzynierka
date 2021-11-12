@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IAuctionDetailsHeaderProps } from "./IAuctionDetailsHeaderProps";
+import { IAuctionDetailsHeaderProps } from "../../../../Interfaces/Auction/";
 import {
   Paper,
   Typography,

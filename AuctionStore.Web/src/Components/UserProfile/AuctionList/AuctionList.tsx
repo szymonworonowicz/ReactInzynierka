@@ -1,10 +1,10 @@
 import React,{useState,useContext} from "react";
-import {IAuctionListProps} from './IAuctionListProps';
+import {IAuctionListProps} from '../../../Interfaces/Auction/';
 import {IAuction} from '../../../Interfaces/Auctions';
 import {IPageRequest} from '../../../Interfaces/Paged';
 import {AuctionApi} from '../../../Services/Auction/Auction.service';
 import AuctionListElement from '../../AuctionsTable/AuctionList/AuctionListElement';
-import { IGenericTableProps,IGenericTableColumnDefinitionType} from "../../Shared/GenericTable/index";
+import { IGenericTableProps,IGenericTableColumnDefinitionProps} from "../../../Interfaces/shared/GenericTable"
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import {UserContext} from '../../../Context/UserContext';
 import usePaged from '../../../shared/hooks/usePaged/usePaged';
@@ -24,7 +24,7 @@ const AuctionList:React.FC<IAuctionListProps> = ({isWinning}) => {
     context.userId as string,
     isWinning);
 
-    const generateColumns = (): Array<IGenericTableColumnDefinitionType<IAuction, keyof IAuction>> => {
+    const generateColumns = (): Array<IGenericTableColumnDefinitionProps<IAuction, keyof IAuction>> => {
         return [
             {
                 header:'',

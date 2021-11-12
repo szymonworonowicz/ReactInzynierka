@@ -1,5 +1,5 @@
 import React from "react";
-import { IAddressContainerProps } from "./IAddressContainerProps";
+import { IAddressContainerProps } from "../../../../../Interfaces/Admin/IAddressContainerProps";
 import { Grid, Typography, makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 

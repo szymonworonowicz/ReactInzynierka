@@ -3,11 +3,11 @@ import { IPageRequest } from "../../Interfaces/Paged";
 import GenericTable from "../Shared/GenericTable/GenericTable";
 import {
   IGenericTableProps,
-  IGenericTableColumnDefinitionType,
-} from "../Shared/GenericTable/index";
+  IGenericTableColumnDefinitionProps,
+} from "../../Interfaces/Shared/GenericTable";
 import { IAuction } from "../../Interfaces/Auctions";
 import { AuctionApi } from "../../Services/Auction/Auction.service";
-import { ICategoriesTableProps } from "./IAuctionsTableProps";
+import { ICategoriesTableProps } from "../../Interfaces/Auction/";
 import AuctionListElement from "./AuctionList/AuctionListElement";
 import { LottieContext } from "../../Context/LottieContext";
 
@@ -34,7 +34,7 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   }, [categoryId, query, setLottieOpen]);
 
   const generateColumns = (): Array<
-    IGenericTableColumnDefinitionType<IAuction, keyof IAuction>
+    IGenericTableColumnDefinitionProps<IAuction, keyof IAuction>
   > => {
     return [
       {

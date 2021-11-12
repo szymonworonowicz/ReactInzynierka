@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {ICarouselItemProps} from './ICarouselItemProps'
+import {ICarouselItemProps} from '../../../../Interfaces/Auction/AuctionPhoto/'
 import Popper from '../../../../shared/Popper/Popper';
 import LargePhoto from './LargePhoto/LargePhoto';
 

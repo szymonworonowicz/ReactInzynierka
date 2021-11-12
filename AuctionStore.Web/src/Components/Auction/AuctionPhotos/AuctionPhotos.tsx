@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { IAuctionPhotosProps } from "./iAuctionPhotosProps";
+import { IAuctionPhotosProps } from "../../../Interfaces/Auction/AuctionPhoto/";
 import { ImageService } from "../../../Services/Image/Image.service";
 import { IAuctionImage } from "../../../Interfaces/Image";
 import Carousel from "react-material-ui-carousel";

@@ -3,10 +3,10 @@ import PaperNav from "../../Shared/PaperNav/PaperNav";
 import { Add } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
 import { IPageRequest } from "../../../Interfaces/Paged";
-import { ICategoryList } from "../../../Interfaces/Api";
+import {CategoryType } from "../../../Types/Categories";
 import { CategoriesApi } from "../../../Services/Categories/Category.service";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
-import { IGenericTableProps,IGenericTableColumnDefinitionType } from "../../Shared/GenericTable";
+import { IGenericTableProps,IGenericTableColumnDefinitionProps } from "../../../Interfaces/Shared/GenericTable";
 import CategoryPanelElement from './CategoryElement/CategoryPanelElement';
 import Modal from '../../../shared/Modal/Modal';
 import AddCategoryForm from '../../../Forms/AddCategoryForm';
@@ -16,7 +16,7 @@ import { LottieContext } from "../../../Context/LottieContext";
 
 const CategoryPanel: React.FC = () => {
   const [addModal, setAddModal] = useState<boolean>(false);
-  const [categories, setCategories] = useState<Array<ICategoryList>>([]);
+  const [categories, setCategories] = useState<Array<CategoryType>>([]);
   const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const [query, setQuery] = useState<IPageRequest>({
     elemPerPage: 10,
@@ -104,9 +104,9 @@ const CategoryPanel: React.FC = () => {
 
   }
 
-  const generateColumns = (): IGenericTableColumnDefinitionType<
-    ICategoryList,
-    keyof ICategoryList
+  const generateColumns = (): IGenericTableColumnDefinitionProps<
+    CategoryType,
+    keyof CategoryType
   >[] => {
 
     return [
@@ -122,8 +122,8 @@ const CategoryPanel: React.FC = () => {
   };
 
   const generateGenericTableProps = (): IGenericTableProps<
-    ICategoryList,
-    keyof ICategoryList
+    CategoryType,
+    keyof CategoryType
   > => {
     return {
       columns: generateColumns(),

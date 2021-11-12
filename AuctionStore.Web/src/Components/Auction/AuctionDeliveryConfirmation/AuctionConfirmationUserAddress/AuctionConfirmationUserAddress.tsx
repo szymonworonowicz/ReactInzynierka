@@ -1,6 +1,6 @@
 import React from "react";
 import { IAddress } from "../../../../Interfaces/user";
-import { IDataComponentProps } from "../../../IDataComponentProps";
+import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import {Grid, makeStyles, Typography} from '@material-ui/core'
 import { useTranslation } from "react-i18next";
 

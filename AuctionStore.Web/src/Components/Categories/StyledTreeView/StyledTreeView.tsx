@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { IStyledTreeView } from "./IStyledTreeView";
+import { IStyledTreeViewProps } from "../../../Interfaces/StyleTree/";
 import { TreeView } from "@material-ui/lab";
-import { ArrowDropDown, ArrowRight, Home } from "@material-ui/icons";
+import { ArrowDropDown, ArrowRight } from "@material-ui/icons";
 import StyledTreeItem from "./StyledTreeItem/StyledTreeItem";
 
 const useStyles = makeStyles({
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-const StyledTreeView: React.FC<IStyledTreeView> = ({ data }) => {
+const StyledTreeView: React.FC<IStyledTreeViewProps> = ({ data }) => {
   const classes = useStyles();
 
 

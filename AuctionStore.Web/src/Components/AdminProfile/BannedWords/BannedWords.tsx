@@ -4,17 +4,16 @@ import {IconButton } from "@material-ui/core";
 import { Delete, Add } from "@material-ui/icons";
 import { IPageRequest } from "../../../Interfaces/Paged";
 import { AdminApi } from "../../../Services/Admin/AdminApi";
-import { IBannedWord } from "../../../Interfaces/Admin";
+import { BannedWordType, AddBannedWordType } from "../../../Types/Admin";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
-import { IGenericTableProps } from "../../Shared/GenericTable/GenericTableInterface/IGenericTableProps";
-import { IGenericTableColumnDefinitionType } from "../../Shared/GenericTable/GenericTableInterface/IGenericTableColumnDefinition";
+import { IGenericTableProps } from "../../../Interfaces/Shared/GenericTable";
+import { IGenericTableColumnDefinitionProps } from "../../../Interfaces/Shared/GenericTable/IGenericTableColumnDefinitionProps";
 import moment from "moment";
 import { useToast } from "../../../shared/hooks/useToast";
 import PaperNav from "../../Shared/PaperNav/PaperNav";
 import Modal from "../../../shared/Modal/Modal";
 import AddWord from '../../../Forms/AddWord';
 import usePaged from "../../../shared/hooks/usePaged/usePaged";
-import {AddBannedWordType} from '../../../Types/Admin'
 
 const BannedWords: React.FC = () => {
   const [query, setQuery] = useState<IPageRequest>({
@@ -28,7 +27,7 @@ const BannedWords: React.FC = () => {
   const { t } = useTranslation();
   const toast = useToast();
 
-  const [bannedWords, isLoaded, countOfElements] = usePaged<IBannedWord>({
+  const [bannedWords, isLoaded, countOfElements] = usePaged<BannedWordType>({
     apiCall : AdminApi.getBannedWords,
     query : query
   })
@@ -70,9 +69,9 @@ const BannedWords: React.FC = () => {
       })
   }
 
-  const generateColumns = (): IGenericTableColumnDefinitionType<
-    IBannedWord,
-    keyof IBannedWord
+  const generateColumns = (): IGenericTableColumnDefinitionProps<
+    BannedWordType,
+    keyof BannedWordType
   >[] => {
     return [
       {
@@ -103,8 +102,8 @@ const BannedWords: React.FC = () => {
   };
 
   const generateGenericTableProps = (): IGenericTableProps<
-    IBannedWord,
-    keyof IBannedWord
+    BannedWordType,
+    keyof BannedWordType
   > => {
     return {
       columns: generateColumns(),

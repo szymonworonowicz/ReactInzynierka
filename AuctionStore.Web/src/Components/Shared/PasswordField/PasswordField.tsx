@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IPasswordFieldProps } from "./IPasswordFieldProps";
+import { IPasswordFieldProps } from "../../../Interfaces/Shared/PasswordField/";
 import {
   TextField,
   InputAdornment,

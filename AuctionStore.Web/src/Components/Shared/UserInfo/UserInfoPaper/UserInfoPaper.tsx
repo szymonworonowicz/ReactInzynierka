@@ -1,5 +1,5 @@
 import React from "react";
-import { IUserInfoPaper } from "./IUserInfoPaper";
+import { IUserInfoPaper } from "../../../../Interfaces/Shared/UserInfoPaper/";
 import { useTranslation } from "react-i18next";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
