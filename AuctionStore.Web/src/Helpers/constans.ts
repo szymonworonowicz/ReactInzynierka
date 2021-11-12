@@ -1,5 +1,6 @@
 import { TFunction } from "react-i18next";
 import { DictThemeTypes } from "../Enums";
+import { RegisterOptions, Validate } from "react-hook-form";
 
 export const EmailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -14,8 +15,8 @@ export const Password =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 export enum ValidatorType {
-  Email,
-  AlphaNumeric,
+  Email = 0,
+  AlphaNumeric = 1,
   Alphabetic,
   PhoneNumber,
   Numbers,
@@ -28,7 +29,7 @@ export enum AuctionStatus {
   New = 1,
   Cancel = 2,
   Finish,
-  Payed
+  Payed,
 }
 
 export const getAuctionStatusLabel = (t: TFunction<"translation">) => {
@@ -39,18 +40,63 @@ export const getAuctionStatusLabel = (t: TFunction<"translation">) => {
     [AuctionStatus.Finish, t("finish_auction")],
   ]);
 };
-export const getValidators = () => {
-  return new Map<ValidatorType, RegExp>([
-    [ValidatorType.Email, EmailRegex],
-    [ValidatorType.Alphabetic, Alphabetic],
-    [ValidatorType.AlphaNumeric, AlphaNumeric],
-    [ValidatorType.PhoneNumber, PhoneNumber],
-    [ValidatorType.Numbers, Numbers],
-    [ValidatorType.ZipCode, ZipCode],
-    [ValidatorType.Decimal, Decimal],
-    [ValidatorType.Password, Password],
-  ]);
+
+export type IRegexTable = {
+  [name: number]: { value: RegExp; message: string };
 };
+
+export const getRegexTable = (t: TFunction<"translation">): IRegexTable => {
+  let table: IRegexTable = {};
+
+  table = {
+    0: {
+      value: EmailRegex,
+      message: t("invalidEmail"),
+    },
+    1: {
+      value: AlphaNumeric,
+      message: t("alphanumericValue"),
+    },
+    2: {
+      value: Alphabetic,
+      message: t("alphabeticalValue"),
+    },
+    3:{
+      value: PhoneNumber,
+      message : t('phoneValue')
+    },
+    4:{
+      value: Numbers,
+      message : t('numbersValue')
+    },
+    5:{
+      value: ZipCode,
+      message : t('zipCodeValue')
+    },
+    6:{
+      value: Decimal,
+      message : t('decimalValue')
+    },
+    7: {
+      value: Password,
+      message: t("invalidPassword"),
+    },
+  };
+
+  return table;
+};
+// export const getValidators = () => {
+//   return new Map<ValidatorType, RegExp>([
+//     [ValidatorType.Email, EmailRegex],
+//     [ValidatorType.Alphabetic, Alphabetic],
+//     [ValidatorType.AlphaNumeric, AlphaNumeric],
+//     [ValidatorType.PhoneNumber, PhoneNumber],
+//     [ValidatorType.Numbers, Numbers],
+//     [ValidatorType.ZipCode, ZipCode],
+//     [ValidatorType.Decimal, Decimal],
+//     [ValidatorType.Password, Password],
+//   ]);
+// };
 
 export const UserRoles = {
   Admin: "Admin",
@@ -90,30 +136,38 @@ export function getEnumKeys<O extends object, K extends keyof O = keyof O>(
   return Object.keys(obj).filter((k) => Number.isNaN(+k)) as K[];
 }
 
-// export const getValidator = (translation: any, max: number | null, pattern: { value: RegExp; message: string } | null, required: boolean = false, minLength: number = 2) => {
-// 	const registerObject: ValidationOptions = {};
+export const getValidator = (
+  translation: TFunction<"translation">,
+  max: number | null,
+  pattern: { value: RegExp; message: string } | null,
+  required: boolean = false,
+  minLength: number = 2,
+  validate?: Validate<any> | Record<string, Validate<any>>
+): RegisterOptions => {
+  const registerObject: RegisterOptions = {};
 
-// 	if (max)
-// 		registerObject.maxLength = {
-// 			value: max,
-// 			message: translation('common.validations.maxLength', { length: max }),
-// 		};
+  if (max) {
+    registerObject.maxLength = {
+      value: max,
+      message: translation("maxLength", { length: max }),
+    };
+  }
+  if (required) {
+    if (minLength) {
+      registerObject.minLength = {
+        value: minLength,
+        message: translation("minLength", {
+          length: minLength,
+        }),
+      };
+    }
+    registerObject.required = {
+      value: true,
+      message: translation("required"),
+    };
+  }
 
-// 	if (required) {
-// 		if (max) {
-// 			registerObject.minLength = {
-// 				value: minLength,
-// 				message: translation('common.validations.minLength', {
-// 					length: minLength,
-// 				}),
-// 			};
-// 		}
-// 		registerObject.required = {
-// 			value: true,
-// 			message: translation('common.validations.required'),
-// 		};
-// 	}
-
-// 	if (pattern) registerObject.pattern = pattern;
-// 	return registerObject;
-// };
+  if (pattern) registerObject.pattern = pattern;
+  if (validate) registerObject.validate = validate;
+  return registerObject;
+};

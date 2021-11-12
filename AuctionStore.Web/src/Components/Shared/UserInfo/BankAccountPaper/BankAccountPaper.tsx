@@ -1,5 +1,5 @@
 import React from "react";
-import { IDataComponentProps } from "../../../IDataComponentProps";
+import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import { IBankAccount } from "../../../../Interfaces/user";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
@@ -28,10 +28,10 @@ const BankAccountPaper: React.FC<IDataComponentProps<IBankAccount | null>> = ({
               {t("accountNr")}: {data?.accountNr}
             </Typography>
             <Typography variant="h5">
-              {t("firstname")}: {data?.ownerFirstName}
+              {t("firstName")}: {data?.ownerFirstName}
             </Typography>
             <Typography variant="h5">
-              {t("lastname")}: {data?.ownerLastName}
+              {t("lastName")}: {data?.ownerLastName}
             </Typography>
             <Typography variant="h5">
               {t("address")}: {data?.ownerAddress}

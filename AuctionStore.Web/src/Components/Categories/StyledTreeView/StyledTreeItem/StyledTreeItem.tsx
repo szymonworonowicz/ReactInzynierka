@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { IStyledTreeItem } from "./IStyledTreeItem";
+import { IStyledTreeItemProps } from "../../../../Interfaces/StyleTree/";
 import { TreeItem } from "@material-ui/lab";
 import { Typography } from "@material-ui/core";
 import {useHistory} from 'react-router-dom'
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTreeItem: React.FC<IStyledTreeItem> = ({
+const StyledTreeItem: React.FC<IStyledTreeItemProps> = ({
   labelText,
   bgColor,
   color,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { IAuctionPhotosProps } from "./iAuctionPhotosProps";
+import { IAuctionPhotosProps } from "../../../Interfaces/Auction/AuctionPhoto/";
 import { ImageService } from "../../../Services/Image/Image.service";
 import { IAuctionImage } from "../../../Interfaces/Image";
 import Carousel from "react-material-ui-carousel";
@@ -29,7 +29,7 @@ const AuctionPhotos: React.FC<IAuctionPhotosProps> = ({ id }) => {
 
   const carouselItems: Array<JSX.Element> = useMemo(() => {
     if (auctionImages.length === 0) {
-      return [<CarouselItem photo="https://via.placeholder.com/150" />];
+      return [<CarouselItem key={'placeholder'} photo="https://via.placeholder.com/150" />];
     }
     return auctionImages.map((elem, index) => {
       return <CarouselItem photo={elem.photoString} key={index} />;

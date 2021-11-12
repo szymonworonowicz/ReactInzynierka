@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { ICategoryPanelElementProps } from "./ICategoryPanelElementProps";
+import { ICategoryPanelElementProps } from "../../../../Interfaces/Admin";
 import {
   Accordion,
   AccordionDetails,

@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { IAuctionDetailsProps } from "./IAuctionDetailsProps";
+import { IAuctionDetailsProps } from "../../../Interfaces/Auction/";
 import { AuctionApi } from "../../../Services/Auction/Auction.service";
 import { IAuctionDetails } from "../../../Interfaces/Auctions";
 import AuctionDetailsContent from "./AuctionDetailsContent/AuctionDetailsContent";
 import AuctionDetailsHeader from "./AuctionDetailsHeader/AuctionDetailsHeader";
 import AuctionMessage from "./AuctionMessage/AuctionMessage";
-import { CircularProgress } from "@material-ui/core";
+import { LottieContext } from "../../../Context/LottieContext";
 
 const AuctionDetails: React.FC<IAuctionDetailsProps> = ({ id }) => {
   const [auction, setAuction] = useState<IAuctionDetails>();
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const { isOpen, setLottieOpen } = React.useContext(LottieContext);
 
   useEffect(() => {
-       AuctionApi.getAuction(id).then(response => {
+    setLottieOpen(true);
+    AuctionApi.getAuction(id)
+      .then((response) => {
         setAuction(response);
-       })
-       .finally(() => {
-        setIsLoaded(true);
-       })
+      })
+      .finally(() => {
+        setLottieOpen(false);
+      });
+  }, [id, setLottieOpen]);
 
-  }, [id]);
-
-  if (!isLoaded) {
-    return <CircularProgress />;
+  if (isOpen || !auction) {
+    return <></>
   }
   return (
     <div>

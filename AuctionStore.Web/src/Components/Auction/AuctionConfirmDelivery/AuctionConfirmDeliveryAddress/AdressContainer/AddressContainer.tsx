@@ -1,7 +1,6 @@
 import React from "react";
-import { IAddressContainerProps } from "./IAddressContainerProps";
-import { IconButton, Grid, Typography, makeStyles } from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
+import { IAddressContainerProps } from "../../../../../Interfaces/Admin/IAddressContainerProps";
+import { Grid, Typography, makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
@@ -16,7 +15,7 @@ const useStyles = makeStyles({
     }
 })
 
-const AddressContainer: React.FC<IAddressContainerProps> = ({ data,setEditAddress }) => {
+const AddressContainer: React.FC<IAddressContainerProps> = ({ data }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 

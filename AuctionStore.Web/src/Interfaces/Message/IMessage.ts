@@ -3,5 +3,5 @@ export interface IMessage {
     text : string;
     added : number;
     from? : string;
-    
+    isReaded : boolean;
 }

@@ -226,6 +226,9 @@ namespace AuctionStore.Infrastructure.Migrations
                     b.Property<Guid>("AuctionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsReaded")
+                        .HasColumnType("bit");
+
                     b.Property<byte>("MessageType")
                         .HasColumnType("tinyint");
 

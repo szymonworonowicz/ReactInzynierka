@@ -55,7 +55,7 @@ const LanguageSelect: React.FC = () => {
               <ListItemIcon>
                 {Flags.get(key)}
               </ListItemIcon>
-              <ListItemText primary={t(key)} />
+              <ListItemText primary={key} />
             </MenuItem>
           );
         })}

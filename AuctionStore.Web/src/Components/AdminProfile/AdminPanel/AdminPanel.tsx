@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IAdmin } from "../../../Interfaces/Admin";
+import { AdminType } from "../../../Types/Admin";
 import { AdminApi } from "../../../Services/Admin/AdminApi";
-import { CircularProgress, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { IPageRequest } from "../../../Interfaces/Paged";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
-import { IGenericTableProps } from "../../Shared/GenericTable/GenericTableInterface/IGenericTableProps";
-import { IGenericTableColumnDefinitionType } from "../../Shared/GenericTable/GenericTableInterface/IGenericTableColumnDefinition";
+import { IGenericTableColumnDefinitionProps,IGenericTableProps } from "../../../Interfaces/Shared/GenericTable/";
 import moment from "moment";
 import { useToast } from "../../../shared/hooks/useToast";
 import { Check, Clear, Delete, BeachAccess } from "@material-ui/icons";
 import usePaged from "../../../shared/hooks/usePaged/usePaged";
-import Modal from '../../../shared/Modal/Modal';
-import {Add} from '@material-ui/icons';
+import Modal from "../../../shared/Modal/Modal";
+import { Add } from "@material-ui/icons";
 import PaperNav from "../../Shared/PaperNav/PaperNav";
-import RegisterForm from '../../../Forms/Auth/RegisterForm';
-import {IRegisterCredentials} from '../../../Interfaces/Api';
+import RegisterForm from "../../../Forms/Auth/RegisterForm";
+import { IRegisterCredentials } from "../../../Interfaces/Api";
 import { UserRoles } from "../../../Helpers/constans";
 import { authService } from "../../../Services/Auth/Auth.service";
-
 
 const AdminPanel: React.FC = () => {
   const [query, setQuery] = useState<IPageRequest>({
@@ -29,9 +27,8 @@ const AdminPanel: React.FC = () => {
 
   const { t } = useTranslation();
   const toast = useToast();
-  
 
-  const [adminsResponse, isLoaded, countOfElements] = usePaged<IAdmin>({
+  const [adminsResponse, isLoaded, countOfElements] = usePaged<AdminType>({
     apiCall: AdminApi.getAdmins,
     query: query,
   });
@@ -46,14 +43,6 @@ const AdminPanel: React.FC = () => {
             page: 0,
           };
         });
-        // setAdmins(prev => {
-        //     let index = prev.findIndex(x => x.id === id);
-        //     if(index !== -1) {
-        //         prev[index].isDisabled = !prev[index].isDisabled;
-        //     }
-
-        //     return [...prev]
-        // })
       })
       .catch(() => {
         toast(t("failureHoliday"), "error");
@@ -70,46 +59,38 @@ const AdminPanel: React.FC = () => {
             page: 0,
           };
         });
-        // setAdmins(prev => {
-        //     let index = prev.findIndex(x => x.id === id);
-        //     if(index !== -1) {
-        //         prev[index].isDeleted = !prev[index].isDeleted;
-        //     }
-
-        //     return [...prev]
-        // })
       })
       .catch(() => {
         toast(t("failureDelete"), "error");
       });
   };
 
-  const AddAdmin = (data :IRegisterCredentials) => {
+  const AddAdmin = (data: IRegisterCredentials) => {
     data.userType = UserRoles.Admin;
-    authService.register(data)
-        .then(response => {
-            if(response) {
-                toast(t('addAdminSuccess'), 'success');
-            }
-        })
-        .catch(() =>{
-            toast(t('addAdminFailure'), 'error');
-        })
-        .finally(() => {
-            setAddModal(false);
-            setQuery(prev => {
-                return {
-                    ...prev,
-                    page:0
-                }
-            })
-        })
-    
-  }
+    authService
+      .register(data)
+      .then((response) => {
+        if (response) {
+          toast(t("addAdminSuccess"), "success");
+        }
+      })
+      .catch(() => {
+        toast(t("addAdminFailure"), "error");
+      })
+      .finally(() => {
+        setAddModal(false);
+        setQuery((prev) => {
+          return {
+            ...prev,
+            page: 0,
+          };
+        });
+      });
+  };
 
-  const generateColumns = (): IGenericTableColumnDefinitionType<
-    IAdmin,
-    keyof IAdmin
+  const generateColumns = (): IGenericTableColumnDefinitionProps<
+    AdminType,
+    keyof AdminType
   >[] => {
     return [
       {
@@ -176,8 +157,8 @@ const AdminPanel: React.FC = () => {
   };
 
   const generateGenericTableProps = (): IGenericTableProps<
-    IAdmin,
-    keyof IAdmin
+    AdminType,
+    keyof AdminType
   > => {
     return {
       columns: generateColumns(),
@@ -188,8 +169,8 @@ const AdminPanel: React.FC = () => {
     };
   };
 
-  if (isLoaded) {
-    return <CircularProgress />;
+  if (!isLoaded) {
+    return <></>;
   }
   return (
     <>
@@ -198,7 +179,7 @@ const AdminPanel: React.FC = () => {
           header={t("addAdmin")}
           isOpen={addModal}
           handleClose={() => setAddModal(false)}
-          handleSave={(data : IRegisterCredentials) => AddAdmin(data)}
+          handleSave={(data: IRegisterCredentials) => AddAdmin(data)}
         >
           <RegisterForm />
         </Modal>

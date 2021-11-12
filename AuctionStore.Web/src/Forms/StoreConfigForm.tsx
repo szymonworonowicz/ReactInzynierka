@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IAuctionInfo } from "../Interfaces/Auctions";
 import {
   Grid,
-  FormControl,
-  Input,
-  InputLabel,
   InputAdornment,
+  TextField
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import { getRegexTable, getValidator, ValidatorType } from "../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,17 +25,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StoreConfigForm: React.FC = () => {
-  const { register, setValue, getValues } = useFormContext();
-  const [payload, setPayload] = useState<IAuctionInfo>({
-    maxPhotoSize: getValues()["maxPhotoSize"],
-    maxPhotos: getValues()["maxPhotos"],
-  });
+  const { register, setValue, getValues, formState:{errors}} = useFormContext<IAuctionInfo>();
+  const [payload, setPayload] = useState<IAuctionInfo>(getValues() as IAuctionInfo);
 
   const classes = useStyles();
   const { t } = useTranslation();
 
   const handleChange = (
-    e: React.ChangeEvent<{ value: string; id: string }>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { value, id } = e.target;
     setPayload((prev) => {
@@ -45,41 +41,61 @@ const StoreConfigForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(`${id}`, value);
+    setValue(id as (keyof IAuctionInfo), Number(value));
   };
+
+  const regexTable = getRegexTable(t);
+
+  const formValidators  = {
+    maxPhotoSize: getValidator(t, null, regexTable[ValidatorType.Decimal], true),
+    maxPhotos: getValidator(t, null, regexTable[ValidatorType.Numbers], true),
+  }
 
   return (
     <form>
       <Grid container spacing={1} justify={"center"} alignContent={"center"}>
         <input
           type="hidden"
-          {...register("maxPhotoSize", { required: true })}
+          {...register("maxPhotoSize",formValidators.maxPhotoSize)}
         />
-        <input type="hidden" {...register("maxPhotos", { required: true })} />
+        <input type="hidden" {...register("maxPhotos",formValidators.maxPhotoSize)} />
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="maxPhotoSize">{t("maxPhotoSize")}</InputLabel>
-            <Input
-              id="maxPhotoSize"
-              autoFocus
-              fullWidth
-              value={payload.maxPhotoSize}
-              onChange={handleChange}
-              endAdornment={<InputAdornment position="end">MB</InputAdornment>}
-            />
-          </FormControl>
+        <TextField
+            id="maxPhotoSize"
+            name="maxPhotoSize"
+            autoFocus
+            fullWidth
+            value={payload.maxPhotoSize}
+            onChange={handleChange}
+            error={
+              errors.maxPhotoSize && errors.maxPhotoSize.message !== undefined
+            }
+            helperText={(errors.maxPhotoSize as FieldError)?.message}
+            label={t("maxPhotoSize")}
+            InputProps ={{
+              endAdornment : (
+                <InputAdornment position="end">MB</InputAdornment>
+              ) 
+            }}
+            className={clsx(classes.margin)}
+          />
+          
         </Grid>
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="maxPhotos">{t("maxPhotos")}</InputLabel>
-            <Input
-              id="maxPhotos"
-              autoFocus
-              fullWidth
-              value={payload.maxPhotos}
-              onChange={handleChange}
-            />
-          </FormControl>
+        <TextField
+            id="maxPhotos"
+            name="maxPhotos"
+            autoFocus
+            fullWidth
+            value={payload.maxPhotos}
+            onChange={handleChange}
+            error={
+              errors.maxPhotos && errors.maxPhotos.message !== undefined
+            }
+            helperText={(errors.maxPhotos as FieldError)?.message}
+            label={t("maxPhotos")}
+            className={clsx(classes.margin)}
+          />
         </Grid>
       </Grid>
     </form>

@@ -1,5 +1,5 @@
 import React from "react";
-import { ITabPanel } from "./ITabPanel";
+import { ITabPanel } from "../../../Interfaces/Shared/Tabs/";
 
 const TabPanel: React.FC<ITabPanel> = ({ children, value, index }) => {
   return (

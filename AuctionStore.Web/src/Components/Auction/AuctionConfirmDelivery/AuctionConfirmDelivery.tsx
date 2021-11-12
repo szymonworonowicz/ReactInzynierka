@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { IAuctionConfirmDeliveryProps } from "./IAuctionConfirmDeliveryProps";
 import AuctionConfirmDeliveryAddress from "./AuctionConfirmDeliveryAddress/AuctionConfirmDeliveryAddress";
 import AuctionConfirmDeliveryCompany from "./AuctionConfirmDeliveryCompany/AuctionConfirmDeliveryCompany";
 
-const AuctionConfirmDelivery: React.FC<IAuctionConfirmDeliveryProps> = () => {
+const AuctionConfirmDelivery: React.FC= () => {
   const [selectedCity, setSelectedCity] = useState<string>("Warsaw");
 
   return (

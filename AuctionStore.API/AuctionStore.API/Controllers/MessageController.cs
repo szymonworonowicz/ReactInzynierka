@@ -42,5 +42,14 @@ namespace AuctionStore.API.Controllers
 
             return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
         }
+
+        [HttpPost("setMessageState")]
+        public async Task<IActionResult> UpdateMessageStateAsync([FromBody] UpdateMessageStateCommand command)
+        {
+            var result = await CommandAsync(command);
+
+            return result != false ? JsonSuccess(result) : JsonError(new ApiError(400, "update"));
+
+        }
     }
 }

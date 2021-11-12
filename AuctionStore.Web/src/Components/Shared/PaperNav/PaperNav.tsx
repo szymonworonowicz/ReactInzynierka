@@ -1,5 +1,5 @@
 import React from "react";
-import { IPaperNav } from "./IPaperNav";
+import { IPaperNav } from "../../../Interfaces/Shared/PaperNav/";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import { Edit, Delete } from "@material-ui/icons";

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { IAuctionMessageProps } from "./IAuctionMessageProps";
+import { IAuctionMessageProps } from "../../../../Interfaces/Auction/";
 import { makeStyles } from "@material-ui/styles";
 import {
   Grid,

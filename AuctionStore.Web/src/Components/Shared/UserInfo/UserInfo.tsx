@@ -7,7 +7,7 @@ import {
 } from "../../../Interfaces/user";
 import { UserApi } from "../../../Services/User/UserApi";
 import { UserContext } from "../../../Context/UserContext";
-import { CircularProgress, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import PaperNav from "../PaperNav/PaperNav";
 import UserInfoPaper from "./UserInfoPaper/UserInfoPaper";
 import BankAccountPaper from "./BankAccountPaper/BankAccountPaper";
@@ -18,12 +18,13 @@ import ChangePasswordForm from "../../../Forms/Auth/ChangePasswordForm";
 import { useToast } from "../../../shared/hooks/useToast";
 import ChangeBankAccountForm from "../../../Forms/Auth/ChangeBankAccountForm";
 import ChangeUserDataForm from "../../../Forms/Auth/ChangeUserDataForm";
+import{LottieContext} from '../../../Context/LottieContext'
 
 const UserInfo: React.FC = () => {
   const context = useContext(UserContext);
   const [userData, setUserData] = useState<IUserDto | null>(null);
   const [bankAccount, setBankAccount] = useState<IBankAccount | null>(null);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const [error, setError] = useState<boolean>(false);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
     useState<boolean>(false);
@@ -35,7 +36,7 @@ const UserInfo: React.FC = () => {
   const toast = useToast();
 
   useEffect(() => {
-    setIsLoaded(false);
+    setLottieOpen(true);
 
     UserApi.getBankAccount(context.userId)
       .then((response) => {
@@ -45,9 +46,9 @@ const UserInfo: React.FC = () => {
         setError(true);
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
       });
-  }, [context.userId]);
+  }, [context.userId, setLottieOpen]);
 
   useEffect(() => {
     UserApi.getUser(context.userId)
@@ -55,9 +56,9 @@ const UserInfo: React.FC = () => {
         setUserData(response);
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
       });
-  }, [context.userId]);
+  }, [context.userId, setLottieOpen]);
 
   const handleDelete = () => {
     setIsDeleteUser(true);
@@ -83,7 +84,7 @@ const UserInfo: React.FC = () => {
   };
 
   const ConfirmBankAccountChange = (data: IBankAccount): void => {
-    setIsLoaded(false);
+    setLottieOpen(true);
     UserApi.upsertBankAccount(data)
       .then((data) => {
         setBankAccount(data);
@@ -93,7 +94,7 @@ const UserInfo: React.FC = () => {
         toast(t("failure"), "error");
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
         setEditBankAccount(false);
       });
   };
@@ -103,7 +104,7 @@ const UserInfo: React.FC = () => {
   };
 
   const ConfirmChangeUserData = (data: IUserDto) => {
-    setIsLoaded(true);
+    setLottieOpen(true);
     UserApi.UpdateUserData(data, context.userId)
       .then((data) => {
         setUserData(data);
@@ -113,7 +114,7 @@ const UserInfo: React.FC = () => {
         toast(t("failure"), "error");
       })
       .finally(() => {
-        setIsLoaded(true);
+        setLottieOpen(false);
         setEditUserData(false);
       });
   };
@@ -132,8 +133,8 @@ const UserInfo: React.FC = () => {
     setEditBankAccount(true);
   };
 
-  if (!isLoaded && !error) {
-    return <CircularProgress />;
+  if (isOpen && !error) {
+    return <></>
   }
 
   return (
@@ -190,7 +191,7 @@ const UserInfo: React.FC = () => {
       </Modal>
 
       <Modal
-        header={t("changeUserDAta")}
+        header={t("changeUserData")}
         isOpen={editUserData}
         handleClose={() => setEditUserData(false)}
         handleSave={ConfirmChangeUserData}

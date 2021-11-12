@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
-import { Grid, FormControl, Input, InputLabel } from "@material-ui/core";
+import { useFormContext, FieldError } from "react-hook-form";
+import { Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { IAddress } from "../Interfaces/user";
+import {
+  getRegexTable,
+  getValidator,
+  ValidatorType,
+} from "../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const AddressForm: React.FC = () => {
-  const { register, getValues, setValue } = useFormContext();
+  const {
+    register,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useFormContext<IAddress>();
   const [address, setAddress] = useState<IAddress>({
     city: getValues()["city"],
     houseNo: getValues()["houseNo"],
@@ -30,7 +40,9 @@ const AddressForm: React.FC = () => {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const handleChange = (e: React.ChangeEvent<{value : string, id : string}>) => {
+  const handleChange = (
+    e: React.ChangeEvent<{ value: string; id: string }>
+  ) => {
     const { value, id } = e.target;
     setAddress((prev) => {
       return {
@@ -38,64 +50,81 @@ const AddressForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(`${id}`, value);
+    setValue(id as keyof IAddress, value);
+  };
+
+  const regexTable = getRegexTable(t);
+
+  const formValidators = {
+    city: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
+    houseNo: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
+    postCode: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
+    street: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
   };
 
   return (
     <form>
       <Grid container spacing={1} justify="center" alignContent="center">
-        <input type="hidden" {...register("city", { required: true })} />
-        <input type="hidden" {...register("houseNo", { required: true })} />
-        <input type="hidden" {...register("id", { required: false })}/>
-        <input type="hidden" {...register("postCode", { required: true })} />
-        <input type="hidden" {...register("street", { required: true })} />
+        <input type="hidden" {...register("city", formValidators.city)} />
+        <input type="hidden" {...register("houseNo",formValidators.houseNo)} />
+        <input type="hidden" {...register("id", { required: false })} />
+        <input type="hidden" {...register("postCode", formValidators.postCode)} />
+        <input type="hidden" {...register("street", formValidators.street)} />
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="city">{t("city")}</InputLabel>
-            <Input
-              id="city"
-              autoFocus
-              fullWidth
-              value={address.city}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="city"
+            name="city"
+            autoFocus
+            fullWidth
+            value={address.city}
+            onChange={handleChange}
+            error={errors.city && errors.city.message !== undefined}
+            helperText={(errors.city as FieldError)?.message}
+            label={t("city")}
+            className={clsx(classes.margin)}
+          />
         </Grid>
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="houseNo">{t("houseNo")}</InputLabel>
-            <Input
-              id="houseNo"
-              autoFocus
-              fullWidth
-              value={address.houseNo}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="houseNo"
+            name="houseNo"
+            autoFocus
+            fullWidth
+            value={address.houseNo}
+            onChange={handleChange}
+            error={errors.houseNo && errors.houseNo.message !== undefined}
+            helperText={(errors.houseNo as FieldError)?.message}
+            label={t("houseNo")}
+            className={clsx(classes.margin)}
+          />
         </Grid>
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="postCode">{t("postCode")}</InputLabel>
-            <Input
-              id="postCode"
-              autoFocus
-              fullWidth
-              value={address.postCode}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="postCode"
+            name="postCode"
+            autoFocus
+            fullWidth
+            value={address.postCode}
+            onChange={handleChange}
+            error={errors.postCode && errors.postCode.message !== undefined}
+            helperText={(errors.postCode as FieldError)?.message}
+            label={t("postCode")}
+            className={clsx(classes.margin)}
+          />
         </Grid>
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="street">{t("street")}</InputLabel>
-            <Input
-              id="street"
-              autoFocus
-              fullWidth
-              value={address.street}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="street"
+            name="street"
+            autoFocus
+            fullWidth
+            value={address.street}
+            onChange={handleChange}
+            error={errors.street && errors.street.message !== undefined}
+            helperText={(errors.street as FieldError)?.message}
+            label={t("street")}
+            className={clsx(classes.margin)}
+          />
         </Grid>
       </Grid>
     </form>

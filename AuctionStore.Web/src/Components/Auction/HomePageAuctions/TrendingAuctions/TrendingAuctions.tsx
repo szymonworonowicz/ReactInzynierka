@@ -1,9 +1,10 @@
 import React from "react";
 import { IAuction } from "../../../../Interfaces/Auctions";
-import {CircularProgress, Grid, makeStyles, Typography} from '@material-ui/core'
+import {Grid, makeStyles, Typography} from '@material-ui/core'
 import { AuctionApi } from "../../../../Services/Auction/Auction.service";
 import { useTranslation } from "react-i18next";
 import HomePageAuctionContainer from '../HomePageAuctionContainer/HomePageAuctionContainer';
+import { LottieContext } from "../../../../Context/LottieContext";
 
 const useStyles = makeStyles({
     root:{
@@ -17,12 +18,12 @@ const useStyles = makeStyles({
 
 const TrendingAuctions : React.FC = () => {
     const [auctions, setAuctions ] = React.useState<Array<IAuction>>([]);
-    const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
+    const {isOpen, setLottieOpen} = React.useContext(LottieContext);    
     const {t} = useTranslation();
 
     const classes = useStyles();
     React.useEffect(() => {
-        setIsLoaded(false);
+        setLottieOpen(true);
         AuctionApi.getTrendingAuctions()
             .then(response => {
                 setAuctions(response);
@@ -31,12 +32,12 @@ const TrendingAuctions : React.FC = () => {
                 alert('error')
             })
             .finally(() => {
-                setIsLoaded(true);
+                setLottieOpen(false);
             })
-    },[])
+    },[setLottieOpen])
 
-    if (!isLoaded ) {
-        return <CircularProgress />;
+    if (isOpen) {
+        return <></>
       }
 
     return (

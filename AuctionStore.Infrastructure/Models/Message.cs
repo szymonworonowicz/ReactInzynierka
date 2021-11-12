@@ -14,6 +14,7 @@ namespace AuctionStore.Infrastructure.Models
         public string  Text { get; set; }
         public long Added { get; set; }
         public DictMessageType  MessageType { get; set; }
+        public bool IsReaded { get; set; }
 
         public virtual User User { get; set; }
     }

@@ -7,19 +7,22 @@ import {
   DialogActions,
   DialogContentText,
   Button,
+  IconButton,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import { makeStyles } from "@material-ui/styles";
+import {Close} from '@material-ui/icons'
 
-
-// const useStyles  = (props : Props) => {
-//     const {width} = props;
-
-//     return makeStyles({
-//       root: {
-//         width: width
-//       }
-//     })
-// }
+const useStyles = makeStyles({
+  close: {
+    position:'absolute',
+    top:'2px',
+    right:'5px'
+  },
+  popper: {
+    position:'relative'
+  }
+})
 
 const Popper: React.FC<IPopperProps> = ({
   body,
@@ -30,9 +33,11 @@ const Popper: React.FC<IPopperProps> = ({
   showCancel = true,
   showSave = true,
   maxWidth = "sm",
+  hasCloseIcon
 }) => {
   const { t } = useTranslation();
-  // const classes = useStyles({width})
+  const classes = useStyles()
+
   return (
     <Dialog
       maxWidth={maxWidth}
@@ -40,15 +45,28 @@ const Popper: React.FC<IPopperProps> = ({
       onClose={onCancel}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      className={classes.popper}
     >
-      {title && <DialogTitle id="alert-dialog-title"> {title}</DialogTitle>}
+      {title && (
+        <DialogTitle id="alert-dialog-title">
+          {title}
+          {
+            hasCloseIcon && (
+              <IconButton className={classes.close} onClick={() => onCancel()} >
+                <Close/>
+              </IconButton>
+            )
+          }
+          </DialogTitle>
+          )
+         }
       <DialogContent>
         {typeof body === "string" ? (
           <DialogContentText id="alert-dialog-description">
             {body}
           </DialogContentText>
         ) : (
-          body 
+          body
         )}
       </DialogContent>
       <DialogActions>

@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useCallback } from "react";
-import { IRemainingTimeCounterProps } from "./IRemainingTimeCounterProps";
+import { IRemainingTimeCounterProps } from "../../../../../Interfaces/Auction/";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Typography } from "@material-ui/core";

@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
-import { useIdleTimer } from 'react-idle-timer';
-import { ToastContainer } from 'react-toastify';
-import { CssBaseline, Theme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
-import {BlackTheme} from './Themes/BlackTheme';
-import {WhiteTheme} from './Themes/WhiteTheme';
-import {ContrastTheme} from './Themes/ContrastTheme';
+import React, { useState } from "react";
+import { useIdleTimer } from "react-idle-timer";
+import { ToastContainer } from "react-toastify";
+import { CssBaseline, Theme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { BlackTheme } from "./Themes/BlackTheme";
+import { WhiteTheme } from "./Themes/WhiteTheme";
+import { ContrastTheme } from "./Themes/ContrastTheme";
 
-import { apiClient } from './Services/APIClient/apiClient';
-import { UserContext, InitialUserContext } from './Context/UserContext';
-import AppRouter from './Routing/AppRouter';
-import { IUserData } from './Interfaces/user';
-import { authService } from './Services/Auth/Auth.service';
-import {ThemeContext} from './Context/ThemeContext';
-import { DictThemeTypes } from './Enums';
+import { apiClient } from "./Services/APIClient/apiClient";
+import { UserContext, InitialUserContext } from "./Context/UserContext";
+import AppRouter from "./Routing/AppRouter";
+import { IUserData } from "./Interfaces/user";
+import { authService } from "./Services/Auth/Auth.service";
+import { ThemeContext } from "./Context/ThemeContext";
+import { LottieContext } from "./Context/LottieContext";
+import { DictThemeTypes } from "./Enums";
+import Loader from './shared/Loader/Loader'
 
 const App: React.FC = () => {
   const [userContext, setUserContext] = useState<IUserData>(InitialUserContext);
-  const saveTheme = localStorage.getItem('theme') as string;
-  const [theme, setTheme] = useState<DictThemeTypes>(parseInt(saveTheme) ?? DictThemeTypes.White);
+  const saveTheme = localStorage.getItem("theme") as string;
+  const [theme, setTheme] = useState<DictThemeTypes>(
+    parseInt(saveTheme) ?? DictThemeTypes.White
+  );
+
+  const [lottieOpen, setLottieOpen] = React.useState<boolean>(false);
 
   authService.onLogin = (authdata) => {
     setUserContext({
@@ -41,11 +47,11 @@ const App: React.FC = () => {
   };
 
   const handleUserIdle = (e: Event): void => {
-    console.log('user is idle', e);
+    console.log("user is idle", e);
     if (userContext.isLogged) {
-      const refreshToken = localStorage.getItem('refresh_token');
+      const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken === null) {
-        console.log('no remember me, user logout', e);
+        console.log("no remember me, user logout", e);
         apiClient.logout(true);
       }
     }
@@ -57,25 +63,28 @@ const App: React.FC = () => {
     debounce: 500,
   });
 
-  const getThemePallete = () : Theme => {
-    switch(theme) {
+  const getThemePallete = (): Theme => {
+    switch (theme) {
       case DictThemeTypes.Black:
         return BlackTheme;
       case DictThemeTypes.Contrast:
         return ContrastTheme;
       default:
-        return WhiteTheme
+        return WhiteTheme;
     }
-  }
+  };
 
   return (
     <>
-      <CssBaseline />
-      <ToastContainer />
-      <ThemeContext.Provider value={{theme : theme, setTheme : setTheme}}>
+      <ThemeContext.Provider value={{ theme: theme, setTheme: setTheme }}>
         <UserContext.Provider value={userContext}>
           <ThemeProvider theme={getThemePallete()}>
-            <AppRouter />
+            <LottieContext.Provider value={{isOpen:lottieOpen, setLottieOpen: setLottieOpen }}>
+              <CssBaseline />
+              <ToastContainer />
+              <Loader isOpen={lottieOpen}/>
+              <AppRouter />
+            </LottieContext.Provider>
           </ThemeProvider>
         </UserContext.Provider>
       </ThemeContext.Provider>

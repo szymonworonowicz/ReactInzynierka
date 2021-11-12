@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IBankAccount } from "../../../../Interfaces/user";
-import { IDataComponentProps } from "../../../IDataComponentProps";
+import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import dotpay from "../../../../Logos/dotpay.jpg";
 import wallet from "../../../../Logos/wallet.png";
 import { makeStyles ,Grid, Typography} from "@material-ui/core";

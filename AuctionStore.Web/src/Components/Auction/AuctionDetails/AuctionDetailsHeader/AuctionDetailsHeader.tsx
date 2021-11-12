@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IAuctionDetailsHeaderProps } from "./IAuctionDetailsHeaderProps";
+import { IAuctionDetailsHeaderProps } from "../../../../Interfaces/Auction/";
 import {
   Paper,
   Typography,
@@ -55,7 +55,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
 
   const [connection, setConnection] = useState<HubConnection>();
   const [newPrice, setNewPrice] = useState<number>();
-  const [actualOffer, setActualOffer] = useState<number>(data.maxOffer);
+  const [actualOffer, setActualOffer] = useState<number>(data?.maxOffer ?? 0);
 
   useEffect(() => {
     (async () => {

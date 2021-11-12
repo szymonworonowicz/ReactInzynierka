@@ -1,5 +1,5 @@
 import React from "react";
-import {ILargePhotoProps} from './ILargePhotoProps';
+import {ILargePhotoProps} from '../../../../../Interfaces/Auction/AuctionPhoto/';
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles= makeStyles({

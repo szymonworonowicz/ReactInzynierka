@@ -19,7 +19,10 @@ const Modal: React.FC<IModalProps> = ({
   children,
 }) => {
   const methods = useForm({
-    defaultValues: initValue
+    defaultValues: initValue,
+    reValidateMode:'onChange',
+    shouldFocusError : true,
+    mode:'all',
   });
   const { handleSubmit } = methods;
 

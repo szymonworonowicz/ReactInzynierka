@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { IMessage } from "../../Interfaces/Message";
 import { IPageRequest } from "../../Interfaces/Paged";
 import { MessageService } from "../../Services/Messaage/Message.service";
 import { UserContext } from "../../Context/UserContext";
 import GenericTable from "../Shared/GenericTable/GenericTable";
-import { IGenericTableProps } from "../Shared/GenericTable/GenericTableInterface/IGenericTableProps";
-import { IGenericTableColumnDefinitionType } from "../Shared/GenericTable/GenericTableInterface/IGenericTableColumnDefinition";
+import { IGenericTableProps } from "../../Interfaces/Shared/GenericTable";
+
+import { IGenericTableColumnDefinitionProps } from "../../Interfaces/Shared/GenericTable/IGenericTableColumnDefinitionProps";
 import MessageItem from "./MessageItem/MessageItem";
 import { useToast } from "../../shared/hooks/useToast";
 import Popper from "../../shared/Popper/Popper";
 import MessageDetails from "./MessageDetails/MessageDetails";
-import usePaged from "../../shared/hooks/usePaged/usePaged";
+import { UpdateMessageStateType } from "../../Types/Messages";
+import { LottieContext } from "../../Context/LottieContext";
 
 const useStyles = makeStyles({
   root: {
@@ -30,32 +31,67 @@ const useStyles = makeStyles({
 });
 
 const MessageView: React.FC = () => {
-  // const [messages, setMessages] = useState<Array<IMessage>>([]);
-  // const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  // const [countOfElements, setCountOfElements] = useState<number>(0);
   const [query, setQuery] = useState<IPageRequest>({
     elemPerPage: 10,
     page: 0,
   });
   const [showMore, setShowMore] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<IMessage | undefined>();
+  const [countOfElements, setCountOfElements] = React.useState<number>(0);
+  const [messages, setMessages] = React.useState<Array<IMessage>>([]);
 
   const context = useContext(UserContext);
 
-  const [messages, isLoaded, countOfElements] = usePaged<IMessage>(
-    {
-      apiCall: MessageService.getMessages,
-      query: query,
-    },
-    context.userId as string
-  );
+  const { isOpen, setLottieOpen } = React.useContext(LottieContext);
+
+  React.useEffect(() => {
+    setLottieOpen(true);
+    MessageService.getMessages(query, context.userId as string)
+      .then((data) => {
+        setCountOfElements(data.countOfElements);
+        setMessages(data.pageElements);
+      })
+      .finally(() => {
+        setLottieOpen(false);
+      });
+  }, [context.userId, query, setLottieOpen]);
+
+  const updateMessagesState = React.useCallback((): void => {
+    const messageStates: UpdateMessageStateType[] = messages.map((message) => {
+      return {
+        messageId: message.id,
+        isReaded: message.isReaded,
+      };
+    });
+
+    MessageService.setMessageState(messageStates);
+  }, [messages]);
+
+  React.useEffect(() => {
+    return () => {
+      updateMessagesState();
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { t } = useTranslation();
   const toast = useToast();
   const classes = useStyles();
 
   const showMessageMore = (messageId: string): void => {
-    const message = messages.find((x) => x.id === messageId);
+    const messageIndex = messages.findIndex((x) => x.id === messageId);
+    const message = messages[messageIndex];
+
+    if (!message?.isReaded) {
+      setMessages((prev) => {
+        const stateMessage = prev[messageIndex];
+        stateMessage.isReaded = true;
+        prev.splice(messageIndex, 1, stateMessage);
+
+        return prev;
+      });
+    }
     setSelectedItem(message);
     setShowMore(true);
   };
@@ -69,24 +105,35 @@ const MessageView: React.FC = () => {
   };
 
   const deleteMessage = (messageId: string): void => {
-    MessageService.deleteMessage(messageId)
-      .then(response => {
-        if (response) {
-          toast(t("successRemoveMessage"), "success");
-          setQuery(prev => {
-            return {
-              ...prev,
-              query: 0
-            }
-          })
-        } else {
-          toast(t("failureRemoveMessage"), "error");
-        }
-      })
-
+    MessageService.deleteMessage(messageId).then((response) => {
+      if (response) {
+        toast(t("successRemoveMessage"), "success");
+        setQuery((prev) => {
+          return {
+            ...prev,
+            query: 0,
+          };
+        });
+      } else {
+        toast(t("failureRemoveMessage"), "error");
+      }
+    });
   };
 
-  const generateColumns = (): IGenericTableColumnDefinitionType<
+  const handleMessageReaded = (messageId: string) => {
+    setMessages((prev) => {
+      const local = prev;
+      const messageIndex = local.findIndex((x) => x.id === messageId);
+      debugger;
+      const stateMessage = local[messageIndex];
+      stateMessage.isReaded = !stateMessage.isReaded;
+      local.splice(messageIndex, 1, stateMessage);
+
+      return [...local];
+    });
+  };
+
+  const generateColumns = (): IGenericTableColumnDefinitionProps<
     IMessage,
     keyof IMessage
   >[] => {
@@ -100,6 +147,7 @@ const MessageView: React.FC = () => {
               message={rowData}
               showMessageMore={showMessageMore}
               deleteMessage={deleteMessage}
+              handleMessageReaded={handleMessageReaded}
             />
           );
         },
@@ -117,12 +165,15 @@ const MessageView: React.FC = () => {
       query,
       setQuery,
       data: messages,
+      externalMethod: updateMessagesState,
     };
   };
 
-  if (isLoaded) {
-    return <CircularProgress />;
+  if (isOpen) {
+    return <></>;
   }
+
+  console.log("AS");
   return (
     <div className={classes.root}>
       {showMore && (
@@ -134,6 +185,7 @@ const MessageView: React.FC = () => {
           title={t("messageDetails")}
           body={getMessageDetailsBody()}
           maxWidth="lg"
+          hasCloseIcon={true}
         />
       )}
 

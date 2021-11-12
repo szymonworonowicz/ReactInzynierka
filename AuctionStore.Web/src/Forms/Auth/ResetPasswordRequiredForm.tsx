@@ -1,61 +1,71 @@
-import React, {useState} from "react";
-import { Grid, FormControl, Input, InputLabel } from "@material-ui/core";
-import { useFormContext } from "react-hook-form";
+import React, { useState } from "react";
+import { Grid, TextField } from "@material-ui/core";
+import { useFormContext, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import { IResetPasswordRequired } from "../../Interfaces/user";
+import { getValidator, ValidatorType, getRegexTable } from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-      flexWrap: "wrap",
-    },
-    margin: {
-      margin: theme.spacing(1),
-    },
-    withoutLabel: {
-      marginTop: theme.spacing(3),
-    },
-  }));
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+}));
 
-const ResetPasswordRequiredForm : React.FC = () => {
-    const { setValue, register } = useFormContext();
-    const classes = useStyles();
-    const {t} = useTranslation();
+const ResetPasswordRequiredForm: React.FC = () => {
+  const { setValue, register,formState:{errors} } = useFormContext<IResetPasswordRequired>();
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const regexTable = getRegexTable(t);
 
-    const [credentials, setCredentials] = useState<IResetPasswordRequired>( {
-        email:''
+  const [credentials, setCredentials] = useState<IResetPasswordRequired>({
+    email: "",
+  });
+
+  const handleCredentialChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value, id } = e.target;
+    setCredentials((prev) => {
+      return { ...prev, [id]: value };
     });
+    setValue(id as (keyof IResetPasswordRequired), value);
+  };
 
-    const handleCredentialChange = (e: any) => {
-        const { value, id } = e.target;
-        setCredentials((prev) => {
-          return { ...prev, [id]: value };
-        });
-        setValue(`${id}`, value);
-      };
+  const formValidators = {
+    email:getValidator(t,null,regexTable[ValidatorType.Email],true),
+  }
 
-    return (
-        <form>
-            <Grid container spacing={1} justify={"center"} alignContent={"center"}>
-                <input type="hidden" {...register("email", { required: true })} />
-                <Grid item xl={12}>
-                <FormControl className={clsx(classes.margin)} fullWidth>
-                    <InputLabel htmlFor="userName">{t("email")}</InputLabel>
-                    <Input
-                    id="email"
-                    autoFocus
-                    fullWidth
-                    value={credentials.email}
-                    onChange={handleCredentialChange}
-                    />
-                </FormControl>
-                </Grid>
-            </Grid>
-        </form>
-    )
-
-}
+  return (
+    <form>
+      <Grid container spacing={1} justify={"center"} alignContent={"center"}>
+        <input type="hidden" {...register("email", formValidators.email)} />
+        <Grid item xl={12}>
+          <TextField
+            id="email"
+            name="email"
+            autoFocus
+            fullWidth
+            value={credentials.email}
+            onChange={handleCredentialChange}
+            error={
+              errors.email && errors.email.message !== undefined
+            }
+            helperText={(errors.email as FieldError)?.message}
+            label={t("email")}
+            className={classes.margin}
+          />
+        </Grid>
+      </Grid>
+    </form>
+  );
+};
 
 export default ResetPasswordRequiredForm;

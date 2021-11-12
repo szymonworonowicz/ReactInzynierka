@@ -1,12 +1,12 @@
 import React,{useState} from "react";
 import { useTranslation } from "react-i18next";
-import {CircularProgress, IconButton} from '@material-ui/core'
-import { IBannedUser } from "../../../Interfaces/Admin";
+import {IconButton} from '@material-ui/core'
+import { BannedUserType } from "../../../Types/Admin";
 import {IPageRequest} from '../../../Interfaces/Paged';
 import {AdminApi} from '../../../Services/Admin/AdminApi';
 import GenericTable from "../../Shared/GenericTable/GenericTable";
-import { IGenericTableProps } from "../../Shared/GenericTable/GenericTableInterface/IGenericTableProps";
-import {IGenericTableColumnDefinitionType} from '../../Shared/GenericTable/GenericTableInterface/IGenericTableColumnDefinition';
+import { IGenericTableProps } from "../../../Interfaces/Shared/GenericTable";
+import {IGenericTableColumnDefinitionProps} from '../../../Interfaces/Shared/GenericTable/IGenericTableColumnDefinitionProps';
 import { LockOpen } from "@material-ui/icons";
 import moment from 'moment'
 import { useToast } from "../../../shared/hooks/useToast";
@@ -20,7 +20,7 @@ const BannedUsers :React.FC = () => {
     const {t} = useTranslation();
     const toast = useToast()
 
-    const [bannedUser, isLoaded, countOfElements] = usePaged<IBannedUser>({
+    const [bannedUser, isLoaded, countOfElements] = usePaged<BannedUserType>({
         apiCall : AdminApi.getBannedUsers,
         query : query
     })
@@ -43,7 +43,7 @@ const BannedUsers :React.FC = () => {
 
     }
 
-    const generateColumns = () : IGenericTableColumnDefinitionType<IBannedUser, keyof IBannedUser>[]  => {
+    const generateColumns = () : IGenericTableColumnDefinitionProps<BannedUserType, keyof BannedUserType>[]  => {
         return [
             {
                 header : t('nick'),
@@ -84,7 +84,7 @@ const BannedUsers :React.FC = () => {
         ]
     }
 
-    const generateGenericTableProps = () : IGenericTableProps<IBannedUser, keyof IBannedUser>  => {
+    const generateGenericTableProps = () : IGenericTableProps<BannedUserType, keyof BannedUserType>  => {
         return {
             columns:generateColumns(),
             countOfElements :countOfElements,
@@ -94,8 +94,8 @@ const BannedUsers :React.FC = () => {
         }
     }
 
-    if (isLoaded ) {
-        return <CircularProgress />;
+    if (!isLoaded ) {
+        return <></>
       }
     
     return (

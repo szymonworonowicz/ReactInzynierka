@@ -30,7 +30,7 @@ const AdminProfile: React.FC = () => {
   const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
-  const handleChangeTab = (_e: React.ChangeEvent<{}>, newValue: any) => {
+  const handleChangeTab = (_e: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
   return (

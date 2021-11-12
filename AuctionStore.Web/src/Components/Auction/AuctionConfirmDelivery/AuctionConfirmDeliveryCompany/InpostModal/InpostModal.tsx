@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* tslint:disable */
 import React,{useEffect,useRef} from "react";
-import { IInpostModalProps } from "./IInpostModalProps";
+import { IInpostModalProps } from "../../../../../Interfaces/Auction/IInpostModalProps";
 import { useFormContext } from "react-hook-form";
 
 const InpostModal : React.FC<IInpostModalProps> = ({

@@ -1,22 +1,19 @@
 import React, { useState, useContext } from "react";
 import { IAddAuctionProps } from "./IAddAuctionFormProps";
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
-import {
-  Grid,
-  FormControl,
-  Input,
-  InputLabel,
-  TextField,
-  Button,
-} from "@material-ui/core";
+import { useFormContext, FieldError } from "react-hook-form";
+import { Grid, TextField, Button } from "@material-ui/core";
 import { IAddAuction, IAuctionPhoto } from "../../Interfaces/Auctions";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import PictureUpload from "../../Components/Shared/PictureUpload/PictureUpload";
 import AuctionTimePicker from "../../Components/AuctionAdd/AuctionTimePicker/AuctionTimePicker";
 import AuctionAddCategoryPicker from "../../Components/AuctionAdd/AuctionAddCategoryPicker/AuctionAddCategoryPicker";
 import { UserContext } from "../../Context/UserContext";
+import {
+  getRegexTable,
+  getValidator,
+  ValidatorType,
+} from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   margin: {
-    margin: theme.spacing(1),
+    marginTop: "10px",
   },
   withoutLabel: {
     marginTop: theme.spacing(3),
@@ -48,10 +45,29 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
 
   const classes = useStyles();
   const { t } = useTranslation();
+  const regexTable = getRegexTable(t);
 
-  const { register, setValue, handleSubmit } = useFormContext();
+  const formValidators = {
+    title: getValidator(t, null, regexTable[ValidatorType.AlphaNumeric], true),
+    price: getValidator(t, null, regexTable[ValidatorType.Decimal], true),
+    description: getValidator(
+      t,
+      null,
+      regexTable[ValidatorType.AlphaNumeric],
+      true
+    ),
+  };
 
-  const handleChange = (e: any) => {
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext<IAddAuction>();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { value, id } = e.target;
     setAuction((prev) => {
       return {
@@ -59,7 +75,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
         [id]: value,
       };
     });
-    setValue(`${id}`, value);
+    setValue(id as (keyof IAddAuction), value);
   };
 
   const handleSave = (data: IAddAuction) => {
@@ -75,21 +91,38 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
     saveData(data);
   };
 
+  const handlePriceBlur = (e: React.FocusEvent<{}>) => {
+    const roundedPrice = Number(auction.price).toFixed(2);
+    setAuction((prev) => {
+      return {
+        ...prev,
+        price: Number(roundedPrice),
+      };
+    });
+    setValue("price", Number(roundedPrice));
+  };
+
   return (
     <form>
-      <input type="hidden" {...register("title", { required: true })} />
-      <input type="hidden" {...register("price", { required: true })} />
+      <input type="hidden" {...register("title", formValidators.title)} />
+      <input type="hidden" {...register("price", formValidators.price)} />
+      <input
+        type="hidden"
+        {...register("description", formValidators.description)}
+      />
       <input
         type="hidden"
         {...register("isTimeAuction", { required: false })}
       />
-      <input type="hidden" {...register("description", { required: true })} />
       <input
         type="hidden"
         {...register("timeStampStart", { required: true })}
       />
       <input type="hidden" {...register("timeStampEnd", { required: false })} />
-      <input type="hidden" {...register("userId", { required: false ,value:context.userId})} />
+      <input
+        type="hidden"
+        {...register("userId", { required: false, value: context.userId })}
+      />
 
       <input
         type="hidden"
@@ -98,29 +131,32 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
       <input type="hidden" {...register("subCategoryId", { required: true })} />
       <Grid container spacing={1} justify="center" alignContent="center">
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="title">{t("auctionName")}</InputLabel>
-            <Input
-              id="title"
-              autoFocus
-              fullWidth
-              value={auction.title}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="title"
+            name="title"
+            autoFocus
+            fullWidth
+            value={auction.title}
+            onChange={handleChange}
+            error={errors.title && errors.title.message !== undefined}
+            helperText={(errors.title as FieldError)?.message}
+            label={t("auctionName")}
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <InputLabel htmlFor="price">{t("auctionPrice")}</InputLabel>
-            <Input
-              id="price"
-              autoFocus
-              fullWidth
-              value={auction.price}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="price"
+            name="price"
+            fullWidth
+            value={auction.price}
+            onChange={handleChange}
+            error={errors.price && errors.price?.message !== undefined}
+            helperText={(errors.price as FieldError)?.message}
+            label={t("auctionPrice")}
+            onBlur={handlePriceBlur}
+            type="number"
+          />
         </Grid>
         <Grid item xs={12}>
           <AuctionTimePicker
@@ -130,20 +166,19 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <AuctionAddCategoryPicker  setAuction={setAuction} auction={auction}/>
+          <AuctionAddCategoryPicker setAuction={setAuction} auction={auction} />
         </Grid>
         <Grid item xs={12}>
-          <FormControl className={clsx(classes.margin)} fullWidth>
-            <TextField
-              id="description"
-              label={t("auctionDescription")}
-              multiline
-              rows={4}
-              fullWidth
-              value={auction.description}
-              onChange={handleChange}
-            />
-          </FormControl>
+          <TextField
+            id="description"
+            label={t("auctionDescription")}
+            multiline
+            rows={4}
+            fullWidth
+            value={auction.description}
+            onChange={handleChange}
+            className={classes.margin}
+          />
         </Grid>
 
         <Grid item xs={12}>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { IAuctionConfirmationFooterProps } from "./IAuctionConfirmationFooterProps";
+import { IAuctionConfirmationFooterProps } from "../../../Interfaces/Auction/AuctionConfirmation";
 import { Button } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,7 +7,6 @@ import { useFormContext } from "react-hook-form";
 import {IAuctionConfirmationForm} from '../../../Interfaces/Auctions'
 import { AuctionApi } from "../../../Services/Auction/Auction.service";
 import { UserContext } from "../../../Context/UserContext";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +24,6 @@ const AuctionConfirmationFooter: React.FC<IAuctionConfirmationFooterProps> = ({
   const classes = useStyles();
   const {handleSubmit} = useFormContext();
   const context = useContext(UserContext);
-  const history = useHistory();
 
   const handlePrev = (): void => {
     setCurrentStep((prev) => prev - 1);

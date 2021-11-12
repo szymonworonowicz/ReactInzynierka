@@ -1,5 +1,5 @@
 import React from "react";
-import { IConfirmationStepperProps } from "./IConfirmationStepperProps";
+import { IConfirmationStepperProps } from "../../../Interfaces/Auction/AuctionConfirmation";
 import {Stepper, Step, StepLabel } from '@material-ui/core';
 import {ColorConnector} from './CustomStepperComponents';
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';

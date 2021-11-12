@@ -17,24 +17,26 @@
     "@types/history": "^4.7.8",
     "@types/jest": "^26.0.23",
     "@types/node": "^12.20.15",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.9",
+    "@types/react": "^16.0.0",
+    "@types/react-dom": "^16.0.0",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "country-flag-icons": "^1.4.10",
     "date-fns": "^2.22.1",
     "history": "^4.10.1",
     "jwt-decode": "^3.1.2",
+    "lottie-colorify": "^0.8.0",
     "material-ui-dropzone": "^3.5.0",
     "moment": "^2.29.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-easy-crop": "^3.5.3",
     "react-flagkit": "^2.0.4",
     "react-hook-form": "^7.12.2",
     "react-hot-loader": "^4.13.0",
     "react-i18next": "^11.3.1",
     "react-idle-timer": "^4.6.4",
+    "react-lottie": "^1.2.3",
     "react-material-ui-carousel": "^2.3.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -46,7 +48,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
   },
   "eslintConfig": {
     "extends": [
@@ -67,6 +70,13 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-lottie": "^1.2.6",
+    "@types/react-router-dom": "^5.1.8",
+    "husky": "^7.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format"
+    }
   }
 }
