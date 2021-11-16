@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { useForm, FieldError } from "react-hook-form";
-import { IResetPassword } from "../../Interfaces/user";
+import { ResetPasswordType } from "../../Types/User/user";
 import { useToast } from "../../shared/hooks/useToast";
 import {
   getRegexTable,
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
-  const [resetPasswordData, setResetPasswordData] = useState<IResetPassword>({
+  const [resetPasswordData, setResetPasswordData] = useState<ResetPasswordType>({
     token: token,
     newPassword: "",
     password: "",
@@ -46,7 +46,7 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<IResetPassword>();
+  } = useForm<ResetPasswordType>();
   const toast = useToast();
   const regexTable = getRegexTable(t);
 
@@ -65,10 +65,10 @@ const ResetPasswordForm: React.FC<IResetPasswordProps> = ({ token }) => {
         [id]: value,
       };
     });
-    setValue(id as (keyof IResetPassword), value);
+    setValue(id as (keyof ResetPasswordType), value);
   };
 
-  const submitData = async (data: IResetPassword): Promise<void> => {
+  const submitData = async (data: ResetPasswordType): Promise<void> => {
     authService.resetPassword(data).then((response) => {
       if (response) {
         toast(t("success_password_change"), "success");

@@ -7,7 +7,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
-import { IBankAccount } from "../../Interfaces/user";
+import { BankAccountType } from "../../Types/User/user";
 import {
   getRegexTable,
   getValidator,
@@ -34,9 +34,9 @@ const ChangeBankAccountForm: React.FC = () => {
     getValues,
     formState: { errors },
     clearErrors
-  } = useFormContext<IBankAccount>();
+  } = useFormContext<BankAccountType>();
   
-  const [bankAccount, setBankAccount] = React.useState<IBankAccount>({
+  const [bankAccount, setBankAccount] = React.useState<BankAccountType>({
     id: getValues()["id"],
     accountNr: getValues()["accountNr"],
     ownerAddress: getValues()["ownerAddress"],
@@ -85,7 +85,7 @@ const ChangeBankAccountForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(id as (keyof IBankAccount), value);
+    setValue(id as (keyof BankAccountType), value);
   };
 
   return (

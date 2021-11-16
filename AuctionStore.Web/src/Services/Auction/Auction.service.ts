@@ -1,20 +1,20 @@
 import {apiClient} from '../APIClient/apiClient';
 import {IAddAuction, IAuction, IAuctionDetails, IAuctionInfo, IAuctionConfirmationForm, IAuctionConfirmResult} from '../../Interfaces/Auctions';
 import {  IBaseResponse } from '../../Interfaces/Api';
-import { IPageRequest, IPageResponse } from "../../Interfaces/Paged";
+import { PageRequestType, PageResponseType } from "../../Types/Paged";
 
 
 export const AuctionApi = {
-    getAllByCategory : async ( data :IPageRequest,categoryId : string) : Promise<IPageResponse<IAuction>>  => {
-        const response = await apiClient.post<IBaseResponse<IPageResponse<IAuction>>>('auctions/',{categoryId, ...data});
+    getAllByCategory : async ( data :PageRequestType,categoryId : string) : Promise<PageResponseType<IAuction>>  => {
+        const response = await apiClient.post<IBaseResponse<PageResponseType<IAuction>>>('auctions/',{categoryId, ...data});
 
         if (response.data.success) {
-            return new Promise<IPageResponse<IAuction>>((resolve) =>
+            return new Promise<PageResponseType<IAuction>>((resolve) =>
               resolve(response.data.data)
             );
           }
       
-          return new Promise<IPageResponse<IAuction>>((_resolve, reject) =>
+          return new Promise<PageResponseType<IAuction>>((_resolve, reject) =>
             reject(null)
           );
     },
@@ -75,16 +75,16 @@ export const AuctionApi = {
       );
     },
 
-    getUserAuction : async(data : IPageRequest, userId : string, isWinning : boolean) : Promise<IPageResponse<IAuction>>  => {
-      const response = await apiClient.post<IBaseResponse<IPageResponse<IAuction>>>('/auctions/userAuction',{userId, isWinning,...data});
+    getUserAuction : async(data : PageRequestType, userId : string, isWinning : boolean) : Promise<PageResponseType<IAuction>>  => {
+      const response = await apiClient.post<IBaseResponse<PageResponseType<IAuction>>>('/auctions/userAuction',{userId, isWinning,...data});
 
       if (response.data.success) {
-          return new Promise<IPageResponse<IAuction>>((resolve) =>
+          return new Promise<PageResponseType<IAuction>>((resolve) =>
             resolve(response.data.data)
           );
         }
     
-        return new Promise<IPageResponse<IAuction>>((_resolve, reject) =>
+        return new Promise<PageResponseType<IAuction>>((_resolve, reject) =>
           reject(null)
         );
   },

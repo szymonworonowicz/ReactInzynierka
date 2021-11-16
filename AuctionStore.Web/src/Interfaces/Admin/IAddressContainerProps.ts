@@ -1,5 +1,5 @@
-import { IAddress } from "../user";
+import { AddressType } from "../../Types/User/user";
 import { IDataComponentProps } from "../IDataComponentProps";
 
-export interface IAddressContainerProps extends IDataComponentProps<IAddress> {
+export interface IAddressContainerProps extends IDataComponentProps<AddressType> {
 }

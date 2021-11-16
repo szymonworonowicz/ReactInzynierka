@@ -4,7 +4,7 @@ import { useFormContext, FieldError } from "react-hook-form";
 import { Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import { IAddress } from "../Interfaces/user";
+import { AddressType } from "../Types/User/user";
 import {
   getRegexTable,
   getValidator,
@@ -29,8 +29,8 @@ const AddressForm: React.FC = () => {
     getValues,
     setValue,
     formState: { errors },
-  } = useFormContext<IAddress>();
-  const [address, setAddress] = useState<IAddress>({
+  } = useFormContext<AddressType>();
+  const [address, setAddress] = useState<AddressType>({
     city: getValues()["city"],
     houseNo: getValues()["houseNo"],
     id: getValues()["id"],
@@ -50,7 +50,7 @@ const AddressForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(id as keyof IAddress, value);
+    setValue(id as keyof AddressType, value);
   };
 
   const regexTable = getRegexTable(t);

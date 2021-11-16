@@ -10,7 +10,7 @@ import { ContrastTheme } from "./Themes/ContrastTheme";
 import { apiClient } from "./Services/APIClient/apiClient";
 import { UserContext, InitialUserContext } from "./Context/UserContext";
 import AppRouter from "./Routing/AppRouter";
-import { IUserData } from "./Interfaces/user";
+import { UserDataType } from "./Types/User/user";
 import { authService } from "./Services/Auth/Auth.service";
 import { ThemeContext } from "./Context/ThemeContext";
 import { LottieContext } from "./Context/LottieContext";
@@ -18,7 +18,7 @@ import { DictThemeTypes } from "./Enums";
 import Loader from './shared/Loader/Loader'
 
 const App: React.FC = () => {
-  const [userContext, setUserContext] = useState<IUserData>(InitialUserContext);
+  const [userContext, setUserContext] = useState<UserDataType>(InitialUserContext);
   const saveTheme = localStorage.getItem("theme") as string;
   const [theme, setTheme] = useState<DictThemeTypes>(
     parseInt(saveTheme) ?? DictThemeTypes.White

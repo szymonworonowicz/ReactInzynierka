@@ -1,5 +1,5 @@
 import { IDataComponentProps } from "../../IDataComponentProps";
-import { IUserDto } from "../../user";
+import { UserInfoType } from "../../../Types/User";
 
-export interface IUserInfoPaper  extends IDataComponentProps<IUserDto | null>{
+export interface IUserInfoPaper  extends IDataComponentProps<UserInfoType | null>{
 }

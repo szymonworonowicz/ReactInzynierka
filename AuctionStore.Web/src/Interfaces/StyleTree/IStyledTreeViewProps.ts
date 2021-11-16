@@ -1,7 +1,7 @@
-import {CategoryType} from '../../Types/Categories';
+import {CategoryListType} from '../../Types/Category';
 import { IDataComponentProps } from '../IDataComponentProps';
 
-export interface IStyledTreeViewProps extends IDataComponentProps<Array<CategoryType>>  {
+export interface IStyledTreeViewProps extends IDataComponentProps<Array<CategoryListType>>  {
 
 
 }

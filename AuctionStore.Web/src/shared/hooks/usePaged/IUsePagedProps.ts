@@ -1,6 +1,6 @@
-import {IPageResponse, IPageRequest} from '../../../Interfaces/Paged'
+import {PageResponseType, PageRequestType} from '../../../Types/Paged'
 
 export interface IUsePagedProps<T,> {
-    apiCall : (query: IPageRequest ,...params : any[]) => Promise<IPageResponse<T>>;
-    query : IPageRequest;
+    apiCall : (query: PageRequestType ,...params : any[]) => Promise<PageResponseType<T>>;
+    query : PageRequestType;
 }

@@ -5,7 +5,7 @@ import { Paper } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { IAuctionInfo } from "../../../Interfaces/Auctions";
 import { useToast } from "../../../shared/hooks/useToast";
-import { AdminApi } from "../../../Services/Admin/AdminApi";
+import { AdminApi } from "../../../Services/Admin/Admin.service";
 import StoreConfigPaper from "./StoreConfigPaper/StoreConfigPaper";
 import Modal from "../../../shared/Modal/Modal";
 import StoreConfigForm from "../../../Forms/StoreConfigForm";

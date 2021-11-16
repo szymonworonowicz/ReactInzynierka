@@ -1,7 +1,7 @@
-import { IAddress } from "../user";
+import { AddressType } from "../../Types/User/user";
 
 export interface IUserAddressContainerPapperProps{
-    address : IAddress;
+    address : AddressType;
     onDeleteAddress: (id:string) => void;
     onEditAddress: (addressId : string) => void;
 }

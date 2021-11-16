@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import {IUserData} from '../Interfaces/user'
+import {UserDataType} from '../Types/User/user'
 import { getUserDataFromAccessToken } from "../Services/Auth/Auth.service";
 
-export const InitialUserContext : IUserData = {
+export const InitialUserContext : UserDataType = {
   isLogged : false,
   userId : null,
   userName : null,
@@ -20,4 +20,4 @@ if (tokenData != null) {
   InitialUserContext.userRole = tokenData.role;
 }
 
-export const UserContext = createContext<IUserData>(InitialUserContext);
+export const UserContext = createContext<UserDataType>(InitialUserContext);

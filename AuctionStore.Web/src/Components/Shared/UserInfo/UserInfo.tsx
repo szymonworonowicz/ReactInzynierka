@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  IUserDto,
-  IChangePassword,
-  IBankAccount,
-} from "../../../Interfaces/user";
-import { UserApi } from "../../../Services/User/UserApi";
+  UserInfoType,
+  ChangePasswordType,
+  BankAccountType,
+} from "../../../Types/User/user";
+import { UserApi } from "../../../Services/User/User.service";
 import { UserContext } from "../../../Context/UserContext";
 import { Paper } from "@material-ui/core";
 import PaperNav from "../PaperNav/PaperNav";
@@ -22,8 +22,8 @@ import{LottieContext} from '../../../Context/LottieContext'
 
 const UserInfo: React.FC = () => {
   const context = useContext(UserContext);
-  const [userData, setUserData] = useState<IUserDto | null>(null);
-  const [bankAccount, setBankAccount] = useState<IBankAccount | null>(null);
+  const [userData, setUserData] = useState<UserInfoType | null>(null);
+  const [bankAccount, setBankAccount] = useState<BankAccountType | null>(null);
   const {isOpen, setLottieOpen} = React.useContext(LottieContext);
   const [error, setError] = useState<boolean>(false);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
@@ -72,7 +72,7 @@ const UserInfo: React.FC = () => {
     setIsChangePasswordModalOpen(true);
   };
 
-  const ConfirmPasswordChange = (data: IChangePassword): void => {
+  const ConfirmPasswordChange = (data: ChangePasswordType): void => {
     data.userId = context.userId;
     UserApi.changePassword(data).then((response) => {
       if (response) {
@@ -83,7 +83,7 @@ const UserInfo: React.FC = () => {
     });
   };
 
-  const ConfirmBankAccountChange = (data: IBankAccount): void => {
+  const ConfirmBankAccountChange = (data: BankAccountType): void => {
     setLottieOpen(true);
     UserApi.upsertBankAccount(data)
       .then((data) => {
@@ -103,7 +103,7 @@ const UserInfo: React.FC = () => {
     setIsDeleteUser(false);
   };
 
-  const ConfirmChangeUserData = (data: IUserDto) => {
+  const ConfirmChangeUserData = (data: UserInfoType) => {
     setLottieOpen(true);
     UserApi.UpdateUserData(data, context.userId)
       .then((data) => {
@@ -185,7 +185,7 @@ const UserInfo: React.FC = () => {
         isOpen={editBankAccount}
         handleClose={() => setEditBankAccount(false)}
         handleSave={ConfirmBankAccountChange}
-        initValue={bankAccount as IBankAccount}
+        initValue={bankAccount as BankAccountType}
       >
         <ChangeBankAccountForm />
       </Modal>
@@ -195,7 +195,7 @@ const UserInfo: React.FC = () => {
         isOpen={editUserData}
         handleClose={() => setEditUserData(false)}
         handleSave={ConfirmChangeUserData}
-        initValue={userData as IUserDto}
+        initValue={userData as UserInfoType}
       >
         <ChangeUserDataForm />
       </Modal>

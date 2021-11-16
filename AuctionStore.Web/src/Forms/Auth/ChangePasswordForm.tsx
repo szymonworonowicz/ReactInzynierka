@@ -4,7 +4,7 @@ import { Grid} from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import PasswordField from "../../Components/Shared/PasswordField/PasswordField";
-import { IChangePassword } from "../../Interfaces/user/IChangePassword";
+import { ChangePasswordType } from "../../Types/User/user/ChangePasswordType";
 import { UserContext } from "../../Context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const ChangePasswordForm: React.FC = () => {
   const context = useContext(UserContext);
   const classes = useStyles();
   
-  const [changePasswordData, setChangePasswordData] = useState<IChangePassword>(
+  const [changePasswordData, setChangePasswordData] = useState<ChangePasswordType>(
     {
       newPassword: "",
       oldPassword: "",

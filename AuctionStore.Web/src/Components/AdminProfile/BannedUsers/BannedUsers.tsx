@@ -2,8 +2,8 @@ import React,{useState} from "react";
 import { useTranslation } from "react-i18next";
 import {IconButton} from '@material-ui/core'
 import { BannedUserType } from "../../../Types/Admin";
-import {IPageRequest} from '../../../Interfaces/Paged';
-import {AdminApi} from '../../../Services/Admin/AdminApi';
+import {PageRequestType} from '../../../Types/Paged';
+import {AdminApi} from '../../../Services/Admin/Admin.service';
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import { IGenericTableProps } from "../../../Interfaces/Shared/GenericTable";
 import {IGenericTableColumnDefinitionProps} from '../../../Interfaces/Shared/GenericTable/IGenericTableColumnDefinitionProps';
@@ -13,7 +13,7 @@ import { useToast } from "../../../shared/hooks/useToast";
 import usePaged from "../../../shared/hooks/usePaged/usePaged";
 
 const BannedUsers :React.FC = () => {
-    const [query,setQuery] = useState<IPageRequest>({
+    const [query,setQuery] = useState<PageRequestType>({
         elemPerPage:10,
         page : 0
     });

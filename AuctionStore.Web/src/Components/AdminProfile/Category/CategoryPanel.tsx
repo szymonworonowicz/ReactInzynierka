@@ -2,23 +2,23 @@ import React, { useState, useEffect } from "react";
 import PaperNav from "../../Shared/PaperNav/PaperNav";
 import { Add } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
-import { IPageRequest } from "../../../Interfaces/Paged";
-import {CategoryType } from "../../../Types/Categories";
+import { PageRequestType } from "../../../Types/Paged";
+import {CategoryListType } from "../../../Types/Category";
 import { CategoriesApi } from "../../../Services/Categories/Category.service";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import { IGenericTableProps,IGenericTableColumnDefinitionProps } from "../../../Interfaces/Shared/GenericTable";
 import CategoryPanelElement from './CategoryElement/CategoryPanelElement';
 import Modal from '../../../shared/Modal/Modal';
 import AddCategoryForm from '../../../Forms/AddCategoryForm';
-import {IAddCategory} from '../../../Interfaces/Category';
+import {AddCategoryType} from '../../../Types/Category';
 import {GuidEmpty} from '../../../Helpers/constans';
 import { LottieContext } from "../../../Context/LottieContext";
 
 const CategoryPanel: React.FC = () => {
   const [addModal, setAddModal] = useState<boolean>(false);
-  const [categories, setCategories] = useState<Array<CategoryType>>([]);
+  const [categories, setCategories] = useState<Array<CategoryListType>>([]);
   const {isOpen, setLottieOpen} = React.useContext(LottieContext);
-  const [query, setQuery] = useState<IPageRequest>({
+  const [query, setQuery] = useState<PageRequestType>({
     elemPerPage: 10,
     page: 0,
   });
@@ -73,7 +73,7 @@ const CategoryPanel: React.FC = () => {
       })
   }
 
-  const addCategory = (data :IAddCategory) : void => {
+  const addCategory = (data :AddCategoryType) : void => {
     let value = {}
     if(data.id === undefined || data.id === '') {
       value = {
@@ -105,8 +105,8 @@ const CategoryPanel: React.FC = () => {
   }
 
   const generateColumns = (): IGenericTableColumnDefinitionProps<
-    CategoryType,
-    keyof CategoryType
+    CategoryListType,
+    keyof CategoryListType
   >[] => {
 
     return [
@@ -122,8 +122,8 @@ const CategoryPanel: React.FC = () => {
   };
 
   const generateGenericTableProps = (): IGenericTableProps<
-    CategoryType,
-    keyof CategoryType
+    CategoryListType,
+    keyof CategoryListType
   > => {
     return {
       columns: generateColumns(),
@@ -151,7 +151,7 @@ const CategoryPanel: React.FC = () => {
           isOpen={addModal}
           handleClose={() => setAddModal(false)}
           key='categorymodal'
-          handleSave = {(data : IAddCategory) => addCategory(data)}
+          handleSave = {(data : AddCategoryType) => addCategory(data)}
         >
           <AddCategoryForm/>
 

@@ -2,7 +2,7 @@ import { IBaseResponse, ILoginCredentials,IRegisterCredentials,ILoginResult } fr
 import { apiClient } from "../APIClient/apiClient";
 import JWTDecode from "jwt-decode";
 import { history } from "../../Helpers";
-import { IResetPasswordRequired ,IResetPassword} from "../../Interfaces/user";
+import { ResetPasswordRequiredType ,ResetPasswordType} from "../../Types/User/user";
 
 export interface IAuthService {
   login: (credentials: ILoginCredentials) => Promise<boolean>;
@@ -10,8 +10,8 @@ export interface IAuthService {
   onLogin?: (userData: IUserAuthData) => void;
   onLogout?: () => void;
   register : (credentials : IRegisterCredentials) => Promise<boolean>;
-  resetPasswordRequired : (data : IResetPasswordRequired) => Promise<boolean>;
-  resetPassword : (data : IResetPassword) => Promise<boolean>;
+  resetPasswordRequired : (data : ResetPasswordRequiredType) => Promise<boolean>;
+  resetPassword : (data : ResetPasswordType) => Promise<boolean>;
 }
 
 export interface IUserAuthData {
@@ -82,7 +82,7 @@ export const authService: IAuthService = {
     })
   },
 
-  resetPasswordRequired : async(data: IResetPasswordRequired) : Promise<boolean> => {
+  resetPasswordRequired : async(data: ResetPasswordRequiredType) : Promise<boolean> => {
     const response = await apiClient.post('auths/resetPasswordRequest', data);
     
     if(response.data.success === false) {
@@ -97,7 +97,7 @@ export const authService: IAuthService = {
     
   },
 
-  resetPassword : async(data : IResetPassword) : Promise<boolean> => {
+  resetPassword : async(data : ResetPasswordType) : Promise<boolean> => {
     const response = await apiClient.post('auths/resetPassword', data);
 
     if(response.data.success === false) {

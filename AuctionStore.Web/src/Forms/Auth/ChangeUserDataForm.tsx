@@ -5,7 +5,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { IUserDto } from "../../Interfaces/user";
+import { UserInfoType } from "../../Types/User/user";
 import {
   getRegexTable,
   getValidator,
@@ -19,9 +19,9 @@ const ChangeUserDataForm: React.FC = () => {
     setValue,
     getValues,
     formState: { errors },
-  } = useFormContext<IUserDto>();
+  } = useFormContext<UserInfoType>();
 
-  const [data, setData] = React.useState<IUserDto>(getValues() as IUserDto);
+  const [data, setData] = React.useState<UserInfoType>(getValues() as UserInfoType);
   const { t } = useTranslation();
 
   const regexTable = getRegexTable(t);
@@ -41,7 +41,7 @@ const ChangeUserDataForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(id as (keyof IUserDto), value);
+    setValue(id as (keyof UserInfoType), value);
   };
 
   return (

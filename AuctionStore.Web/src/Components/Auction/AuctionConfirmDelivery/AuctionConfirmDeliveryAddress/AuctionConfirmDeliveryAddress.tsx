@@ -2,8 +2,8 @@ import React, { useState,  useEffect, useContext } from "react";
 import { IAuctionConfirmDeliveryAddressProps } from "../../../../Interfaces/Auction/AuctionConfirmation";
 import { UserContext } from "../../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
-import { IAddress } from "../../../../Interfaces/user";
-import { UserApi } from "../../../../Services/User/UserApi";
+import { AddressType } from "../../../../Types/User/";
+import { UserApi } from "../../../../Services/User/User.service";
 import { Select, MenuItem } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddressContainer from "./AdressContainer/AddressContainer";
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProps> =
   ({ setSelectedCity }) => {
-    const [addressTable, setAddressTable] = useState<Array<IAddress>>([]);
+    const [addressTable, setAddressTable] = useState<Array<AddressType>>([]);
     const [selectedItem, setSelectedItem] = useState<number>(0);
     const {isOpen, setLottieOpen} = React.useContext(LottieContext);
 
@@ -56,7 +56,7 @@ const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProp
       setValue('selectedAddressId',addressTable[index].id)
     };
 
-    const generateMenuItemText = (elem: IAddress): string => {
+    const generateMenuItemText = (elem: AddressType): string => {
       return `${elem.city}  ${elem.street} ${elem.houseNo}`;
     };
 

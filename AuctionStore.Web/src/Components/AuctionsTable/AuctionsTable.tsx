@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IPageRequest } from "../../Interfaces/Paged";
+import { PageRequestType } from "../../Types/Paged";
 import GenericTable from "../Shared/GenericTable/GenericTable";
 import {
   IGenericTableProps,
@@ -16,7 +16,7 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   const [auctions, setAuctions] = useState<Array<IAuction>>([]);
   const [countOfElements, setCountOfElements] = useState<number>(0);
 
-  const [query, setQuery] = useState<IPageRequest>({
+  const [query, setQuery] = useState<PageRequestType>({
     elemPerPage: 10,
     page: 0,
   });

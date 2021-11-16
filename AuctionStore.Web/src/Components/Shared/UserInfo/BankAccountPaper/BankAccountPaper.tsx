@@ -1,6 +1,6 @@
 import React from "react";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
-import { IBankAccount } from "../../../../Interfaces/user";
+import { BankAccountType } from "../../../../Types/User/user";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
   content: {},
 }));
 
-const BankAccountPaper: React.FC<IDataComponentProps<IBankAccount | null>> = ({
+const BankAccountPaper: React.FC<IDataComponentProps<BankAccountType | null>> = ({
   data,
 }) => {
   const { t } = useTranslation();

@@ -1,5 +1,5 @@
 import React from "react";
-import { IAddress } from "../../../../Interfaces/user";
+import { AddressType } from "../../../../Types/User/user";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import {Grid, makeStyles, Typography} from '@material-ui/core'
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ const useStyles = makeStyles({
         marginBottom:'20px'
     }
 })
-const AuctionConfirmationUserAddress : React.FC<IDataComponentProps<IAddress | undefined>> = ({data}) => {
+const AuctionConfirmationUserAddress : React.FC<IDataComponentProps<AddressType | undefined>> = ({data}) => {
 
     const {t} = useTranslation();
     const classes = useStyles();

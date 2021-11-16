@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AdminType } from "../../../Types/Admin";
-import { AdminApi } from "../../../Services/Admin/AdminApi";
+import { AdminApi } from "../../../Services/Admin/Admin.service";
 import { IconButton } from "@material-ui/core";
-import { IPageRequest } from "../../../Interfaces/Paged";
+import { PageRequestType } from "../../../Types/Paged";
 import GenericTable from "../../Shared/GenericTable/GenericTable";
 import { IGenericTableColumnDefinitionProps,IGenericTableProps } from "../../../Interfaces/Shared/GenericTable/";
 import moment from "moment";
@@ -19,7 +19,7 @@ import { UserRoles } from "../../../Helpers/constans";
 import { authService } from "../../../Services/Auth/Auth.service";
 
 const AdminPanel: React.FC = () => {
-  const [query, setQuery] = useState<IPageRequest>({
+  const [query, setQuery] = useState<PageRequestType>({
     elemPerPage: 10,
     page: 0,
   });

@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core";
-import { IMessage } from "../../Interfaces/Message";
-import { IPageRequest } from "../../Interfaces/Paged";
+import { MessageType } from "../../Interfaces/Message";
+import { PageRequestType } from "../../Types/Paged";
 import { MessageService } from "../../Services/Messaage/Message.service";
 import { UserContext } from "../../Context/UserContext";
 import GenericTable from "../Shared/GenericTable/GenericTable";
@@ -31,14 +31,14 @@ const useStyles = makeStyles({
 });
 
 const MessageView: React.FC = () => {
-  const [query, setQuery] = useState<IPageRequest>({
+  const [query, setQuery] = useState<PageRequestType>({
     elemPerPage: 10,
     page: 0,
   });
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<IMessage | undefined>();
+  const [selectedItem, setSelectedItem] = useState<MessageType | undefined>();
   const [countOfElements, setCountOfElements] = React.useState<number>(0);
-  const [messages, setMessages] = React.useState<Array<IMessage>>([]);
+  const [messages, setMessages] = React.useState<Array<MessageType>>([]);
 
   const context = useContext(UserContext);
 
@@ -101,7 +101,7 @@ const MessageView: React.FC = () => {
   };
 
   const getMessageDetailsBody = (): JSX.Element => {
-    return <MessageDetails message={selectedItem as IMessage} />;
+    return <MessageDetails message={selectedItem as MessageType} />;
   };
 
   const deleteMessage = (messageId: string): void => {
@@ -134,14 +134,14 @@ const MessageView: React.FC = () => {
   };
 
   const generateColumns = (): IGenericTableColumnDefinitionProps<
-    IMessage,
-    keyof IMessage
+    MessageType,
+    keyof MessageType
   >[] => {
     return [
       {
         header: t("message"),
         key: "id",
-        generate: (rowData: IMessage) => {
+        generate: (rowData: MessageType) => {
           return (
             <MessageItem
               message={rowData}
@@ -156,8 +156,8 @@ const MessageView: React.FC = () => {
   };
 
   const generateGenericTableProps = (): IGenericTableProps<
-    IMessage,
-    keyof IMessage
+    MessageType,
+    keyof MessageType
   > => {
     return {
       columns: generateColumns(),

@@ -1,5 +1,5 @@
-import { IMessage } from "../Message";
+import { MessageType } from "../../Types/Messages/";
 
 export interface IMessageDetailsProps {
-    message : IMessage
+    message : MessageType
 }

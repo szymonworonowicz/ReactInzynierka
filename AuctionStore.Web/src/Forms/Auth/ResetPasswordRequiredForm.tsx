@@ -3,7 +3,7 @@ import { Grid, TextField } from "@material-ui/core";
 import { useFormContext, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import { IResetPasswordRequired } from "../../Interfaces/user";
+import { ResetPasswordRequiredType } from "../../Types/User/user";
 import { getValidator, ValidatorType, getRegexTable } from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ResetPasswordRequiredForm: React.FC = () => {
-  const { setValue, register,formState:{errors} } = useFormContext<IResetPasswordRequired>();
+  const { setValue, register,formState:{errors} } = useFormContext<ResetPasswordRequiredType>();
   const classes = useStyles();
   const { t } = useTranslation();
   const regexTable = getRegexTable(t);
 
-  const [credentials, setCredentials] = useState<IResetPasswordRequired>({
+  const [credentials, setCredentials] = useState<ResetPasswordRequiredType>({
     email: "",
   });
 
@@ -36,7 +36,7 @@ const ResetPasswordRequiredForm: React.FC = () => {
     setCredentials((prev) => {
       return { ...prev, [id]: value };
     });
-    setValue(id as (keyof IResetPasswordRequired), value);
+    setValue(id as (keyof ResetPasswordRequiredType), value);
   };
 
   const formValidators = {

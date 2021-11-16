@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { IAddress, IBankAccount } from "../../../Interfaces/user";
-import { UserApi } from "../../../Services/User/UserApi";
+import { AddressType, BankAccountType } from "../../../Types/User/user";
+import { UserApi } from "../../../Services/User/User.service";
 import AuctionConfirmationUserAddress from './AuctionConfirmationUserAddress/AuctionConfirmationUserAddress'
 import AuctionConfirmationDelivery from './AuctionConfirmationDelivery/AuctionConfirmationDelivery'
 import AuctionConfirmationPayment from './AuctionConfirmationPayment/AuctionConfirmationPayment'
@@ -10,8 +10,8 @@ import {Grid} from '@material-ui/core';
 
 const AuctionDeliveryConfirmation : React.FC = () => {
 
-    const [address , setAddress] = React.useState<IAddress>();
-    const [bankAccount, setBankAccount] = React.useState<IBankAccount>();
+    const [address , setAddress] = React.useState<AddressType>();
+    const [bankAccount, setBankAccount] = React.useState<BankAccountType>();
     const {getValues} = useFormContext();
 
     React.useEffect(() => {

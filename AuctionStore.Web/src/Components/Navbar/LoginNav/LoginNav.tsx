@@ -20,7 +20,7 @@ import {
 import { UserRoles } from "../../../Helpers/constans";
 import styles from "./LoginNav.module.css";
 import { useToast } from "../../../shared/hooks/useToast";
-import { IResetPasswordRequired } from "../../../Interfaces/user";
+import { ResetPasswordRequiredType } from "../../../Types/User/user";
 
 const LoginNav: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -121,7 +121,7 @@ const LoginNav: React.FC = () => {
           header={t('resetPassword')}
           isOpen={isResetPassword}
           handleClose={() => setIsResetPassword(false)}
-          handleSave={(data : IResetPasswordRequired) => {
+          handleSave={(data : ResetPasswordRequiredType) => {
             authService.resetPasswordRequired(data);
           }}
         >

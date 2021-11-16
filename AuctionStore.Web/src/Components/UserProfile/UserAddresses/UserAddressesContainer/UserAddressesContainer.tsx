@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { IUserAddressContainerProps } from "../../../../Interfaces/UserAddress/";
 import { useTranslation } from "react-i18next";
-import { IAddress } from "../../../../Interfaces/user";
+import { AddressType } from "../../../../Types/User/user";
 import {
   Select,
   MenuItem,
@@ -29,7 +29,7 @@ const UserAddressesContainer: React.FC<IUserAddressContainerProps> = ({
     const index = event.target.value as number;
     setSelectedIndex(index);
   };
-  const generateMenuItemText = (elem: IAddress): string => {
+  const generateMenuItemText = (elem: AddressType): string => {
     return `${elem.city} ${t("ul")} ${elem.street} ${elem.houseNo}`;
   };
 

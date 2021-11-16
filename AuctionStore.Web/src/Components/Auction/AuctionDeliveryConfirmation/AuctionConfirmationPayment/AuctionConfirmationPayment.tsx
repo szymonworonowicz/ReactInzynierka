@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { IBankAccount } from "../../../../Interfaces/user";
+import { BankAccountType } from "../../../../Types/User/user";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import dotpay from "../../../../Logos/dotpay.jpg";
 import wallet from "../../../../Logos/wallet.png";
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 const AuctionConfirmationPayment: React.FC<
-  IDataComponentProps<IBankAccount | undefined>
+  IDataComponentProps<BankAccountType | undefined>
 > = ({ data }) => {
   const { getValues } = useFormContext();
   const { t } = useTranslation();

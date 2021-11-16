@@ -27,7 +27,7 @@ import moment from "moment";
 import { AuctionApi } from "../../../../Services/Auction/Auction.service";
 import { useHistory } from "react-router-dom";
 import { AuctionStatus, UserRoles } from "../../../../Helpers/constans";
-import { AdminApi } from "../../../../Services/Admin/AdminApi";
+import { AdminApi } from "../../../../Services/Admin/Admin.service";
 
 type timeCounterDataType = Pick<
   IAuctionDetails,

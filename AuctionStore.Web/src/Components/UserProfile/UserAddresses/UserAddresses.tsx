@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
-import { IAddress } from "../../../Interfaces/user";
+import { AddressType } from "../../../Types/User/user";
 import { useToast } from "../../../shared/hooks/useToast";
-import { UserApi } from "../../../Services/User/UserApi";
+import { UserApi } from "../../../Services/User/User.service";
 import PaperNav from "../../Shared/PaperNav/PaperNav";
 import { Add } from "@material-ui/icons";
 import UserAddressesContainer from "./UserAddressesContainer/UserAddressesContainer";
@@ -13,7 +13,7 @@ import AddressForm from "../../../Forms/AddressForm";
 import { LottieContext } from "../../../Context/LottieContext";
 
 const UserAddresses: React.FC = () => {
-  const [addressTable, setAddressTable] = useState<Array<IAddress>>([]);
+  const [addressTable, setAddressTable] = useState<Array<AddressType>>([]);
   const { isOpen, setLottieOpen } = React.useContext(LottieContext);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [isDeleteAddress, setIsDeleteAddress] = useState<boolean>(false);
@@ -67,7 +67,7 @@ const UserAddresses: React.FC = () => {
     setAddModal(true);
   };
 
-  const handleUpsertAddress = async (data: IAddress): Promise<void> => {
+  const handleUpsertAddress = async (data: AddressType): Promise<void> => {
     UserApi.UpsertAddress(data, context.userId)
       .then((response) => {
         if (response) {
@@ -91,7 +91,7 @@ const UserAddresses: React.FC = () => {
       });
   };
 
-  const getInitAddress = (): IAddress | undefined => {
+  const getInitAddress = (): AddressType | undefined => {
     const index = addressTable.findIndex((x) => x.id === actionAddressId);
     if (index === -1) {
       return undefined;
@@ -128,7 +128,7 @@ const UserAddresses: React.FC = () => {
           header={actionAddressId === "" ? t("addAddress") : t("editAddress")}
           isOpen={addModal}
           handleClose={() => setAddModal(false)}
-          handleSave={(data: IAddress) => handleUpsertAddress(data)}
+          handleSave={(data: AddressType) => handleUpsertAddress(data)}
           initValue={getInitAddress()}
         >
           <AddressForm />
