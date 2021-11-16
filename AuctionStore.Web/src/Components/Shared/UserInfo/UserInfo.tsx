@@ -4,7 +4,7 @@ import {
   UserInfoType,
   ChangePasswordType,
   BankAccountType,
-} from "../../../Types/User/user";
+} from "../../../Types/User/";
 import { UserApi } from "../../../Services/User/User.service";
 import { UserContext } from "../../../Context/UserContext";
 import { Paper } from "@material-ui/core";

@@ -7,7 +7,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
-import { BankAccountType } from "../../Types/User/user";
+import { BankAccountType } from "../../Types/User/";
 import {
   getRegexTable,
   getValidator,

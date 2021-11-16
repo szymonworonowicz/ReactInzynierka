@@ -10,7 +10,7 @@ import { ContrastTheme } from "./Themes/ContrastTheme";
 import { apiClient } from "./Services/APIClient/apiClient";
 import { UserContext, InitialUserContext } from "./Context/UserContext";
 import AppRouter from "./Routing/AppRouter";
-import { UserDataType } from "./Types/User/user";
+import { UserDataType } from "./Types/User/";
 import { authService } from "./Services/Auth/Auth.service";
 import { ThemeContext } from "./Context/ThemeContext";
 import { LottieContext } from "./Context/LottieContext";

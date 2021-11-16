@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core";
-import { MessageType } from "../../Interfaces/Message";
+import { MessageType } from "../../Types/Messages";
 import { PageRequestType } from "../../Types/Paged";
 import { MessageService } from "../../Services/Messaage/Message.service";
 import { UserContext } from "../../Context/UserContext";

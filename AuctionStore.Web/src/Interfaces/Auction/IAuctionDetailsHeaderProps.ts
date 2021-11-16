@@ -1,5 +1,5 @@
-import { IAuctionDetails } from "../Auctions";
+import {AuctionDetailsType } from "../../Types/Auction";
 import { IDataComponentProps } from "../IDataComponentProps";
 
 export interface IAuctionDetailsHeaderProps
-  extends IDataComponentProps<Omit<IAuctionDetails, "description">> {}
+  extends IDataComponentProps<Omit<AuctionDetailsType, "description">> {}

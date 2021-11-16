@@ -5,7 +5,7 @@ import {
   IGenericTableProps,
   IGenericTableColumnDefinitionProps,
 } from "../../Interfaces/Shared/GenericTable";
-import { IAuction } from "../../Interfaces/Auctions";
+import { AuctionType } from "../../Types/Auction";
 import { AuctionApi } from "../../Services/Auction/Auction.service";
 import { ICategoriesTableProps } from "../../Interfaces/Auction/";
 import AuctionListElement from "./AuctionList/AuctionListElement";
@@ -13,7 +13,7 @@ import { LottieContext } from "../../Context/LottieContext";
 
 const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   const { isOpen, setLottieOpen } = React.useContext(LottieContext);
-  const [auctions, setAuctions] = useState<Array<IAuction>>([]);
+  const [auctions, setAuctions] = useState<Array<AuctionType>>([]);
   const [countOfElements, setCountOfElements] = useState<number>(0);
 
   const [query, setQuery] = useState<PageRequestType>({
@@ -34,7 +34,7 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   }, [categoryId, query, setLottieOpen]);
 
   const generateColumns = (): Array<
-    IGenericTableColumnDefinitionProps<IAuction, keyof IAuction>
+    IGenericTableColumnDefinitionProps<AuctionType, keyof AuctionType>
   > => {
     return [
       {
@@ -54,8 +54,8 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   };
 
   const generateGenericTableProps = (): IGenericTableProps<
-    IAuction,
-    keyof IAuction
+    AuctionType,
+    keyof AuctionType
   > => {
     return {
       columns: generateColumns(),
@@ -69,7 +69,7 @@ const AuctionsTable: React.FC<ICategoriesTableProps> = ({ categoryId }) => {
   if (isOpen) {
     return <></>;
   }
-  
+
   return <GenericTable {...generateGenericTableProps()} />;
 };
 

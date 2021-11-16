@@ -1,6 +1,6 @@
 import React from "react";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
-import { BankAccountType } from "../../../../Types/User/user";
+import { BankAccountType } from "../../../../Types/User/";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";

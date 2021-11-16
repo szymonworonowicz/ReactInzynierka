@@ -1,6 +1,6 @@
 import React from "react";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
-import { IAuction } from "../../../../Interfaces/Auctions";
+import {AuctionType } from "../../../../Types/Auction/";
 import { Grid, makeStyles } from "@material-ui/core";
 import HomePageAuctionElement from "./HomePageAuctionElement";
 
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-const HomePageAuctionContainer: React.FC<IDataComponentProps<Array<IAuction>>> =
+const HomePageAuctionContainer: React.FC<IDataComponentProps<Array<AuctionType>>> =
   ({ data }) => {
     const classes = useStyles();
     return (

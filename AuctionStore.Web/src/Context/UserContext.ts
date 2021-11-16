@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import {UserDataType} from '../Types/User/user'
+import {UserDataType} from "../Types/User/"
 import { getUserDataFromAccessToken } from "../Services/Auth/Auth.service";
 
 export const InitialUserContext : UserDataType = {

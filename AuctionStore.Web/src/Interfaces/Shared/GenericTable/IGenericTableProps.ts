@@ -1,12 +1,12 @@
 import React from 'react';
-import {IPageRequest} from '../../Paged/IPageRequest';
+import {PageRequestType} from '../../../Types/Paged/';
 import { IGenericTableColumnDefinitionProps } from './IGenericTableColumnDefinitionProps';
 
 export interface IGenericTableProps <T, K extends keyof T>  {
     data : Array<T>;
     columns: Array<IGenericTableColumnDefinitionProps<T,K>>;
-    query : IPageRequest
-    setQuery: React.Dispatch<React.SetStateAction<IPageRequest>>,
+    query : PageRequestType
+    setQuery: React.Dispatch<React.SetStateAction<PageRequestType>>,
     countOfElements : number;
     externalMethod?: () => void ;
 }

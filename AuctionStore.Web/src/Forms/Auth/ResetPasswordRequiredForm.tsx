@@ -3,7 +3,7 @@ import { Grid, TextField } from "@material-ui/core";
 import { useFormContext, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import { ResetPasswordRequiredType } from "../../Types/User/user";
+import { ResetPasswordRequiredType } from "../../Types/User/";
 import { getValidator, ValidatorType, getRegexTable } from "../../Helpers/constans";
 
 const useStyles = makeStyles((theme) => ({

@@ -4,7 +4,7 @@ import { Grid} from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import PasswordField from "../../Components/Shared/PasswordField/PasswordField";
-import { ChangePasswordType } from "../../Types/User/user/ChangePasswordType";
+import { ChangePasswordType } from "../../Types/User//ChangePasswordType";
 import { UserContext } from "../../Context/UserContext";
 
 const useStyles = makeStyles((theme) => ({

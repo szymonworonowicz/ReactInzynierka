@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../Context/UserContext";
 import { useTranslation } from "react-i18next";
-import { AddressType } from "../../../Types/User/user";
+import { AddressType } from "../../../Types/User/";
 import { useToast } from "../../../shared/hooks/useToast";
 import { UserApi } from "../../../Services/User/User.service";
 import PaperNav from "../../Shared/PaperNav/PaperNav";

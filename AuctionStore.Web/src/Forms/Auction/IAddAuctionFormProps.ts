@@ -1,6 +1,6 @@
-import { IAddAuction, IAuctionInfo } from "../../Interfaces/Auctions";
+import { AddAuctionType, AuctionInfoType } from "../../Types/Auction";
 
 export interface IAddAuctionProps {
-    auctionInfo : IAuctionInfo;
-    saveData : (data :IAddAuction) => void
+    auctionInfo : AuctionInfoType;
+    saveData : (data :AddAuctionType) => void
 }

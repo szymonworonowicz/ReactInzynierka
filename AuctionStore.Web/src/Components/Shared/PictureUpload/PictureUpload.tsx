@@ -8,7 +8,7 @@ import { convertBytesToMbsOrKbs } from "../../../Helpers/constans";
 import { IFileEntityId } from "./Interfaces";
 import ImageElement from "./ImageElement/ImageElement";
 import { ImageService } from "../../../Services/Image/Image.service";
-import { IAuctionPhoto } from "../../../Interfaces/Auctions";
+import {AuctionPhotoType } from "../../../Types/Auction";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -67,7 +67,7 @@ const PictureUpload: React.FC<IPictureUploadProps> = ({
   const handleUploadPhoto = useCallback(async (newFiles : Array<FileObject>): Promise<void> => {
     if (true) {
       let loadedFiles: Array<IFileEntityId> = [];
-      let fileEntities: Array<IAuctionPhoto> = [];
+      let fileEntities: Array<AuctionPhotoType> = [];
       await Promise.all(
         newFiles.map(async (file) => {
           ImageService.saveImage(file.file)

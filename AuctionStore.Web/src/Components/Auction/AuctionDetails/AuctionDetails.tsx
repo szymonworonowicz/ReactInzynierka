@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { IAuctionDetailsProps } from "../../../Interfaces/Auction/";
 import { AuctionApi } from "../../../Services/Auction/Auction.service";
-import { IAuctionDetails } from "../../../Interfaces/Auctions";
+import { AuctionDetailsType } from "../../../Types/Auction/";
 import AuctionDetailsContent from "./AuctionDetailsContent/AuctionDetailsContent";
 import AuctionDetailsHeader from "./AuctionDetailsHeader/AuctionDetailsHeader";
 import AuctionMessage from "./AuctionMessage/AuctionMessage";
 import { LottieContext } from "../../../Context/LottieContext";
 
 const AuctionDetails: React.FC<IAuctionDetailsProps> = ({ id }) => {
-  const [auction, setAuction] = useState<IAuctionDetails>();
+  const [auction, setAuction] = useState<AuctionDetailsType>();
   const { isOpen, setLottieOpen } = React.useContext(LottieContext);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const AuctionDetails: React.FC<IAuctionDetailsProps> = ({ id }) => {
   return (
     <div>
       <AuctionDetailsHeader
-        data={auction as Omit<IAuctionDetails, "description">}
+        data={auction as Omit<AuctionDetailsType, "description">}
       />
       <AuctionDetailsContent description={auction?.description ?? ""} />
 

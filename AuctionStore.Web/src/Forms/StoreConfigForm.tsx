@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormContext, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { IAuctionInfo } from "../Interfaces/Auctions";
+import {AuctionInfoType } from "../Types/Auction";
 import {
   Grid,
   InputAdornment,
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StoreConfigForm: React.FC = () => {
-  const { register, setValue, getValues, formState:{errors}} = useFormContext<IAuctionInfo>();
-  const [payload, setPayload] = useState<IAuctionInfo>(getValues() as IAuctionInfo);
+  const { register, setValue, getValues, formState:{errors}} = useFormContext<AuctionInfoType>();
+  const [payload, setPayload] = useState<AuctionInfoType>(getValues() as AuctionInfoType);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -41,7 +41,7 @@ const StoreConfigForm: React.FC = () => {
         [id]: value,
       };
     });
-    setValue(id as (keyof IAuctionInfo), Number(value));
+    setValue(id as (keyof AuctionInfoType), Number(value));
   };
 
   const regexTable = getRegexTable(t);

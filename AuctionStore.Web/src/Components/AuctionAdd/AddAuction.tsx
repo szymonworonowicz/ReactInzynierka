@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AuctionApi } from "../../Services/Auction/Auction.service";
-import { IAddAuction, IAuctionInfo } from "../../Interfaces/Auctions";
+import { AddAuctionType,AuctionInfoType } from "../../Types/Auction";
 import { useToast } from "../../shared/hooks/useToast";
 import AddAuctionForm from '../../Forms/Auction/AddAuctionForm';
 import { useHistory } from "react-router-dom";
 import { LottieContext } from "../../Context/LottieContext";
 
 const AddAuction: React.FC = () => {
-  const [auctionInfo, setAuctionInfo] = useState<IAuctionInfo>({
+  const [auctionInfo, setAuctionInfo] = useState<AuctionInfoType>({
     maxPhotoSize: 2,
     maxPhotos: 5,
   });
@@ -38,7 +38,7 @@ const AddAuction: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmitAuction = (auction :IAddAuction) : void => {
+  const handleSubmitAuction = (auction :AddAuctionType) : void => {
 
     setLottieOpen(true);
     AuctionApi.checkWrongWord(auction.description,auction.title)

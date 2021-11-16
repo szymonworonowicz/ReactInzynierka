@@ -1,5 +1,5 @@
 import React from "react";
-import { IAuction } from "../../../../Interfaces/Auctions";
+import { AuctionType } from "../../../../Types/Auction";
 import {Grid, makeStyles, Typography} from '@material-ui/core'
 import { AuctionApi } from "../../../../Services/Auction/Auction.service";
 import { useTranslation } from "react-i18next";
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 })
 
 const NewestAuctions : React.FC = () => {
-    const [auctions, setAuctions ] = React.useState<Array<IAuction>>([]);
+    const [auctions, setAuctions ] = React.useState<Array<AuctionType>>([]);
     const {isOpen, setLottieOpen} = React.useContext(LottieContext);
     const {t} = useTranslation();
 

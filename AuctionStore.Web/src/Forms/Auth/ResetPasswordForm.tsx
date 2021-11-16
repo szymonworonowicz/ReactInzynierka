@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { useForm, FieldError } from "react-hook-form";
-import { ResetPasswordType } from "../../Types/User/user";
+import { ResetPasswordType } from "../../Types/User/";
 import { useToast } from "../../shared/hooks/useToast";
 import {
   getRegexTable,

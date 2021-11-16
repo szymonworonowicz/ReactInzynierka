@@ -1,5 +1,5 @@
 import React from "react";
-import { AddressType } from "../../../../Types/User/user";
+import { AddressType } from "../../../../Types/User/";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import {Grid, makeStyles, Typography} from '@material-ui/core'
 import { useTranslation } from "react-i18next";

@@ -9,7 +9,7 @@ import {
   FormControl,
   TextField,
 } from "@material-ui/core";
-import { IAuctionDetails } from "../../../Interfaces/Auctions";
+import {AuctionDetailsType } from "../../../Types/Auction";
 import { makeStyles } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
@@ -33,7 +33,7 @@ const AuctionConfirmDetails: React.FC<IAuctionConfirmDetailsProps> = ({
   setConfirmation,
   confirmation,
 }) => {
-  const [auction, setAuction] = useState<IAuctionDetails>();
+  const [auction, setAuction] = useState<AuctionDetailsType>();
   const {isOpen, setLottieOpen} = React.useContext(LottieContext);
 
   const classes = useStyles();

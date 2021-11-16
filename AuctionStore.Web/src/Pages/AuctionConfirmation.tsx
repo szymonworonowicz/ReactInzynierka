@@ -3,13 +3,12 @@ import { makeStyles } from "@material-ui/core";
 import ConfirmationStepper from "../Components/AuctionConfirm/ConfirmationStepper/ConfirmationStepper";
 import AuctionConfirmationFooter from "../Components/AuctionConfirm/ConfirmationFooter/AuctionConfirmationFooter";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { IAuctionConfirmation } from "../Interfaces/Auctions";
+import { AuctionConfirmationType ,AuctionConfirmationFormType} from "../Types/Auction";
 import AuctionConfirmDetails from "../Components/Auction/AuctionConfirmDetail/AuctionConfirmDetails";
 import AuctionConfirmDelivery from "../Components/Auction/AuctionConfirmDelivery/AuctionConfirmDelivery";
 import AuctionConfirmPayment from "../Components/Auction/AuctionConfirmPayment/AuctionConfirmPayment";
 import AuctionDeliveryConfirmation from "../Components/Auction/AuctionDeliveryConfirmation/AuctionDeliveryConfirmation";
 import { useForm, FormProvider } from "react-hook-form";
-import {IAuctionConfirmationForm} from '../Interfaces/Auctions'
 
 const useStyles = makeStyles({
   root: {
@@ -43,14 +42,14 @@ const AuctionConfirmation: React.FC<IAuctionConfirmationProps> = ({
 }) => {
   const [selectedStep, setSelectedStep] = useState<number>(0);
   const [auctionConfirmation, setAuctionConfirmation] =
-    useState<IAuctionConfirmation>({
+    useState<AuctionConfirmationType>({
       message: "",
     });
 
   const classes = useStyles();
 
   const { id } = match.params;
-  const methods = useForm<IAuctionConfirmationForm>({
+  const methods = useForm<AuctionConfirmationFormType>({
     defaultValues : {
       auctionId:id,
       inpost : true,

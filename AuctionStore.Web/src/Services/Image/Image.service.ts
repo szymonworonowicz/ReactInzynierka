@@ -1,19 +1,19 @@
 import { IBaseResponse } from "../../Interfaces/Api";
-import { IAuctionImage, IImage } from "../../Interfaces/Image";
+import { AuctionImageType, ImageType } from "../../Types/Image";
 import {apiClient} from '../APIClient/apiClient';
 
 export interface IImageService {
-    saveImage: (file : File) => Promise<IImage>,
+    saveImage: (file : File) => Promise<ImageType>,
     deleteImage: (id:string) => Promise<boolean>,
     getMainImage: (auctionId : string) => Promise<string>,
-    getAuctionImages:(auctionId : string) => Promise<Array<IAuctionImage>>
+    getAuctionImages:(auctionId : string) => Promise<Array<AuctionImageType>>
 }
 
 export const ImageService : IImageService = {
-    saveImage: async (file: File): Promise<IImage> => {
+    saveImage: async (file: File): Promise<ImageType> => {
         let form = new FormData();
         form.append('file', file, file.name);
-        const response = await apiClient.post<IBaseResponse<IImage>>('/files/addImage', form);
+        const response = await apiClient.post<IBaseResponse<ImageType>>('/files/addImage', form);
 
         if (response.data.success) {
             return new Promise((resolve) => resolve(response.data.data));
@@ -39,12 +39,12 @@ export const ImageService : IImageService = {
         return new Promise<string>((_response, reject) => reject(null));
     },
 
-    getAuctionImages : async (auctionId: string):Promise<Array<IAuctionImage>> => {
-        const response = await apiClient.post<IBaseResponse<Array<IAuctionImage>>>('/files/getAuctionImages', {auctionId});
+    getAuctionImages : async (auctionId: string):Promise<Array<AuctionImageType>> => {
+        const response = await apiClient.post<IBaseResponse<Array<AuctionImageType>>>('/files/getAuctionImages', {auctionId});
 
         if(response.data.success) {
-            return new Promise<Array<IAuctionImage>>((resolve) => resolve(response.data.data));
+            return new Promise<Array<AuctionImageType>>((resolve) => resolve(response.data.data));
         } 
-        return new Promise<Array<IAuctionImage>>((_resolve,reject) => reject(null));
+        return new Promise<Array<AuctionImageType>>((_resolve,reject) => reject(null));
     }
 }

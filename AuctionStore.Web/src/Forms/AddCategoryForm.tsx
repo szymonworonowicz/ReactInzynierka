@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-import { IAddCategory } from "../Interfaces/Category";
+import { AddCategoryType } from "../Types/Category";
 import { CategoriesApi } from "../Services/Categories/Category.service";
 import {
   Grid,
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddCategoryForm: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  type ExtendedAddCategory = IAddCategory & { inputValue?: string };
+  type ExtendedAddCategory = AddCategoryType & { inputValue?: string };
   const filter = createFilterOptions<ExtendedAddCategory>();
   const [categories, setCategories] = useState<Array<ExtendedAddCategory>>([]);
   const [selectedValue, setSelectedValue] =
@@ -92,7 +92,7 @@ const AddCategoryForm: React.FC = () => {
       setValue("categoryName", newValue.inputValue);
       setValue('categoryId','');
     } else {
-      let value = newValue as IAddCategory;
+      let value = newValue as AddCategoryType;
       setSelectedValue(value);
       setValue("categoryId", value?.id ?? "");
       setValue('categoryName','');

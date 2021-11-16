@@ -5,7 +5,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { UserInfoType } from "../../Types/User/user";
+import { UserInfoType } from "../../Types/User/";
 import {
   getRegexTable,
   getValidator,

@@ -5,7 +5,7 @@ import { CategoriesApi } from "../Services/Categories/Category.service";
 import { NewsletterService } from "../Services/Newsletter/Newsletter.service";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/styles";
-import { INewsletterInfo, ICategory } from "../Interfaces/Newsletter";
+import {NewsletterInfoType,NewsletterCategoryType } from "../Types/Newsletter";
 import { useToast } from "../shared/hooks/useToast";
 import { useHistory } from "react-router-dom";
 import { LottieContext } from "../Context/LottieContext";
@@ -28,16 +28,16 @@ const useStyles = makeStyles({
 });
 
 const NewsletterForm: React.FC = () => {
-  const [categories, setCategories] = useState<Array<ICategory>>([]);
+  const [categories, setCategories] = useState<Array<NewsletterCategoryType>>([]);
   const { isOpen, setLottieOpen } = React.useContext(LottieContext);
   const [categoryError, setCategoryError] = React.useState<string>("");
 
-  const [data, setData] = useState<INewsletterInfo>({
+  const [data, setData] = useState<NewsletterInfoType>({
     email: "",
     subcategories: [],
   });
 
-  const methods = useForm<INewsletterInfo>({
+  const methods = useForm<NewsletterInfoType>({
     reValidateMode: "onChange",
     shouldFocusError: true,
     mode: "all",
@@ -62,7 +62,7 @@ const NewsletterForm: React.FC = () => {
     setLottieOpen(true);
     CategoriesApi.getAll()
       .then((response) => {
-        let arr: Array<ICategory> = [];
+        let arr: Array<NewsletterCategoryType> = [];
         response.forEach((category) => {
           category.subCategories.forEach((subcategory) => {
             arr = [
@@ -98,17 +98,17 @@ const NewsletterForm: React.FC = () => {
     setValue("email", value);
   };
 
-  const handleOptionLabel = (option: ICategory): string => {
+  const handleOptionLabel = (option: NewsletterCategoryType): string => {
     return option.name;
   };
 
-  const handleGroupOptions = (option: ICategory): string => {
+  const handleGroupOptions = (option: NewsletterCategoryType): string => {
     return option.categoryName;
   };
 
   const handleCategoriesChange = (
     _e: React.ChangeEvent<{}>,
-    newValue: ICategory[]
+    newValue: NewsletterCategoryType[]
   ): void => {
     if(categoryError) {
       setCategoryError('');

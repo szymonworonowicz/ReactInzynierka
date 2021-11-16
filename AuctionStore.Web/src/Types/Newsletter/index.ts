@@ -1,2 +1,2 @@
-export * from './INewsletterInfo';
-export * from './ICategory';
+export * from './NewsletterCategoryType';
+export * from './NewsletterInfoType';

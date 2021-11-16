@@ -2,7 +2,7 @@ import { IBaseResponse, ILoginCredentials,IRegisterCredentials,ILoginResult } fr
 import { apiClient } from "../APIClient/apiClient";
 import JWTDecode from "jwt-decode";
 import { history } from "../../Helpers";
-import { ResetPasswordRequiredType ,ResetPasswordType} from "../../Types/User/user";
+import { ResetPasswordRequiredType ,ResetPasswordType} from "../../Types/User/";
 
 export interface IAuthService {
   login: (credentials: ILoginCredentials) => Promise<boolean>;

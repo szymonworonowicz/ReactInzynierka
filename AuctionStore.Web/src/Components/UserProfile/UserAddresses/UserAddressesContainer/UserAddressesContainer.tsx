@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { IUserAddressContainerProps } from "../../../../Interfaces/UserAddress/";
 import { useTranslation } from "react-i18next";
-import { AddressType } from "../../../../Types/User/user";
+import { AddressType } from "../../../../Types/User/";
 import {
   Select,
   MenuItem,

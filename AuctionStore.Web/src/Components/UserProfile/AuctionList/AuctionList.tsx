@@ -1,6 +1,6 @@
 import React,{useState,useContext} from "react";
 import {IAuctionListProps} from '../../../Interfaces/Auction/';
-import {IAuction} from '../../../Interfaces/Auctions';
+import {AuctionType} from '../../../Types/Auction';
 import {PageRequestType} from '../../../Types/Paged';
 import {AuctionApi} from '../../../Services/Auction/Auction.service';
 import AuctionListElement from '../../AuctionsTable/AuctionList/AuctionListElement';
@@ -17,14 +17,14 @@ const AuctionList:React.FC<IAuctionListProps> = ({isWinning}) => {
         page : 0
     });
 
-    const [auctions, isLoaded, countOfElements] = usePaged<IAuction>({
+    const [auctions, isLoaded, countOfElements] = usePaged<AuctionType>({
         apiCall : AuctionApi.getUserAuction,
         query : query,
     },
     context.userId as string,
     isWinning);
 
-    const generateColumns = (): Array<IGenericTableColumnDefinitionProps<IAuction, keyof IAuction>> => {
+    const generateColumns = (): Array<IGenericTableColumnDefinitionProps<AuctionType, keyof AuctionType>> => {
         return [
             {
                 header:'',
@@ -38,7 +38,7 @@ const AuctionList:React.FC<IAuctionListProps> = ({isWinning}) => {
         ]
     }
 
-    const generateGenericTableProps = () : IGenericTableProps<IAuction, keyof IAuction> => {
+    const generateGenericTableProps = () : IGenericTableProps<AuctionType, keyof AuctionType> => {
         return {
             columns : generateColumns(),
             countOfElements,

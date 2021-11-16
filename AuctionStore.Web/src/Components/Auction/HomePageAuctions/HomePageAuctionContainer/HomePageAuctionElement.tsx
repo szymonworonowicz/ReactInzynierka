@@ -1,5 +1,5 @@
 import React from "react";
-import { IAuction } from "../../../../Interfaces/Auctions";
+import { AuctionType } from "../../../../Types/Auction";
 import { IDataComponentProps } from "../../../../Interfaces/IDataComponentProps";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
@@ -20,7 +20,7 @@ type AuctionIdProps = {
   id: string;
 };
 
-const HomePageAuctionElement: React.FC<IDataComponentProps<IAuction>> = ({
+const HomePageAuctionElement: React.FC<IDataComponentProps<AuctionType>> = ({
   data,
 }) => {
   const [photo, setPhoto] = React.useState<string>(

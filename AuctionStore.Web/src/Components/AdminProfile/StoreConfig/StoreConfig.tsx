@@ -3,7 +3,7 @@ import PaperNav from "../../Shared/PaperNav/PaperNav";
 import { Edit } from "@material-ui/icons";
 import { Paper } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { IAuctionInfo } from "../../../Interfaces/Auctions";
+import { AuctionInfoType } from "../../../Types/Auction/";
 import { useToast } from "../../../shared/hooks/useToast";
 import { AdminApi } from "../../../Services/Admin/Admin.service";
 import StoreConfigPaper from "./StoreConfigPaper/StoreConfigPaper";
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 })
 
 const StoreConfig: React.FC = () => {
-  const [auctionInfo, setAuctionInfo] = useState<IAuctionInfo>({
+  const [auctionInfo, setAuctionInfo] = useState<AuctionInfoType>({
     maxPhotoSize: 2,
     maxPhotos: 5,
   });
@@ -49,7 +49,7 @@ const StoreConfig: React.FC = () => {
   const handleOpenModal = (): void => {
     setHandleModal(true);
   };
-  const handleEdit = async (data: IAuctionInfo): Promise<void> => {
+  const handleEdit = async (data: AuctionInfoType): Promise<void> => {
     AdminApi.UpsertAuctionInfo(data)
       .then(response => {
         setAuctionInfo(response);
@@ -82,7 +82,7 @@ const StoreConfig: React.FC = () => {
         header={t("editStoreConfig")}
         isOpen={handleModal}
         handleClose={() => setHandleModal(false)}
-        handleSave={(data: IAuctionInfo) => handleEdit(data)}
+        handleSave={(data: AuctionInfoType) => handleEdit(data)}
         initValue={auctionInfo}
       >
         <StoreConfigForm />

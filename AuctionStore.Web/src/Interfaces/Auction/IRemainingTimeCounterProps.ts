@@ -1,10 +1,10 @@
-import { IAuctionDetails } from "../Auctions";
+import { AuctionDetailsType } from "../../Types/Auction";
 import { IDataComponentProps } from "../IDataComponentProps";
 
 export interface IRemainingTimeCounterProps
   extends IDataComponentProps<
     Pick<
-      IAuctionDetails,
+      AuctionDetailsType,
       "timeStampDuration" | "timeStampEnd" | "timeStampStart"
     >
   > {}

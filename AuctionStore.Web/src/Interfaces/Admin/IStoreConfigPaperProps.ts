@@ -1,6 +1,5 @@
-import { IAuctionInfo } from "../Auctions";
+import { AuctionInfoType } from "../../Types/Auction";
 import { IDataComponentProps } from "../IDataComponentProps";
 
-export interface IStoreConfigPaperProps extends IDataComponentProps<IAuctionInfo> {
-   
-}
+export interface IStoreConfigPaperProps
+  extends IDataComponentProps<AuctionInfoType> {}

@@ -20,7 +20,7 @@ import {
 import { UserRoles } from "../../../Helpers/constans";
 import styles from "./LoginNav.module.css";
 import { useToast } from "../../../shared/hooks/useToast";
-import { ResetPasswordRequiredType } from "../../../Types/User/user";
+import { ResetPasswordRequiredType } from "../../../Types/User/";
 
 const LoginNav: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);

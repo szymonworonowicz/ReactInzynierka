@@ -4,7 +4,7 @@ import { useFormContext, FieldError } from "react-hook-form";
 import { Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import { AddressType } from "../Types/User/user";
+import { AddressType } from "../Types/User/";
 import {
   getRegexTable,
   getValidator,

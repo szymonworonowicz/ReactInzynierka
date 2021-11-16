@@ -11,7 +11,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { MessageService } from "../../../../Services/Messaage/Message.service";
 import { UserContext } from "../../../../Context/UserContext";
-import { ISendMessage } from "../../../../Interfaces/Message";
+import {SendMessageType } from "../../../../Types/Messages/";
 import { useToast } from "../../../../shared/hooks/useToast";
 
 
@@ -47,7 +47,7 @@ const AuctionMessage: React.FC<IAuctionMessageProps> = ({ auctionId }) => {
   };
 
   const handleSubmit = async (): Promise<void> => {
-    const sendMessage : ISendMessage = {
+    const sendMessage : SendMessageType = {
       auctionId : auctionId ,
       userId : context.userId as string,
       text : message

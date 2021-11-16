@@ -1,8 +1,8 @@
 import React from "react";
-import { IAuctionConfirmation } from "../../Auctions";
+import {AuctionConfirmationType } from "../../../Types/Auction";
 
 export interface IAuctionConfirmDetailsProps {
     id : string;
-    setConfirmation : React.Dispatch<React.SetStateAction<IAuctionConfirmation>>;
-    confirmation: IAuctionConfirmation;
+    setConfirmation : React.Dispatch<React.SetStateAction<AuctionConfirmationType>>;
+    confirmation: AuctionConfirmationType;
 }

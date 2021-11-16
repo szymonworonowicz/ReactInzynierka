@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { AddressType, BankAccountType } from "../../../Types/User/user";
+import { AddressType, BankAccountType } from "../../../Types/User/";
 import { UserApi } from "../../../Services/User/User.service";
 import AuctionConfirmationUserAddress from './AuctionConfirmationUserAddress/AuctionConfirmationUserAddress'
 import AuctionConfirmationDelivery from './AuctionConfirmationDelivery/AuctionConfirmationDelivery'

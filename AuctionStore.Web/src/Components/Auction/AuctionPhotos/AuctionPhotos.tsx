@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { IAuctionPhotosProps } from "../../../Interfaces/Auction/AuctionPhoto/";
 import { ImageService } from "../../../Services/Image/Image.service";
-import { IAuctionImage } from "../../../Interfaces/Image";
+import {AuctionImageType } from "../../../Types/Image";
 import Carousel from "react-material-ui-carousel";
 import CarouselItem from "./CarouselItem/CarouselItem";
 import { makeStyles } from "@material-ui/styles";
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 });
 
 const AuctionPhotos: React.FC<IAuctionPhotosProps> = ({ id }) => {
-  const [auctionImages, setAuctionImages] = useState<Array<IAuctionImage>>([]);
+  const [auctionImages, setAuctionImages] = useState<Array<AuctionImageType>>([]);
   const classes = useStyles();
 
   const carouselItems: Array<JSX.Element> = useMemo(() => {

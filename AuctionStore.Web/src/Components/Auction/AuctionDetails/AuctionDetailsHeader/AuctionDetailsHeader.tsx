@@ -22,7 +22,7 @@ import {
   LogLevel,
 } from "@microsoft/signalr";
 import RemainingTimeCounter from "./RemainingTimeCounter/RemainingTimeCounter";
-import { IAuctionDetails } from "../../../../Interfaces/Auctions";
+import {AuctionDetailsType } from "../../../../Types/Auction";
 import moment from "moment";
 import { AuctionApi } from "../../../../Services/Auction/Auction.service";
 import { useHistory } from "react-router-dom";
@@ -30,7 +30,7 @@ import { AuctionStatus, UserRoles } from "../../../../Helpers/constans";
 import { AdminApi } from "../../../../Services/Admin/Admin.service";
 
 type timeCounterDataType = Pick<
-  IAuctionDetails,
+  AuctionDetailsType,
   "timeStampDuration" | "timeStampEnd" | "timeStampStart"
 >;
 

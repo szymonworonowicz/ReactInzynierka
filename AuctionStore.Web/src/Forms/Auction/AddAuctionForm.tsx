@@ -3,7 +3,7 @@ import { IAddAuctionProps } from "./IAddAuctionFormProps";
 import { useTranslation } from "react-i18next";
 import { useFormContext, FieldError } from "react-hook-form";
 import { Grid, TextField, Button } from "@material-ui/core";
-import { IAddAuction, IAuctionPhoto } from "../../Interfaces/Auctions";
+import { AddAuctionType, AuctionPhotoType } from "../../Types/Auction";
 import { makeStyles } from "@material-ui/core/styles";
 import PictureUpload from "../../Components/Shared/PictureUpload/PictureUpload";
 import AuctionTimePicker from "../../Components/AuctionAdd/AuctionTimePicker/AuctionTimePicker";
@@ -32,9 +32,9 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
   auctionInfo,
   saveData,
 }) => {
-  const [files, setFiles] = useState<Array<IAuctionPhoto>>([]);
+  const [files, setFiles] = useState<Array<AuctionPhotoType>>([]);
   const context = useContext(UserContext);
-  const [auction, setAuction] = useState<IAddAuction>({
+  const [auction, setAuction] = useState<AddAuctionType>({
     title: "",
     photos: [],
     price: 0,
@@ -63,7 +63,7 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useFormContext<IAddAuction>();
+  } = useFormContext<AddAuctionType>();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -75,10 +75,10 @@ const AddAuctionForm: React.FC<IAddAuctionProps> = ({
         [id]: value,
       };
     });
-    setValue(id as (keyof IAddAuction), value);
+    setValue(id as (keyof AddAuctionType), value);
   };
 
-  const handleSave = (data: IAddAuction) => {
+  const handleSave = (data: AddAuctionType) => {
     data.isTimeAuction = auction.isTimeAuction;
     if (!data.photos) {
       data.photos = [];

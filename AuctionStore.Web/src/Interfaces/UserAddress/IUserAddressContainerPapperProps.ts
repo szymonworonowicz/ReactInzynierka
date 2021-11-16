@@ -1,4 +1,4 @@
-import { AddressType } from "../../Types/User/user";
+import { AddressType } from "../../Types/User/";
 
 export interface IUserAddressContainerPapperProps{
     address : AddressType;

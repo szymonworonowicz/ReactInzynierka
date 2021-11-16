@@ -12,9 +12,9 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/styles";
 import {
-  IAuctionConfirmAddress,
-  IAuctionConfirmationForm,
-} from "../../../../../Interfaces/Auctions";
+  AuctionConfirmAddressType,
+  AuctionConfirmationFormType,
+} from "../../../../../Types/Auction";
 
 
 const useStyles = makeStyles({
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 });
 
 const SameAddress: React.FC = () => {
-  const { setValue, getValues } = useFormContext<IAuctionConfirmationForm>();
+  const { setValue, getValues } = useFormContext<AuctionConfirmationFormType>();
   const [sameDeliveryAddress, setSameDeliveryAddress] = useState<boolean>(
     getValues()["sameAddress"] ?? false
   );
@@ -32,7 +32,7 @@ const SameAddress: React.FC = () => {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const [address, setAddress] = useState<IAuctionConfirmAddress>(
+  const [address, setAddress] = useState<AuctionConfirmAddressType>(
     getValues().address
   );
 
@@ -53,7 +53,7 @@ const SameAddress: React.FC = () => {
         [`address.${id}`]: value,
       };
     });
-    setValue(`address.{id}` as keyof IAuctionConfirmationForm, value);
+    setValue(`address.{id}` as keyof AuctionConfirmationFormType, value);
   };
 
 
