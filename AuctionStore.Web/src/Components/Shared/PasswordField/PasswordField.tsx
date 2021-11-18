@@ -22,7 +22,7 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
   const handleClickShowPassword = () => {
     setPasswordVisible((prev) => !prev);
   };
-  const handleMouseDownPassword = (e: any) => {
+  const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
 

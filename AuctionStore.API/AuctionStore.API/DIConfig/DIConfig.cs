@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetCore.AutoRegisterDi;
 using System;
 using System.Linq;
+using AuctionStore.Domain.Repositories;
 
 namespace AuctionStore.API.DIConfig
 {
@@ -26,8 +27,10 @@ namespace AuctionStore.API.DIConfig
                 .AsPublicImplementedInterfaces();
 
             services.RegisterAssemblyPublicNonGenericClasses(infrastructure)
-                .Where(x => x.Name.EndsWith("Repository"))
+                .Where(x => x.Name.EndsWith("Repository") && !x.Name.Contains("SendEmailRepository"))
                 .AsPublicImplementedInterfaces();
+
+            services.AddSingleton<ISendEmailRepository, SendEmailRepository>();
 
             services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
 

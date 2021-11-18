@@ -24,9 +24,9 @@ namespace AuctionStore.Domain.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            logger.LogInformation($"Start Job {nameof(WinningAuctionMessageJob)}");
+            logger.LogInformation($"Start Job {nameof(SendNewsletterJob)}");
             await mediator.Send(new SendNewsletterEmailCommand());
-            logger.LogInformation($"End Job {nameof(WinningAuctionMessageJob)}");
+            logger.LogInformation($"End Job {nameof(SendNewsletterJob)}");
         }
     }
 }

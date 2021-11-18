@@ -2,6 +2,6 @@ export interface IGenericTableFooterProps {
     dataCount :number;
     rowsPerPage : number;
     page:number;
-    handleChangePage : (e: any, newPage : any) => void;
-    handleChangeRowsPerPage : (e : any) => void;
+    handleChangePage : (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
+    handleChangeRowsPerPage : (event :React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 }

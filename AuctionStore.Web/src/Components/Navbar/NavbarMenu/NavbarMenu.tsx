@@ -15,12 +15,13 @@ import { UserRoles } from "../../../Helpers/constans";
 import { UserContext } from "../../../Context/UserContext";
 
 const NavbarMenu: React.FC = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const context = useContext(UserContext);
   const { t } = useTranslation();
   const history = useHistory();
-  const handleMenuClick = (e: any): void => {
-    setAnchorEl(e.target);
+
+  const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    setAnchorEl(e.currentTarget);
   };
 
   const handleMenuClose = (): void => {

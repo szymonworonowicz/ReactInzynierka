@@ -67,7 +67,7 @@ const AddCategoryForm: React.FC = () => {
     }
   }, [open]);
 
-  const handleSubcategoryChange = (e: any) => {
+  const handleSubcategoryChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { value } = e.target;
     setSelectedValue((prev) => {
       return {

@@ -26,16 +26,16 @@ const LoginNav: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isRegister, setIsRegister] = useState<boolean>(false);
   const [isResetPassword, setIsResetPassword] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
   const toast = useToast();
   const { t } = useTranslation();
 
-  const IsLoginOpen = () => {
+  const handleLoginOpen = () => {
     setIsLogin((prev) => !prev);
   };
 
-  const IsRegisterOpen = () => {
+  const handleRegisterOpen = () => {
     setIsRegister((prev) => !prev);
   };
 
@@ -43,8 +43,9 @@ const LoginNav: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const handleMenuClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuClick = (e: 
+    React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(e.currentTarget);
   };
 
   const Login = (data: ILoginCredentials) : void => {
@@ -75,13 +76,13 @@ const LoginNav: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={IsLoginOpen}>
+        <MenuItem onClick={handleLoginOpen}>
           <ListItemIcon>
             <Person />
           </ListItemIcon>
           <ListItemText primary={t("login")} />
         </MenuItem>
-        <MenuItem onClick={IsRegisterOpen}>
+        <MenuItem onClick={handleRegisterOpen}>
           <ListItemIcon>
             <PersonAdd />
           </ListItemIcon>

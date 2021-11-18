@@ -51,7 +51,7 @@ const RegisterForm: React.FC = () => {
 
   password.current = watch("password", "");
 
-  const formValidations: any = {
+  const formValidations = {
     firstName: getValidator(
       t,
       null,

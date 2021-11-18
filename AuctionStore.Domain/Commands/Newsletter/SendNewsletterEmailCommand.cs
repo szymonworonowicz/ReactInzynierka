@@ -30,8 +30,8 @@ namespace AuctionStore.Domain.Commands.Newsletter
             private readonly IImageService imageService;
 
             public SendNewsletterEmailCommandHandler(DataContext context, ISendEmailRepository emailRepository,
-                                                     IOptions<SmtpOptions> smtpOptions, IMapper mapper,
-                                                     IImageService imageService)
+                IOptions<SmtpOptions> smtpOptions, IMapper mapper,
+                IImageService imageService)
             {
                 this.context = context;
                 this.emailRepository = emailRepository;
@@ -39,6 +39,7 @@ namespace AuctionStore.Domain.Commands.Newsletter
                 this.mapper = mapper;
                 this.imageService = imageService;
             }
+
             public async Task<Unit> Handle(SendNewsletterEmailCommand request, CancellationToken cancellationToken)
 
             {
@@ -51,20 +52,33 @@ namespace AuctionStore.Domain.Commands.Newsletter
                 {
                     newsletter.LastNewsletterTimeStamp += Constants.Secons3Days;
 
+                    var categoriesId = newsletter.Subcategories.Select(x => x.SubCategoryId).ToList();
+                    var dateTimeNowUnix = DateTimeOffset.Now.ToUnixTimeSeconds();
+
                     var auctions = await context.Auctions
                         .Include(x => x.AuctionOffers)
-                        .Where(x => x.TimeStampEnd > DateTimeOffset.Now.ToUnixTimeSeconds())
+                        .Where(x => categoriesId.Contains(x.SubCategoryId.Value))
+                        //.Where(x => x.TimeStampEnd > dateTimeNowUnix)
                         .Where(x => x.Status == AuctionStatus.New)
                         .OrderBy(x => x.AuctionOffers.Count())
                         .Take(8)
                         .ProjectTo<AuctionNewsletterDto>(mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken);
 
+                    if (auctions.Count == 0)
+                    {
+                        continue;;
+                    }
                     foreach (var auction in auctions)
                     {
-                        var file = await context.AuctionFiles.FirstOrDefaultAsync(x => x.AuctionId == auction.Id && x.IsMain, cancellationToken);
-
-                        var img = imageService.GetImageString(file.MediumPhotoPath);
+                        var file = await context.AuctionFiles.FirstOrDefaultAsync(
+                            x => x.AuctionId == auction.Id && x.IsMain, cancellationToken);
+                        if (file == null)
+                        {
+                            auction.PhotoString = "";
+                            continue;
+                        }
+                        var img = await imageService.GetImageString(file.MediumPhotoPath);
                         auction.PhotoString = $"data:image/{GetType(file.FileExtensions)};base64,{img}";
                     }
 

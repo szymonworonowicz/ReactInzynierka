@@ -5,23 +5,9 @@ import { useTranslation } from "react-i18next";
 import { AddressType } from "../../../../Types/User/";
 import { UserApi } from "../../../../Services/User/User.service";
 import { Select, MenuItem } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddressContainer from "./AdressContainer/AddressContainer";
 import { useFormContext } from "react-hook-form";
 import { LottieContext } from "../../../../Context/LottieContext";
-
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  })
-);
 
 const AuctionConfirmDeliveryAddress: React.FC<IAuctionConfirmDeliveryAddressProps> =
   ({ setSelectedCity }) => {

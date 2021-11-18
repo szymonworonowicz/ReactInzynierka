@@ -22,19 +22,19 @@ const GenericTable = <T, K extends keyof T>({
 }: IGenericTableProps<T, K>): JSX.Element => {
   const classes = useStyles();
 
-  const handleNewPage = (e: any, newPage: any) => {
+  const handleNewPage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     if (typeof externalMethod === "function") {
       externalMethod();
     }
     setQuery((prev) => {
       return {
         ...prev,
-        page: parseInt(newPage),
+        page: page
       };
     });
   };
-
-  const handleChangeRowsPerPage = (e: any) => {
+  
+  const handleChangeRowsPerPage = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (typeof externalMethod === "function") {
       externalMethod();
     }
