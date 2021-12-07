@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuctionStore.API.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class AdminController : BaseController<AdminController>
     {
         public AdminController(IMediator mediator, ILoggerFactory loggerFactory) : base(mediator, loggerFactory)

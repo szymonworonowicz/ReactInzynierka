@@ -47,7 +47,7 @@ namespace AuctionStore.Infrastructure.Services.Auth
 
             foreach (var userRole in userRoles) customClaims.Add(new Claim(ClaimTypes.Role, userRole));
 
-            customClaims.Add(new Claim(ClaimTypes.UserData, userName));
+            //customClaims.Add(new Claim(ClaimTypes.UserData, userName));
 
             if (additionalClaims != null) customClaims.AddRange(additionalClaims);
 

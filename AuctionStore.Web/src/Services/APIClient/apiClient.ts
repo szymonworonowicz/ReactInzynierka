@@ -13,6 +13,7 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
+    debugger;
     config.headers["Authorization"] = (function () {
       return `Bearer ${localStorage.getItem("access_token")}`;
     })();
@@ -81,49 +82,49 @@ apiClient.interceptors.response.use(
     }
 
     //try request with new Token
-    // try {
-    //   return new Promise((resolve, reject) => {
-    //     const refreshToken = sessionStorage.getItem("refresh_token");
-    //     const userName = sessionStorage.getItem("userName");
+    try {
+      return new Promise((resolve, reject) => {
+        const refreshToken = sessionStorage.getItem("refresh_token");
+        const userName = sessionStorage.getItem("userName");
 
-    //     if (refreshToken === null) {
-    //       // history.push(`/login?returnUrl=${window.location.href}`);
-    //       reject(error);
-    //     }
+        if (refreshToken === null) {
+          // history.push(`/login?returnUrl=${window.location.href}`);
+          reject(error);
+        }
 
-    //     apiClient
-    //       .post("auth/login/refresh", {
-    //         refreshToken,
-    //         userName,
-    //       })
-    //       .then((res) => {
-    //         const response = res.data;
+        apiClient
+          .post("auth/login/refresh", {
+            refreshToken,
+            userName,
+          })
+          .then((res) => {
+            const response = res.data;
 
-    //         sessionStorage.setItem("access_token", response.data.accessToken);
+            sessionStorage.setItem("access_token", response.data.accessToken);
 
-    //         if (sessionStorage.getItem("refresh_token")) {
-    //           sessionStorage.setItem(
-    //             "refresh_token",
-    //             response.data.refreshToken
-    //           );
-    //         }
+            if (sessionStorage.getItem("refresh_token")) {
+              sessionStorage.setItem(
+                "refresh_token",
+                response.data.refreshToken
+              );
+            }
 
-    //         const userData = getUserDataFromAccessToken();
+            const userData = getUserDataFromAccessToken();
 
-    //         if (userData !== null) {
-    //           if (typeof authService.onLogin === "function") {
-    //             authService.onLogin(userData);
-    //           }
-    //         }
+            if (userData !== null) {
+              if (typeof authService.onLogin === "function") {
+                authService.onLogin(userData);
+              }
+            }
 
-    //         resolve(apiClient.request(originalRequest));
-    //       });
-    //   });
-    // } catch (error) {
-    //   return new Promise((_resolve, reject) => {
-    //     reject(error);
-    //   });
-    // }
+            resolve(apiClient.request(originalRequest));
+          });
+      });
+    } catch (error) {
+      return new Promise((_resolve, reject) => {
+        reject(error);
+      });
+    }
   }
 );
 

@@ -28,7 +28,7 @@ namespace AuctionStore.API.DIConfig
         public static void ConfigApi(this IServiceCollection services, IConfiguration configuration,
             Action<JwtBearerOptions> jwtOptions = null)
         {
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             var commopOptions = new CommonOptions();
             configuration.GetSection("ApiOptions").Bind(commopOptions);
@@ -47,26 +47,26 @@ namespace AuctionStore.API.DIConfig
 
             if (commopOptions.UseJwt)
             {
-                var bytesSecret = Encoding.ASCII.GetBytes(commopOptions.Jwt.JwtTokenSecretKey);
-                services.AddAuthentication(x =>
+                var bytesSecret = Encoding.UTF8.GetBytes(commopOptions.Jwt.JwtRefreshTokenSecretKey);
+                services.AddAuthentication(option =>
                     {
-                        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    })
-                    .AddJwtBearer(x =>
+                        option.DefaultAuthenticateScheme = "Bearer";
+                        option.DefaultScheme = "Bearer";
+                        option.DefaultChallengeScheme = "Bearer";
+                    }
+                ).AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        x.SaveToken = true;
-                        x.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(bytesSecret),
-                            ValidateIssuer = true,
-                            ValidIssuer = "AuctionStore.API",
-                            ValidateLifetime = true, // check token's expiration date
-                            ClockSkew = TimeSpan.Zero
-                        };
-                       
-                    });
+                        ValidIssuer = "AuctionStore.API",
+                        ValidAudience = "AuctionStore.API",
+                        IssuerSigningKey = new SymmetricSecurityKey(bytesSecret)
+                    };
+
+                });
+                
             }
 
             services.AddMvc();

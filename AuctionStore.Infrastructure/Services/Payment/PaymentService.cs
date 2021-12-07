@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -38,18 +39,24 @@ namespace AuctionStore.Infrastructure.Services
             var body = JsonConvert.SerializeObject(request);
             restRequest.AddParameter("application/json; charset=utf-8", body, ParameterType.RequestBody);
 
+            var DotpayRequest = new DotpayRequest();
+
+            foreach (var property in typeof(DotpayRequest).GetProperties().OrderBy(x => x.Name).Select( x=> x.Name))
+            {
+                var value = DotpayRequest.GetType().GetProperty(property).GetValue(DotpayRequest, null);
+            }
+
             try
             {
-                var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
+                var response = await restClient.ExecuteAsync<DotpayResponse>(restRequest, cancellationToken);
 
                 if(response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created )
                 {
                     return "";
                 }
-                var dotpayResponse = JsonConvert.DeserializeObject<DotpayResponse>(response.Content);
 
-                string chk = GenerateChk(dotpayResponse.Token);
-                string paymentUrl = $"{dotpayResponse.Payment_url}&chk={chk}";
+                string chk = GenerateChk(response.Data?.Token ?? "");
+                string paymentUrl = $"{response.Data?.Payment_url??""}&chk={chk}";
 
 
                 return paymentUrl;

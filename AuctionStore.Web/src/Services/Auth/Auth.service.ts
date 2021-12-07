@@ -1,17 +1,25 @@
-import { IBaseResponse, ILoginCredentials,IRegisterCredentials,ILoginResult } from "../../Interfaces/Api";
+import {
+  IBaseResponse,
+  ILoginCredentials,
+  IRegisterCredentials,
+  ILoginResult,
+} from "../../Interfaces/Api";
 import { apiClient } from "../APIClient/apiClient";
 import JWTDecode from "jwt-decode";
 import { history } from "../../Helpers";
-import { ResetPasswordRequiredType ,ResetPasswordType} from "../../Types/User/";
+import {
+  ResetPasswordRequiredType,
+  ResetPasswordType,
+} from "../../Types/User/";
 
 export interface IAuthService {
   login: (credentials: ILoginCredentials) => Promise<boolean>;
   logout: () => void;
   onLogin?: (userData: IUserAuthData) => void;
   onLogout?: () => void;
-  register : (credentials : IRegisterCredentials) => Promise<boolean>;
-  resetPasswordRequired : (data : ResetPasswordRequiredType) => Promise<boolean>;
-  resetPassword : (data : ResetPasswordType) => Promise<boolean>;
+  register: (credentials: IRegisterCredentials) => Promise<boolean>;
+  resetPasswordRequired: (data: ResetPasswordRequiredType) => Promise<boolean>;
+  resetPassword: (data: ResetPasswordType) => Promise<boolean>;
 }
 
 export interface IUserAuthData {
@@ -24,10 +32,14 @@ export interface IUserAuthData {
 export const authService: IAuthService = {
   login: async (credentials: ILoginCredentials): Promise<boolean> => {
     try {
-      const response = await apiClient.post<IBaseResponse<ILoginResult>>("auths/login", {
-        UserName: credentials.username,
-        Password: credentials.password,
-      });
+      debugger;
+      const response = await apiClient.post<IBaseResponse<ILoginResult>>(
+        "auths/login",
+        {
+          UserName: credentials.username,
+          Password: credentials.password,
+        }
+      );
 
       if (response.data.success === false) {
         return new Promise<boolean>((_resolve, reject) => {
@@ -35,10 +47,10 @@ export const authService: IAuthService = {
         });
       }
 
-      if(response.data.data.isBanned === true ) {
+      if (response.data.data.isBanned === true) {
         return new Promise<boolean>((_resolve, reject) => {
           reject(true);
-        })
+        });
       }
 
       localStorage.setItem("access_token", response.data.data.accessToken);
@@ -51,7 +63,7 @@ export const authService: IAuthService = {
         }
       }
       sessionStorage.setItem("refresh_token", response.data.data.refreshToken);
-      sessionStorage.setItem("userName", userData?.userName ?? '');
+      sessionStorage.setItem("userName", userData?.userName ?? "");
 
       return new Promise<boolean>((resolve) => resolve(true));
     } catch (error) {
@@ -68,48 +80,49 @@ export const authService: IAuthService = {
     // history.push("/");
   },
 
-  register : async (credentials : IRegisterCredentials) : Promise<boolean> => {
-    const response = await apiClient.post('auths/register', credentials);
+  register: async (credentials: IRegisterCredentials): Promise<boolean> => {
+    const response = await apiClient.post("auths/register", credentials);
 
-    if(response.data.success === false) {
+    if (response.data.success === false) {
       return new Promise<boolean>((_resolve, reject) => {
-        reject(response.data.errors[0].message)
-      })
+        reject(response.data.errors[0].message);
+      });
     }
 
     return new Promise<boolean>((resolve) => {
       resolve(true);
-    })
+    });
   },
 
-  resetPasswordRequired : async(data: ResetPasswordRequiredType) : Promise<boolean> => {
-    const response = await apiClient.post('auths/resetPasswordRequest', data);
-    
-    if(response.data.success === false) {
+  resetPasswordRequired: async (
+    data: ResetPasswordRequiredType
+  ): Promise<boolean> => {
+    const response = await apiClient.post("auths/resetPasswordRequest", data);
+
+    if (response.data.success === false) {
       return new Promise<boolean>((_resolve, reject) => {
-        reject(response.data.errors[0].message)
-      })
+        reject(response.data.errors[0].message);
+      });
     }
 
     return new Promise<boolean>((resolve) => {
       resolve(true);
-    })
-    
+    });
   },
 
-  resetPassword : async(data : ResetPasswordType) : Promise<boolean> => {
-    const response = await apiClient.post('auths/resetPassword', data);
+  resetPassword: async (data: ResetPasswordType): Promise<boolean> => {
+    const response = await apiClient.post("auths/resetPassword", data);
 
-    if(response.data.success === false) {
+    if (response.data.success === false) {
       return new Promise<boolean>((_resolve, reject) => {
-        reject(response.data.errors[0].message)
-      })
+        reject(response.data.errors[0].message);
+      });
     }
 
     return new Promise<boolean>((resolve) => {
       resolve(true);
-    })
-  }
+    });
+  },
 };
 
 export const getUserDataFromAccessToken = (): IUserAuthData | null => {
@@ -118,17 +131,26 @@ export const getUserDataFromAccessToken = (): IUserAuthData | null => {
   if (accessToken) {
     const decodedToken = JWTDecode(accessToken) as any;
 
-    const role = decodedToken["role"];
 
     const userDataClaim =
       "http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata";
+    const userDataRole =
+      "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    const userDataName =
+      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+    const userDataId =
+      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+
     const userData = decodedToken[userDataClaim];
+    const userRole = decodedToken[userDataRole];
+    const userName = decodedToken[userDataName];
+    const userId = decodedToken[userDataId];
 
     const authData: IUserAuthData = {
-      id: decodedToken.nameid,
-      userName: decodedToken.unique_name,
+      id: userId,
+      userName: userName,
       name: userData,
-      role: role,
+      role: userRole,
     };
 
     return authData;
