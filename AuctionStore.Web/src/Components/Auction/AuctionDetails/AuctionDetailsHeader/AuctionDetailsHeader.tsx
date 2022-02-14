@@ -61,7 +61,7 @@ const AuctionDetailsHeader: React.FC<IAuctionDetailsHeaderProps> = ({
     (async () => {
       try {
         const connection: HubConnection = new HubConnectionBuilder()
-          .withUrl("https://localhost:5001/hub", {
+          .withUrl("https://localhost:43315/hub", {
             skipNegotiation: true,
             transport: HttpTransportType.WebSockets,
           })

@@ -11,5 +11,6 @@ namespace AuctionStore.Infrastructure.Models
         public long LastNewsletterTimeStamp { get; set; }
 
         public virtual IEnumerable<NewsletterSubCategory> Subcategories { get; set; }
+        public virtual User User { get; set; }
     }
 }

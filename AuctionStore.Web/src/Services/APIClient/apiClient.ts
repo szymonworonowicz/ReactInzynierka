@@ -7,7 +7,7 @@ interface IApiClient extends AxiosInstance {
 }
 
 export const apiClient = axios.create({
-  baseURL: "https://localhost:5001/api",
+  baseURL: "https://localhost:44315/api",
   timeout: 100000,
 }) as IApiClient;
 

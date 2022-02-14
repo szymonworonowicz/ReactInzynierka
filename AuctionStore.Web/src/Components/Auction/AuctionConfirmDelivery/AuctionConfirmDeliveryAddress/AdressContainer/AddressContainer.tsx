@@ -26,22 +26,22 @@ const AddressContainer: React.FC<IAddressContainerProps> = ({ data }) => {
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Typography variant="h5">
-            {t("city")}: {data.city}
+            {t("city")}: {data?.city}
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h5">
-            {t("postCode")}: {data.postCode}
+            {t("postCode")}: {data?.postCode}
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h5">
-            {t("street")}: {data.street}
+            {t("street")}: {data?.street}
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h5">
-            {t("houseNo")}: {data.houseNo}
+            {t("houseNo")}: {data?.houseNo}
           </Typography>
         </Grid>
       </Grid>

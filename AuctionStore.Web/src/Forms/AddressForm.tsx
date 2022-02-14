@@ -57,9 +57,9 @@ const AddressForm: React.FC = () => {
 
   const formValidators = {
     city: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
-    houseNo: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
-    postCode: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
-    street: getValidator(t, null, regexTable[ValidatorType.Alphabetic], true),
+    houseNo: getValidator(t, null, regexTable[ValidatorType.AlphaNumeric], true),
+    postCode: getValidator(t, null, regexTable[ValidatorType.AlphaNumeric], true),
+    street: getValidator(t, null, regexTable[ValidatorType.AlphaNumeric], true),
   };
 
   return (

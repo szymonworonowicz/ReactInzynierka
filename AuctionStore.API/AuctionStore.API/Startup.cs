@@ -65,6 +65,7 @@ namespace AuctionStore.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseWebSockets();
 
             logger.LogInformation("App started");
 

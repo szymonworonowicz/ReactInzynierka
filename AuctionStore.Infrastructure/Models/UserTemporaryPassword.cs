@@ -15,5 +15,7 @@ namespace AuctionStore.Infrastructure.Models
         public Guid UserId { get; set; }
 
         public bool IsUsed { get; set; }
+
+        public virtual User User { get; set; }
     }
 }
