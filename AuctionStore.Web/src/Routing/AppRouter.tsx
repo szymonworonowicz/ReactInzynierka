@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, BrowserRouter } from "react-router-dom";
+import { Router, Route, BrowserRouter, Switch } from "react-router-dom";
 import Home from "../Pages/Home";
 import ErrorPage from '../Pages/ErrorPage'
 import Profile from "../Pages/Profile";
@@ -26,7 +26,6 @@ history.listen((_) => {
 const AppRouter: React.FC = () => {
   return (
     <Router history={history}>
-      <>
         <BrowserRouter>
           
           <Route exact path={Routes.home} render={() => <DefaultLayout><Home/></DefaultLayout>}/>
@@ -76,7 +75,6 @@ const AppRouter: React.FC = () => {
           />
           
         </BrowserRouter>
-      </>
     </Router>
   );
 };

@@ -143,7 +143,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
             <KeyboardDateTimePicker
               autoOk={true}
               minDate={moment()}
-              format="DD/MM/yyyy HH:MM"
+              format="DD/MM/yyyy HH:mm"
               disablePast
               value={times.startTime}
               label={t("startTime")}
@@ -163,7 +163,7 @@ const AuctionTimePicker: React.FC<IAuctionTimePickerProps> = ({
               <KeyboardDateTimePicker
                 autoOk={true}
                 minDate={moment(times.startTime)}
-                format="DD/MM/yyyy HH:MM"
+                format="DD/MM/yyyy HH:mm"
                 disablePast
                 value={times.endTime}
                 label={getSecondLabel()}

@@ -105,7 +105,7 @@ const AddCategoryForm: React.FC = () => {
     if (params.inputValue !== "") {
       filtered.push({
         inputValue: params.inputValue,
-        name: `${t("add")} ${params.inputValue}`,
+        name: `${t("Add")} ${params.inputValue}`,
       });
     }
 

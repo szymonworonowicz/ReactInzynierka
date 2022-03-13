@@ -37,11 +37,11 @@ const ChangeBankAccountForm: React.FC = () => {
   } = useFormContext<BankAccountType>();
   
   const [bankAccount, setBankAccount] = React.useState<BankAccountType>({
-    id: getValues()["id"],
-    accountNr: getValues()["accountNr"],
-    ownerAddress: getValues()["ownerAddress"],
-    ownerFirstName: getValues()["ownerFirstName"],
-    ownerLastName: getValues()["ownerLastName"],
+    id: getValues().id,
+    accountNr: getValues().accountNr,
+    ownerAddress: getValues().ownerAddress,
+    ownerFirstName: getValues().ownerFirstName,
+    ownerLastName: getValues().ownerLastName,
   });
 
   const classes = useStyles();

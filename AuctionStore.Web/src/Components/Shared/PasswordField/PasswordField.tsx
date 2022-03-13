@@ -17,7 +17,7 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
 }) => {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const { t } = useTranslation();
-  const {formState:{errors}} = useFormContext();
+  const {formState} = useFormContext();
      
   const handleClickShowPassword = () => {
     setPasswordVisible((prev) => !prev);
@@ -31,8 +31,8 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
       id={fieldName}
       name={fieldName}
       label={t(fieldName)}
-      error={errors[fieldName] && errors[fieldName]?.value !== undefined}
-      helperText= {(errors[fieldName] as FieldError)?.message}
+      error={formState?.errors[fieldName] && formState?.errors[fieldName]?.value !== undefined}
+      helperText= {(formState?.errors[fieldName] as FieldError)?.message}
       type={passwordVisible ? "text" : "password"}
       value={value}
       onChange={onChange}
